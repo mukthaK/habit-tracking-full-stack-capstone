@@ -1,0 +1,43 @@
+{
+    "name": "habit-tracking-full-stack-capstone",
+    "version": "1.0.0",
+    "description": "The habit Tracker app is designed for people who would like to cultivate a new habit and make it a routine. It allows a user to create a habit list, plan on when they would like it to be done. User can also add notes and create  milestones to break down it into small steps. It shows how many times it has been done to motivate a user to continue in doing it.",
+    "main": "server.js",
+    "dependencies": {
+        "bcrypt": "^0.8.7",
+        "bcryptjs": "^2.3.0",
+        "body-parser": "^1.15.2",
+        "cors": "^2.8.4",
+        "express": "^4.14.0",
+        "isomorphic-fetch": "^2.2.1",
+        "moment": "^2.18.1",
+        "mongodb": "^2.2.9",
+        "mongoose": "^4.5.10",
+        "passport": "^0.3.2",
+        "passport-http": "^0.3.0",
+        "unirest": "^0.5.1"
+    },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "chai-http": "^3.0.0",
+        "faker": "^3.1.0",
+        "mocha": "^3.2.0"
+    },
+    "engines": {
+        "node": "^8.2.1"
+    },
+    "scripts": {
+        "test": "mocha",
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mukthaK/habit-tracking-full-stack-capstone.git"
+    },
+    "author": "Muktha Krishnaswamy",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mukthaK/habit-tracking-full-stack-capstone/issues"
+    },
+    "homepage": "https://github.com/mukthaK/habit-tracking-full-stack-capstone#readme"
+}

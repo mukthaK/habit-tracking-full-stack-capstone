@@ -72,6 +72,11 @@ header {
     text-align: center;
     padding: 50px;
 }
+.features {
+    max-width: 1000px;
+    
+}
+/* Add habit button style */
 .add-btn {
     background-image: url("/images/icons/plus-icon.svg");
     height: 50px;

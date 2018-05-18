@@ -3,19 +3,19 @@ The habit Tracker app is designed for people who would like to cultivate a new h
 
 ## Screenshots
 
-## User Cases 
+## User Cases
 This app is designed for individual users who would like to cultivate new habit and track their habits.
 
 ### UI Flow
 ![UI Flow handwritten draft](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/ui-flow-alt.jpg)
 
-### Wireframe _main 
+### Wireframe _main
 ![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/landing-screen.jpg "Landing screen") | ![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/signup.jpg "Sign Up screen") | ![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/login.jpg "Log In screen") | ![New user dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/new-user-dashboard.jpg "New user dashboard") | ![User Dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/user-dashboard.jpg "User Dashboard") | ![Adding habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/add-new-habit.jpg "Adding Habit") | ![Edit/View habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/view-habit.jpg "Edit/View habit")
 
 ## Working Prototype
-You can access a working prototype of the app here: 
+You can access a working prototype of the app here: https://habit-tracker-fullstack.herokuapp.com/
 
-## Functionality 
+## Functionality
 The app's functionality includes:
 * Every User has the ability to create an account that stores information unique to them
 * User can Add Entries, Update Entries, and Delete Entries
@@ -28,7 +28,7 @@ The app's functionality includes:
 ## Responsive
 App is strongly built to be usuable on mobile devices, as well as responsive across mobile, tablet, laptop, and desktop screen resolutions.
 
-## Development Roadmap 
+## Development Roadmap
 This is v1.0 of the app, but future enhancements are expected to include:
 * To enable users to add/track habits over a period of time
 * Enable notification to user prior a habit to be done
