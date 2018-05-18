@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Habit Tracker</title>
+    <!-- Responsive Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fonts -->
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+    
+<body>
+    <!-- Nav bar -->
+    <nav role="navigation" id="nav-bar">
+        <ul>
+            <div class="nav-left"><li>Habit Tracker</li></div>
+            <div class="nav-right"><li>Hello username</li>
+            <li><a href="#">Log In</a></li></div>
+        </ul>
+    </nav>
+    
+    <!-- Landing screen -->
+    <main role="main" id="landing-screen">
+        <section class="hero">
+            <header role="banner">
+                <h1>Habit Tracker</h1>
+            </header>
+            <p>Create a habit and make it a routine</p>
+            <p>Improve your habits one day at a time</p>
+            <h4>Why wait? Cultivate a new habit today.</h4>
+            <div class="hero-signup">
+                <button type="button" class="hero-button">Sign Up</button>
+                <p>Have an account?<a href="">Log In</a></p>
+            </div>
+        </section>
+        <section class="features">
+            <div class="feature-container flex-direction">
+                <div class="feature-description">
+                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p> 
+                </div>
+                <div class="feature-image">
+                    <img src="" alt="Feature">
+                </div>
+            </div>
+            <div class="feature-container">
+                <div class="feature-description">
+                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="" alt="Feature">
+                </div>
+            </div>
+            <div class="feature-container">
+                <div class="feature-description">
+                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="" alt="Feature">
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Sign up screen -->
+      <main role="main" id="signup-screen">
+        <div id="signup-section">
+            <form role="form" id="signup-form">
+                <fieldset>
+                    <legend>Sign Up</legend>
+                    <label for="username">Username</label>
+                    <input type="name" id="username" placeholder="Username" value="">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" value="">
+                    <label for="confirm-password">Confirm password</label>
+                    <input type="password" id="confirm-password" placeholder="Re-enter password" value="">
+                    <button role="button" name="login" type="submit">Sign Up</button>
+                </fieldset>
+            </form>
+            <p>Have an account?<button role="button" name="login" type="submit">Log In</button></p>
+        </div>
+    </main>
+    
+    <!-- Login screen -->
+     <main role="main" id="login-screen">
+        <div id="login-section">
+            <form role="form" id="login-form">
+                <fieldset>
+                    <legend>Log In</legend>
+                    <label for="username">Username</label>
+                    <input type="name" id="username" placeholder="Username" value="">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" value="">
+                    <button role="button" name="login" type="submit">Log In</button>
+                </fieldset>
+            </form>
+            <section class="demo-info">
+                <h6>Demo Log In:</h6>
+                <p>demo@email.com | password123</p>
+            </section>
+        </div>
+    </main>
+    
+    <!-- User Dashboard -->
+    <main role="main" id="user-dashboard">
+        <div class="newuser-msg">
+            <p>Looks like you aren't tracking any habits yet, so...</p>
+        </div>
+        <div class="add-habit">
+            <button class="add-btn"></button>
+            <span>Add a new habit</span>
+        </div>
+        <div id="habit-list">
+            <div id="habit">
+                <h4>Habit name</h4>
+                <h6>0 Check-ins</h6>
+                <a href="#"><i class="fas fa-angle-right"></i></a>
+            </div> 
+        </div>
+    </main>
+    
+    <!-- Add a new Habit -->
+    <main role="main" id="habit-add-screen">
+        <form role="form" id="habit-form">
+            <fieldset>
+                <label for="habit-name">Name</label>
+                <input type="text" id="habit-name" placeholder="Name for a Habit" value="">
+                <div class="select-day">
+                    <span>I want to repeat this</span>
+                    <input type="radio" name="day" id="monday" checked>
+                    <label for="monday">M</label>
+                    
+                    <input type="radio" name="day" id="tuesday">
+                    <label for="tuesday">T</label>
+                    
+                    <input type="radio" name="day" id="wednesday">
+                    <label for="wednesday">W</label>
+                    
+                    <input type="radio" name="day" id="thursday">
+                    <label for="thursday">T</label>
+                    
+                    <input type="radio" name="day" id="friday">
+                    <label for="friday">F</label>
+                    
+                    <input type="radio" name="day" id="saturday">
+                    <label for="saturday">S</label>
+                    
+                    <input type="radio" name="day" id="sunday">
+                    <label for="sunday">S</label>             
+                </div>
+                <div class="select-daytime">
+                    <span>I will do it</span>
+                    <select name="daytime">
+                        <option value="anytime">At any time of the day</option>
+                        <option value="morning">In the morning</option>
+                        <option value="afternoon">In the afternoon</option>
+                        <option value="evening">In the evening</option>
+                    </select>
+                </div>
+            </fieldset>
+            <button type="submit"> Done</button>
+            <button type="submit">Cancel</button>
+        </form>
+    </main>
+    
+    <!-- Edit a habit -->
+    <main role="main" id="habit-screen">
+        <div class="habit-container">
+            <div class="habit-details">
+                <h4>Habit name</h4>
+                <h6>0 Check-ins</h6>
+            </div>
+            <div id="notes">
+                <!--
+                <div class="sticky-note-pre ui-widget-content">
+                    <div class="handle">&nbsp;<div class="close">&times;</div></div>
+                    <div contenteditable class="contents">Type here...</div>
+                </div>
+                -->
+            </div>
+            <div id="milestones">
+
+            </div>
+            <div id="habit-edit-bar">
+                <a href="#"></a>
+                <a href="#"><i class="far fa-sticky-note"></i></a>
+                <a href="#"><i class="fas fa-tasks"></i></a>
+                <a href="#"><i class="fas fa-check"></i></a>
+                <a href="#"><i class="fas fa-pencil-alt"></i></a>
+
+                <a href="#"><i class="far fa-trash-alt"></i></a>
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+    </main>
+    
+    
+    <!-- Footer for the page -->
+    <footer role="contentinfo">
+        <p>Source code</p>
+        <!-- Github icon -->
+        <p> Say Hello!</p>
+        <!-- Gmail LinkedIn icons -->
+    </footer>
+    
+
+</body>

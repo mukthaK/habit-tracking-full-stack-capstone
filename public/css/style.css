@@ -1,0 +1,106 @@
+#nav-bar {
+	height: 60px;
+	width: 100%;
+    font-size: 20px;
+    padding: 10px 0;
+}
+.nav-left {
+    float: left;
+}
+.nav-right {
+    float: right;
+    padding-right: 30px;
+}
+#nav-bar li {
+    float: left;
+    padding: 0 10px;
+}
+#nav-bar ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+a {
+    text-decoration: none;
+} 
+#nav-bar li a:hover {
+    background-color: crimson;
+    color: floralwhite;
+}
+/* Hero image style */
+.hero {
+    background: url(/images/hero.jpg);
+    background-size: cover;
+    height: 80vh;
+    text-align: center;
+    color: white;
+}
+header {
+    padding: 60px 0 20px 0;
+}
+.hero p {
+    text-align: center; 
+}
+.hero-button {
+    width: 250px;
+    height: 40px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+.hero-signup p {
+    margin-top: 0;
+}
+/* Feature style */
+.feature-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+.flex-direction {
+    flex-direction: row
+}
+.feature-description {
+    width: 50%;
+    height: 200px;
+}
+.feature-image {
+    width: 50%;
+    height: 200px;
+}
+.feature-description p,
+.feature-image img {
+    display: block;
+    text-align: center;
+    padding: 50px;
+}
+.add-btn {
+    background-image: url("/images/icons/plus-icon.svg");
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+/* style for Weekday inputs */
+.select-day input {
+    display: none;
+}
+.select-day label {
+     display: inline-block;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  line-height: 50px;
+  cursor: pointer;
+}
+#monday:checked ~ label[for="monday"],
+#tuesday:checked ~ label[for="tuesday"],
+#wednesday:checked ~ label[for="wednesday"],
+#thursday:checked ~ label[for="thursday"],
+#friday:checked ~ label[for="friday"],
+#saturday:checked ~ label[for="saturday"],
+#sunday:checked ~ label[for="sunday"] 
+{
+  background: #999;
+  color: #fff;
+}
+
+
