@@ -1,7 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     font-family: 'Monda', sans-serif;
-
 }
 
 button {
@@ -145,7 +148,7 @@ header {
     font-size: 20px;
 }
 
-/* Sign Up section */
+/* Sign Up  and Log In section */
 
 .signup-section,
 .login-section {
@@ -212,8 +215,6 @@ fieldset {
     color: #d05d76;
 }
 
-/* Log In screen */
-
 /* User dashboard */
 
 .user-dashboard {
@@ -258,10 +259,22 @@ fieldset {
     border: 1px solid rgb(140, 75, 118);
 }
 
+.habit-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .habit-name {
     background-color: rgb(140, 75, 118);
     font-size: 20px;
     padding: 10px 0 5px 10px;
+    display: flex;
+}
+
+.habit-title,
+.habit-edit-bar {
+    width: 100%;
 }
 
 .habit-name i {
@@ -297,14 +310,14 @@ fieldset {
 }
 
 .habit-edit-bar {
-    width: 100%;
+    /*    width: auto;*/
     background-color: rgb(140, 75, 118);
     overflow: auto;
 
 }
 
 .habit-edit-bar a {
-    float: left;
+    float: right;
     width: 20%;
     text-align: center;
     padding: 5px 0;
@@ -321,9 +334,11 @@ fieldset {
     overflow: hidden;
 }
 
+/*
 .habit-notes {
     float: left;
 }
+*/
 
 .handle {
     border-bottom: 1px solid #d9d9d9;
@@ -409,6 +424,8 @@ fieldset {
 
 .habit-milestones p {
     border-bottom: 1px solid #e6e6e6;
+    color: #d05d76;
+    padding: 5px;
 }
 
 .milestone-add-button {
@@ -423,11 +440,6 @@ input[type=checkbox] {
     overflow: hidden;
 }
 
-.habit-milestones p {
-    color: #d05d76;
-    padding: 5px;
-}
-
 input[type=checkbox] {
     cursor: pointer;
 
@@ -437,6 +449,17 @@ input[type=checkbox] {
     display: block;
     padding-left: 5px;
     border-bottom: 1px solid #f2f2f2;
+}
+
+
+.notes-container,
+.milestone-container {
+    display: flex;
+}
+
+.milestone-title {
+    width: 100%;
+
 }
 
 input[type=checked]:checked {

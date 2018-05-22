@@ -119,10 +119,21 @@
         </div>
         <div class="habit-container">
             <div class="habit-name">
-                <h4>Habit name</h4>
-                <p><i class="fas fa-trophy"></i>0 Check-ins</p>
+                <div class="habit-title">
+                    <h4>Habit name</h4>
+                    <p><i class="fas fa-trophy"></i>0 Check-ins
+                    </p>
+                </div>
+                <div class="habit-edit-bar">
+                    <!--                    <a href="#"><i class="fas fa-check" id="checkin-habit-js"></i><span>Check-in</span></a>-->
+                    <a href="#"><i class="far fa-trash-alt" id="delete-habit-js"></i></a>
+                    <a href="#"><i class="fas fa-pencil-alt" id="edit-habit-js"></i></a>
+                    <a href="#"><i class="far fa-calendar-check"></i></a>
+                </div>
             </div>
-            <div class="habit-notes-wrapper">
+            <div class="notes-container">
+                <span><i class="far fa-sticky-note"></i>Notes</span>
+                <button type="submit" class="add-notes-button"><i class="fas fa-plus-circle"></i></button>
                 <div class="habit-notes">
                     <div class="sticky-note-pre ui-widget-content">
                         <div class="handle">&nbsp;
@@ -131,11 +142,14 @@
                         <div contenteditable class="contents">Type here...</div>
                     </div>
                 </div>
+            </div>
+            <div class="milestone-container">
+                <p><i class="fas fa-tasks"></i>Milestones</p>
+                <button type="submit" class="add-milestones-button"><i class="fas fa-plus-circle"></i></button>
                 <div class="habit-milestones">
-                    <p>Milestones</p>
 
                     <div class="milestone-list">
-
+                        <p>Milestones</p>
                         <label for="milestone">
                         <input type="checkbox" name="milestone-item" id="milestone" />
                         <span>item1</span></label>
@@ -147,18 +161,10 @@
                         <label for="milestone">
                         <input type="checkbox" name="milestone-item" id="milestone" />
                         <span>item1</span></label>
+
                         <button type="submit" class="milestone-add-button"><span>+</span></button>
                     </div>
                 </div>
-            </div>
-            <div class="habit-edit-bar">
-                <a href="#"><i class="far fa-sticky-note" id="edit-notes-js"></i><span>Notes</span></a>
-                <a href="#"><i class="fas fa-tasks" id="edit-milestones-js"></i><span>Milestones</span></a>
-                <a href="#"><i class="fas fa-check" id="checkin-habit-js"></i><span>Check-in</span></a>
-                <a href="#"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>
-
-                <a href="#"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>
-
             </div>
         </div>
     </main>
