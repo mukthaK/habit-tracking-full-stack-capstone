@@ -17,7 +17,6 @@ button:hover {
     height: 60px;
     width: 100%;
     font-size: 20px;
-
 }
 
 .nav-left {
@@ -34,7 +33,7 @@ button:hover {
     font-size: 17px;
 }
 
-.nav-right a #nav-bar li {
+#nav-bar li {
     float: left;
     padding: 15px 10px;
 }
@@ -66,7 +65,7 @@ a {
 header {
     padding: 100px 0 20px 0;
     font-family: 'Megrim', cursive;
-    font-size: 60px;
+    font-size: 85px;
     font-weight: bolder;
 }
 
@@ -85,12 +84,11 @@ header {
 .hero-signup-button {
     width: 300px;
     height: 40px;
-    margin: 20px 0 0 0;
+    margin: 25px 0 0 0;
     font-size: 20px;
-    border: 2px solid white;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.1);
     font-family: 'Monda', sans-serif;
+    color: #d05d76;
+    background-color: white;
 }
 
 .hero-signup p {
@@ -105,23 +103,36 @@ header {
 .feature-heading {
     text-align: center;
     font-size: 30px;
-    padding: 50px;
+    padding: 100px;
 }
 
 .features {
+    /*
     max-width: 1000px;
     padding: 0px;
     text-align: center;
     margin: 0 auto;
+*/
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-bottom: 150px;
 }
 
 .feature-container {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    display: inline-block;
     width: 30%;
-    height: auto;
     padding: 10px;
+    margin: 0 auto;
+}
 
+.feature-container i {
+    font-size: 100px;
+    padding: 25px;
+    display: inline-block;
+    color: #8C4B76
 }
 
 .feature-description {
@@ -131,11 +142,7 @@ header {
 .feature-description h4 {
     padding: 10px 0;
     color: #d05d76;
-}
-
-.feature-container img {
-    width: 200px;
-    height: 200px;
+    font-size: 20px;
 }
 
 /* Sign Up section */
@@ -435,7 +442,6 @@ input[type=checked]:checked {
     background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg") no-repeat top;
     height: auto;
     padding: 20px;
-
 }
 
 footer p {
@@ -446,4 +452,37 @@ footer p {
 footer img {
     height: 30px;
     width: 30px;
+}
+
+@media only screen and (max-width: 675px) {
+    .feature-container {
+        width: 100%;
+        margin: 10px auto;
+    }
+    .feature:active {
+        display: none;
+    }
+    header {
+        font-size: 60px;
+    }
+    .hero h4 {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .feature-container {
+        width: 80%;
+        font-size: 16px;
+    }
+    .feature-heading {
+        font-size: 23px;
+    }
+    .hero-signup-button {
+        width: 200px;
+        font-size: 18px;
+    }
+    header {
+        font-size: 55px;
+    }
 }
