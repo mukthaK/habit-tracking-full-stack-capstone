@@ -22,6 +22,11 @@ button:hover {
     font-size: 20px;
 }
 
+.nav-background {
+    background-image: url("/website-images/hero.jpg");
+    background-size: cover;
+}
+
 .nav-left {
     float: left;
     font-family: 'Megrim', cursive;
@@ -218,14 +223,15 @@ fieldset {
 /* User dashboard */
 
 .user-dashboard {
-    padding-top: 50px;
-    border: 2px solid black;
-    margin: 100px auto;
+    /*    padding-top: 30px;*/
+    /*    border: 2px solid black;*/
+    margin: 50px auto;
 }
 
 .newuser-msg {
     text-align: center;
     font-size: 20px;
+    padding-bottom: 20px;
 }
 
 .add-habit span {
@@ -236,6 +242,7 @@ fieldset {
 .add-habit {
     margin: auto;
     text-align: center;
+    padding-bottom: 20px;
 }
 
 /* Add habit button style */
@@ -283,6 +290,12 @@ fieldset {
     padding: 5px;
 }
 
+.habit-edit-bar i {
+    color: white;
+}
+
+.habit-edit-bar i: hover {}
+
 .habit-name h4 {
     margin: 0;
     color: white;
@@ -298,7 +311,12 @@ fieldset {
     border: 1px solid black;
     border-radius: 5px;
     margin: 5px;
+}
 
+.add-notes-button span,
+.add-milestones-button span {
+    display: block;
+    padding: 10px;
 }
 
 .habit-milestones {
@@ -326,8 +344,19 @@ fieldset {
     font-size: 20px;
 }
 
-.habit-edit-bar a:hover {
+.habit-edit-bar a i:hover {
     transform: scale(1.2);
+    color: #14A098;
+}
+
+.add-notes-button:hover,
+.add-milestones-button:hover {
+    color: #14A098;
+}
+
+.add-notes-button i,
+.add-milestones-button i {
+    font-size: 20px;
 }
 
 .habit-notes-wrapper {
@@ -455,6 +484,7 @@ input[type=checkbox] {
 .notes-container,
 .milestone-container {
     display: flex;
+    margin: 10px;
 }
 
 .milestone-title {
@@ -468,7 +498,8 @@ input[type=checked]:checked {
 }
 
 .footer-container {
-    background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg") no-repeat top;
+    background-image: url("/website-images/hero.jpg");
+    /*    background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg") no-repeat top;*/
     height: auto;
     padding: 20px;
 }
