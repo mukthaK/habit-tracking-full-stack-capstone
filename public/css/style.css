@@ -149,11 +149,11 @@ header {
 
 .signup-section,
 .login-section {
-    width: 500px;
+    width: 400px;
     margin: 100px auto;
     background: white;
     padding: 10px;
-    border: 2px solid black;
+    /*    border: 2px solid black;*/
 }
 
 .signup-section p,
@@ -199,18 +199,20 @@ fieldset {
     border: none;
 }
 
+/*
+
+#signup-screen,
+#login-screen {
+    width: 80%;
+    margin: 0 auto;
+}
+*/
+
 .singup-screen-login-button {
     color: #d05d76;
 }
 
 /* Log In screen */
-
-.login-section {
-    width: 500px;
-    margin: 0 auto;
-    background: white;
-    border: 2px solid black;
-}
 
 /* User dashboard */
 
@@ -484,5 +486,9 @@ footer img {
     }
     header {
         font-size: 55px;
+    }
+    .signup-section,
+    .login-section {
+        width: 80%;
     }
 }

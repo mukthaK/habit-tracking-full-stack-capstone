@@ -1,9 +1,9 @@
 //Triggers
 $(document).ready(function () {
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#landing-screen').show();
-    $('#footer-container').show();
+//    $('main').hide();
+//    $('#nav-bar').show();
+//    $('#landing-screen').show();
+//    $('#footer-container').show();
     //login button on landing screen(hero)
     $('#hero-login-button-js').on('click', function (event) {
         event.preventDefault();
@@ -79,12 +79,12 @@ $(document).ready(function () {
 });
 
 // Signup button on langing screen(hero)
-$(document).on('click', '#hero-signup-button-js', function (event) {
-    alert("signup button clicked");
-    event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#signup-screen').show();
-    $('#footer-container').show();
-
-});
+//$(document).on('click', '#hero-signup-button-js', function (event) {
+//    alert("signup button clicked");
+//    event.preventDefault();
+//    $('main').hide();
+//    $('#nav-bar').show();
+//    $('#signup-screen').show();
+//    $('#footer-container').show();
+//
+//});
