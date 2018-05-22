@@ -1,111 +1,449 @@
-#nav-bar {
-	height: 60px;
-	width: 100%;
-    font-size: 20px;
-    padding: 10px 0;
+html,
+body {
+    font-family: 'Monda', sans-serif;
+
 }
+
+button {
+    border: none;
+    background: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#nav-bar {
+    height: 60px;
+    width: 100%;
+    font-size: 20px;
+
+}
+
 .nav-left {
     float: left;
+    font-family: 'Megrim', cursive;
+    font-weight: bolder;
+    font-size: 22px;
+    color: #d05d76;
 }
+
 .nav-right {
     float: right;
-    padding-right: 30px;
+    padding-right: 20px;
+    font-size: 17px;
 }
-#nav-bar li {
+
+.nav-right a #nav-bar li {
     float: left;
-    padding: 0 10px;
+    padding: 15px 10px;
 }
+
 #nav-bar ul {
     list-style-type: none;
     overflow: hidden;
 }
+
 a {
     text-decoration: none;
-} 
-#nav-bar li a:hover {
-    background-color: crimson;
-    color: floralwhite;
 }
+
+#nav-bar li a:hover {
+    cursor: pointer;
+}
+
 /* Hero image style */
+
 .hero {
-    background: url(/images/hero.jpg);
+    background-image: url("/website-images/hero.jpg");
+    /*    background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg");*/
     background-size: cover;
-    height: 80vh;
+    height: 70vh;
     text-align: center;
     color: white;
 }
+
 header {
-    padding: 60px 0 20px 0;
+    padding: 100px 0 20px 0;
+    font-family: 'Megrim', cursive;
+    font-size: 60px;
+    font-weight: bolder;
 }
+
 .hero p {
-    text-align: center; 
-}
-.hero-button {
-    width: 250px;
-    height: 40px;
-    margin-top: 20px;
-    margin-bottom: 0;
+    text-align: center;
     font-size: 20px;
 }
+
+.hero h4 {
+    font-family: 'Monda', sans-serif;
+    font-size: 25px;
+    font-weight: 200;
+    padding-bottom: 30px;
+}
+
+.hero-signup-button {
+    width: 300px;
+    height: 40px;
+    margin: 20px 0 0 0;
+    font-size: 20px;
+    border: 2px solid white;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: 'Monda', sans-serif;
+}
+
 .hero-signup p {
     margin-top: 0;
+    font-size: 15px;
 }
+
+
+
 /* Feature style */
-.feature-container {
-    display: inline-flex;
-    flex-wrap: wrap;
-}
-.flex-direction {
-    flex-direction: row
-}
-.feature-description {
-    width: 50%;
-    height: 200px;
-}
-.feature-image {
-    width: 50%;
-    height: 200px;
-}
-.feature-description p,
-.feature-image img {
-    display: block;
+
+.feature-heading {
     text-align: center;
+    font-size: 30px;
     padding: 50px;
 }
+
 .features {
     max-width: 1000px;
-    
+    padding: 0px;
+    text-align: center;
+    margin: 0 auto;
 }
+
+.feature-container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    width: 30%;
+    height: auto;
+    padding: 10px;
+
+}
+
+.feature-description {
+    padding: 5px 16px;
+}
+
+.feature-description h4 {
+    padding: 10px 0;
+    color: #d05d76;
+}
+
+.feature-container img {
+    width: 200px;
+    height: 200px;
+}
+
+/* Sign Up section */
+
+.signup-section,
+.login-section {
+    width: 500px;
+    margin: 100px auto;
+    background: white;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.signup-section p,
+.login-section p {
+    text-align: center;
+
+}
+
+.signup-heading,
+.login-heading {
+    font-size: 30px;
+    color: #d05d76;
+    padding-bottom: 50px;
+}
+
+.signup-button,
+.login-button {
+    /*border: 2px solid #d05d76;*/
+    color: white;
+    display: block;
+    margin: 0 auto;
+    width: 250px;
+    padding: 8px;
+    font-family: 'Monda', sans-serif;
+    font-size: 17px;
+    background-color: #02558B;
+    background-color: #14A098;
+    background-color: rgba(126, 80, 148, 1.9);
+    background-color: #8C4B76;
+}
+
+input[type=text],
+input[type=password] {
+    width: 100%;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    padding: 10px 0 10px 10px;
+    margin: 5px 10px 20px 0;
+}
+
+fieldset {
+    border: none;
+}
+
+.singup-screen-login-button {
+    color: #d05d76;
+}
+
+/* Log In screen */
+
+.login-section {
+    width: 500px;
+    margin: 0 auto;
+    background: white;
+    border: 2px solid black;
+}
+
+/* User dashboard */
+
+.user-dashboard {
+    padding-top: 50px;
+    border: 2px solid black;
+    margin: 100px auto;
+}
+
+.newuser-msg {
+    text-align: center;
+    font-size: 20px;
+}
+
+.add-habit span {
+    padding: 5px;
+    font-size: 20px;
+}
+
+.add-habit {
+    margin: auto;
+    text-align: center;
+}
+
 /* Add habit button style */
-.add-btn {
-    background-image: url("/images/icons/plus-icon.svg");
-    height: 50px;
-    width: 50px;
+
+.add-habit-button {
+    /*background: url(website-images/icons/plus-icon.svg);*/
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
+    color: white;
+    font-size: 25px;
+    background-color: #d05d76;
 }
+
+/* habit list */
+
+.habit-container {
+    max-width: 90%;
+    padding: 0px;
+    margin: 10px auto;
+    border: 1px solid rgb(140, 75, 118);
+}
+
+.habit-name {
+    background-color: rgb(140, 75, 118);
+    font-size: 20px;
+    padding: 10px 0 5px 10px;
+}
+
+.habit-name i {
+    color: gold;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.habit-name h4 {
+    margin: 0;
+    color: white;
+}
+
+.habit-name p {
+    font-size: 15px;
+}
+
+.habit-notes {
+    width: 200px;
+    height: 120px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+
+}
+
+.habit-milestones {
+    width: 200px;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.habit-edit-bar {
+    width: 100%;
+    background-color: rgb(140, 75, 118);
+    overflow: auto;
+
+}
+
+.habit-edit-bar a {
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 20px;
+}
+
+.habit-edit-bar a:hover {
+    transform: scale(1.2);
+}
+
+.habit-notes-wrapper {
+    overflow: hidden;
+}
+
+.habit-notes {
+    float: left;
+}
+
+.handle {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.habit-milestones {
+    float: left;
+}
+
+.habit-edit-bar a span {
+    display: block;
+    font-size: 10px;
+
+}
+
 /* style for Weekday inputs */
+
+.habit-form {
+    width: 700px;
+    border: 2px solid black;
+    padding: 20px;
+    margin: 50px auto;
+    height: 360px;
+}
+
 .select-day input {
     display: none;
 }
+
 .select-day label {
-     display: inline-block;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border: 1px solid #ddd;
-  line-height: 50px;
-  cursor: pointer;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    line-height: 50px;
+    cursor: pointer;
 }
+
+.select-day,
+.select-daytime {
+    padding-bottom: 25px;
+}
+
+.select-day span,
+.select-daytime span {
+    display: block;
+    padding-bottom: 5px;
+}
+
 #monday:checked ~ label[for="monday"],
 #tuesday:checked ~ label[for="tuesday"],
 #wednesday:checked ~ label[for="wednesday"],
 #thursday:checked ~ label[for="thursday"],
 #friday:checked ~ label[for="friday"],
 #saturday:checked ~ label[for="saturday"],
-#sunday:checked ~ label[for="sunday"] 
-{
-  background: #999;
-  color: #fff;
+#sunday:checked ~ label[for="sunday"] {
+    background: #999;
+    color: #fff;
+}
+
+.select-daytime option {
+    background: grey;
 }
 
 
+.habit-edit-done,
+.habit-edit-cancel {
+    color: white;
+    float: left;
+    width: 50%;
+    padding: 5px;
+    font-family: 'Monda', sans-serif;
+    font-size: 17px;
+    background-color: #8C4B76;
+}
+
+/* Milestone style */
+
+.habit-milestones p {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.milestone-add-button {
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+}
+
+input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    overflow: hidden;
+}
+
+.habit-milestones p {
+    color: #d05d76;
+    padding: 5px;
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+
+}
+
+.milestone-list label {
+    display: block;
+    padding-left: 5px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+input[type=checked]:checked {
+    text-decoration: line-through;
+    color: #b3b3b3;
+}
+
+.footer-container {
+    background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg") no-repeat top;
+    height: auto;
+    padding: 20px;
+
+}
+
+footer p {
+    font-size: 15px;
+    color: #ecb2ab;
+}
+
+footer img {
+    height: 30px;
+    width: 30px;
+}
