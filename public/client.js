@@ -62,14 +62,63 @@ $(document).on('click', '#navbar-login-js', function (event) {
 $(document).on('click', '#signup-button-js', function (event) {
     event.preventDefault();
     //    alert("signup  clicked - signup form");
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('#footer-container').show();
-    $('#dashboard-js').show();
-    $('#habit-notes-js').hide();
-    $('#habit-milestones-js').hide();
-    //    $('#habit-container - js ').hide();
+
+
+    // get values from sign up form
+    const username = $('#signup-username').val();
+    const password = $('#signup-password').val();
+    const confirmPassword = $('#signup-confirm-password').val();
+
+    console.log(username, password, confirmPassword);
+
+    // validate user inputs
+    if (username == '')
+        alert('Must input username');
+    else if (password == '')
+        alert('Must input password');
+    else if (confirmPassword == '')
+        alert('Must re-enter password');
+    else if (password != confirmPassword)
+        alert('Passwords do not match');
+    // if valid
+    else {
+        //        alert("success");
+
+        //create the payload object (what data we send to the api call)
+        const newUserObject = {
+            username: username,
+            password: password
+        };
+        //console.log(newUserObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/users/create',
+                dataType: 'json',
+                data: JSON.stringify(newUserObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $('main').hide();
+                $('#nav-bar').show();
+                $('#nav-bar').addClass('nav-background');
+                $('#footer-container').show();
+                $('#dashboard-js').show();
+                $('#habit-notes-js').hide();
+                $('#habit-milestones-js').hide();
+                //    $('#habit-container - js ').hide();
+                //            populateUserDashboardDate(result.username);
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    }
 });
 
 //user dashboard - add habit button

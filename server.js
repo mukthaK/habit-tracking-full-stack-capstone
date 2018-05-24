@@ -130,33 +130,64 @@ app.post('/signin', function (req, res) {
 });
 
 
-// -------------ACHIEVEMENT ENDPOINTS------------------------------------------------
-// POST -----------------------------------------
-// creating a new achievement
-app.post('/new/create', (req, res) => {
-    let achieveWhat = req.body.achieveWhat;
-    achieveWhat = achieveWhat.trim();
-    let achieveHow = req.body.achieveHow;
-    let achieveWhy = req.body.achieveWhy;
-    let achieveWhen = req.body.achieveWhen;
-    let user = req.body.user;
+// ---------------USER ENDPOINTS-------------------------------------
+// creating a new user
+app.post('/users/create', (req, res) => {
 
-    Achievement.create({
-        user,
-        achieveWhat,
-        achieveHow,
-        achieveWhen,
-        achieveWhy
-    }, (err, item) => {
+    //take the  username and the password from the ajax api call
+    let username = req.body.username;
+    let password = req.body.password;
+
+    //exclude extra spaces from the username and password
+    username = username.trim();
+    password = password.trim();
+
+    //create an encryption key
+    bcrypt.genSalt(10, (err, salt) => {
+
+        //if creating the key returns an error...
         if (err) {
+
+            //display it
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Encryption key creation error'
             });
         }
-        if (item) {
-            console.log(`Achievement \`${achieveWhat}\` added.`);
-            return res.json(item);
-        }
+
+        //using the encryption key above generate an encrypted pasword
+        bcrypt.hash(password, salt, (err, hash) => {
+
+            //if creating the encrypted pasword returns an error..
+            if (err) {
+
+                //display it
+                return res.status(500).json({
+                    message: 'Encryption password error'
+                });
+            }
+
+            //using the mongoose DB schema, connect to the database and create the new user
+            User.create({
+                username,
+                password: hash,
+            }, (err, item) => {
+
+                //if creating a new user in the DB returns an error..
+                if (err) {
+                    //display it
+                    return res.status(500).json({
+                        message: 'New user creation Error'
+                    });
+                }
+                //if creating a new user in the DB is succefull
+                if (item) {
+
+                    //display the new user
+                    console.log(`User \`${username}\` created.`);
+                    return res.json(item);
+                }
+            });
+        });
     });
 });
 
