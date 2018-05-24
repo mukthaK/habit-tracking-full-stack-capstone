@@ -266,11 +266,13 @@ fieldset {
     border: 1px solid rgb(140, 75, 118);
 }
 
+/*
 .habit-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
+*/
 
 .habit-name {
     background-color: rgb(140, 75, 118);
@@ -383,6 +385,12 @@ fieldset {
 
 }
 
+.note-milestone-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
 /* style for Weekday inputs */
 
 .habit-form {
@@ -438,15 +446,16 @@ fieldset {
 }
 
 
-.habit-edit-done,
-.habit-edit-cancel {
+.habit-form-done,
+.habit-form-cancel {
     color: white;
     float: left;
-    width: 50%;
+    width: 40%;
     padding: 5px;
     font-family: 'Monda', sans-serif;
     font-size: 17px;
     background-color: #8C4B76;
+    margin: 0 10px;
 }
 
 /* Milestone style */
@@ -483,7 +492,7 @@ input[type=checkbox] {
 
 .notes-container,
 .milestone-container {
-    display: flex;
+/*    display: flex;*/
     margin: 10px;
 }
 
@@ -528,6 +537,12 @@ footer img {
     .hero h4 {
         font-size: 20px;
     }
+    .note-milestone-container {
+        justify-content: center;
+        flex-direction: column;
+
+    }
+
 }
 
 @media only screen and (max-width: 450px) {

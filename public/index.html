@@ -125,44 +125,45 @@
                     </p>
                 </div>
                 <div class="habit-edit-bar">
-                    <!--                    <a href="#"><i class="fas fa-check" id="checkin-habit-js"></i><span>Check-in</span></a>-->
                     <a href="#"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>
                     <a href="#"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>
                     <a href="#"><i class="far fa-calendar-check"></i><span>Check-in</span></a>
                 </div>
             </div>
-            <div class="notes-container">
-                <!--                <span><i class="far fa-sticky-note"></i>Notes</span>-->
-                <button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>
-                <div class="habit-notes" id="habit-notes-js">
-                    <div class="sticky-note-pre ui-widget-content">
-                        <div class="handle">&nbsp;
-                            <div class="close">&times;</div>
+            <div class="note-milestone-container">
+                <div class="notes-container">
+                    <!--                <span><i class="far fa-sticky-note"></i>Notes</span>-->
+                    <!--                <button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>-->
+                    <div class="habit-notes" id="habit-notes-js">
+                        <div class="sticky-note-pre ui-widget-content">
+                            <div class="handle">&nbsp;
+                                <div class="close">&times;</div>
+                            </div>
+                            <div contenteditable class="contents">Type here...</div>
                         </div>
-                        <div contenteditable class="contents">Type here...</div>
                     </div>
                 </div>
-            </div>
-            <div class="milestone-container">
-                <!--                <p><i class="fas fa-tasks"></i>Milestones</p>-->
-                <button type="submit" class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>
-                <div class="habit-milestones" id="habit-milestones-js">
+                <div class="milestone-container">
+                    <!--                <p><i class="fas fa-tasks"></i>Milestones</p>-->
+                    <!--                <button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>-->
+                    <div class="habit-milestones" id="habit-milestones-js">
 
-                    <div class="milestone-list">
-                        <p>Milestones</p>
-                        <label for="milestone">
+                        <div class="milestone-list">
+                            <p>Milestones</p>
+                            <label for="milestone">
                         <input type="checkbox" name="milestone-item" id="milestone" />
                         <span>item1</span></label>
 
-                        <label for="milestone">
+                            <label for="milestone">
                         <input type="checkbox" name="milestone-item" id="milestone" />
                         <span>item1</span></label>
 
-                        <label for="milestone">
+                            <label for="milestone">
                         <input type="checkbox" name="milestone-item" id="milestone" />
                         <span>item1</span></label>
 
-                        <button type="submit" class="milestone-add-button"><span>+</span></button>
+                            <button type="submit" class="milestone-add-button"><span>+</span></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,42 +209,11 @@
                     </select>
                 </div>
             </fieldset>
-            <button type="submit" class="habit-edit-done"> Done</button>
-            <button type="submit" class="habit-edit-cancel">Cancel</button>
+            <button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>
+            <button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>
         </form>
     </main>
 
-    <!-- Edit a habit
-    <main role="main" id="habit-screen">
-        <div class="habit-container">
-            <div class="habit-details">
-                <h4>Habit name</h4>
-                <h6>0 Check-ins</h6>
-            </div>
-            <div id="notes">
-
-                <div class="sticky-note-pre ui-widget-content">
-                    <div class="handle">&nbsp;<div class="close">&times;</div></div>
-                    <div contenteditable class="contents">Type here...</div>
-                </div>
-
-            </div>
-            <div id="milestones">
-
-            </div>
-            <div id="habit-edit-bar">
-                <a href="#"></a>
-                <a href="#"><i class="far fa-sticky-note"></i></a>
-                <a href="#"><i class="fas fa-tasks"></i></a>
-                <a href="#"><i class="fas fa-check"></i></a>
-                <a href="#"><i class="fas fa-pencil-alt"></i></a>
-
-                <a href="#"><i class="far fa-trash-alt"></i></a>
-                <a href="#"><i class="fas fa-times"></i></a>
-            </div>
-        </div>
-    </main>
--->
     <!-- Footer for the page -->
     <footer role="contentinfo" class="footer-container">
         <p>Source code</p>

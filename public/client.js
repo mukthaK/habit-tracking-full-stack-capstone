@@ -97,8 +97,8 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('#nav-bar').addClass('nav-background');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-                $('#habit-notes-js').hide();
-                $('#habit-milestones-js').hide();
+//                $('#habit-notes - js ').hide();
+//                $('#habit-milestones-js').hide();
                 //    $('#habit-container - js ').hide();
                 //            populateUserDashboardDate(result.username);
             })
@@ -119,7 +119,7 @@ $(document).on('click', '#add-habit-button-js', function (event) {
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
     $('#footer-container').show();
-    //    $('#dashboard - js ').show();
+    //    $('#dashboard - js').show();
     $('#habit-add-screen').show();
 });
 
@@ -199,7 +199,7 @@ $(document).on('click', '#login-button-js', function (event) {
 $(document).on('click', '#add-notes-button-js', function (event) {
     event.preventDefault();
     //    alert("edit habit notes button clicked");
-    //    $('main ').hide();
+    //    $('main').hide();
     //    $('#nav-bar').show();
     //    $('#nav-bar').addClass('nav-background');
     //    $('#footer-container').show();
@@ -211,7 +211,7 @@ $(document).on('click', '#add-notes-button-js', function (event) {
 $(document).on('click', '#add-milestones-button-js', function (event) {
     event.preventDefault();
     //    alert("edit habit milestones button clicked");
-    //    $('main ').hide();
+    //    $('main').hide();
     //    $('#nav-bar').show();
     //    $('#nav-bar').addClass('nav-background');
     //    $('#footer-container').show();
@@ -223,7 +223,7 @@ $(document).on('click', '#add-milestones-button-js', function (event) {
 $(document).on('click', '#edit-habit-js', function (event) {
     event.preventDefault();
     //    alert("habit edit icon clicked");
-    $('main ').hide();
+    $('main').hide();
     $('#habit-add-screen').show();
 });
 //habit container - delete habit
@@ -233,11 +233,19 @@ $('#delete-habit-js').on('click', function (event) {
     $('#habit-container-js').hide();
 });
 
+// habit edit form done button
+$(document).on('click', '#habit-form-done-js', function (event) {
+    event.preventDefault();
+    $('#habit-add-screen').hide();
+    $('#dashboard-js').show();
+});
 
-
-
-
-//habit edit form done and cancel button
-
+// habit edit form cancel button
+$(document).on('click', '#habit-form-cancel-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#habit-add-screen').hide();
+    $('#dashboard-js').show();
+});
 //add + at milestones
 //Cancel button at notes
