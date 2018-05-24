@@ -52,82 +52,6 @@ function closeServer() {
     }));
 }
 
-// ---------------USER ENDPOINTS-------------------------------------
-// POST -----------------------------------
-// creating a new user
-app.post('/users/create', (req, res) => {
-    let username = req.body.username;
-    username = username.trim();
-    let password = req.body.password;
-    password = password.trim();
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal server error'
-            });
-        }
-
-        bcrypt.hash(password, salt, (err, hash) => {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
-
-            User.create({
-                username,
-                password: hash,
-            }, (err, item) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Internal Server Error'
-                    });
-                }
-                if (item) {
-                    console.log(`User \`${username}\` created.`);
-                    return res.json(item);
-                }
-            });
-        });
-    });
-});
-
-// signing in a user
-app.post('/signin', function (req, res) {
-    const user = req.body.username;
-    const pw = req.body.password;
-    User
-        .findOne({
-            username: req.body.username
-        }, function (err, items) {
-            if (err) {
-                return res.status(500).json({
-                    message: "Internal server error"
-                });
-            }
-            if (!items) {
-                // bad username
-                return res.status(401).json({
-                    message: "Not found!"
-                });
-            } else {
-                items.validatePassword(req.body.password, function (err, isValid) {
-                    if (err) {
-                        console.log('There was an error validating the password.');
-                    }
-                    if (!isValid) {
-                        return res.status(401).json({
-                            message: "Not found"
-                        });
-                    } else {
-                        var logInTime = new Date();
-                        console.log("User logged in: " + req.body.username + ' at ' + logInTime);
-                        return res.json(items);
-                    }
-                });
-            };
-        });
-});
 
 
 // ---------------USER ENDPOINTS-------------------------------------
@@ -191,6 +115,67 @@ app.post('/users/create', (req, res) => {
     });
 });
 
+// ---------------USER ENDPOINTS-------------------------------------
+// Loging in a user
+app.post('/users/login', function (req, res) {
+
+    //take the username and the password from the ajax api call
+    const username = req.body.username;
+    const password = req.body.password;
+
+    //using the mongoose DB schema, connect to the database and the user with the same username as above
+    User.findOne({
+        username: username
+    }, function (err, items) {
+
+        //if the there is an error connecting to the DB
+        if (err) {
+
+            //display it
+            return res.status(500).json({
+                message: "Error connecting to the DB"
+            });
+        }
+        // if there are no users with that username
+        if (!items) {
+            //display it
+            return res.status(401).json({
+                message: "User Not found!"
+            });
+        }
+        //if the username is found
+        else {
+
+            //try to validate the password
+            items.validatePassword(password, function (err, isValid) {
+
+                //if the connection to the DB to validate the password is not working
+                if (err) {
+
+                    //display error
+                    console.log('Could not connect to the DB to validate the password.');
+                }
+
+                //if the password is not valid
+                if (!isValid) {
+
+                    //display error
+                    return res.status(401).json({
+                        message: "Password Invalid"
+                    });
+                }
+                //if the password is valid
+                else {
+                    //return the logged in user
+                    console.log(`User \`${username}\` logged in.`);
+                    return res.json(items);
+                }
+            });
+        };
+    });
+});
+
+// ---------------USER ENDPOINTS-------------------------------------
 // PUT --------------------------------------
 app.put('/achievement/:id', function (req, res) {
     let toUpdate = {};
@@ -212,6 +197,7 @@ app.put('/achievement/:id', function (req, res) {
         });
 });
 
+// ---------------USER ENDPOINTS-------------------------------------
 // GET ------------------------------------
 // accessing all of a user's achievements
 app.get('/achievements/:user', function (req, res) {

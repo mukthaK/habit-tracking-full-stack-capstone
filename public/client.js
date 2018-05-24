@@ -12,16 +12,6 @@ $(document).ready(function () {
         alert("habit checkin icon clicked");
     });
 
-
-
-
-
-    //habit edit form done and cancel button
-
-    //Add milestone item button
-
-    //Can button at notes
-
 });
 
 // Signup button on landing screen(hero)
@@ -84,14 +74,14 @@ $(document).on('click', '#signup-button-js', function (event) {
     else {
         //        alert("success");
 
-        //create the payload object (what data we send to the api call)
+        // create the payload object (what data we send to the api call)
         const newUserObject = {
             username: username,
             password: password
         };
-        //console.log(newUserObject);
+        // console.log(newUserObject);
 
-        //make the api call using the payload above
+        // make the api call using the payload above
         $.ajax({
                 type: 'POST',
                 url: '/users/create',
@@ -99,7 +89,7 @@ $(document).on('click', '#signup-button-js', function (event) {
                 data: JSON.stringify(newUserObject),
                 contentType: 'application/json'
             })
-            //if call is succefull
+            // if call is succefull
             .done(function (result) {
                 console.log(result);
                 $('main').hide();
@@ -112,7 +102,7 @@ $(document).on('click', '#signup-button-js', function (event) {
                 //    $('#habit-container - js ').hide();
                 //            populateUserDashboardDate(result.username);
             })
-            //if the call is failing
+            // if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
                 console.log(error);
@@ -121,7 +111,7 @@ $(document).on('click', '#signup-button-js', function (event) {
     }
 });
 
-//user dashboard - add habit button
+// user dashboard - add habit button
 $(document).on('click', '#add-habit-button-js', function (event) {
     event.preventDefault();
     //    alert("add habit button clicked");
@@ -133,7 +123,7 @@ $(document).on('click', '#add-habit-button-js', function (event) {
     $('#habit-add-screen').show();
 });
 
-//login button at signup form
+// login button at signup form
 $(document).on('click', '#singup-screen-login-button-js', function (event) {
     event.preventDefault();
     //    alert("login  clicked - signup form");
@@ -142,19 +132,68 @@ $(document).on('click', '#singup-screen-login-button-js', function (event) {
     $('#nav-bar').addClass('nav-background');
     $('#footer-container').show();
     $('#login-screen').show();
+
 });
 
-//Login button at Login form
+// Login button at Login form
 $(document).on('click', '#login-button-js', function (event) {
     event.preventDefault();
     //    alert("login  clicked - login form");
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('#footer-container').show();
-    $('#dashboard-js').show();
-    $('#habit-notes-js').hide();
-    $('#habit-milestones-js').hide();
+
+
+
+    // Get the inputs from the user in Log In form
+    const username = $("#login-username").val();
+    const password = $("#login-password").val();
+
+    // validate the input
+    if (username == "") {
+        alert('Please input user name');
+    } else if (password == "") {
+        alert('Please input password');
+    }
+    // if the input is valid
+    else {
+        // create the payload object (what data we send to the api call)
+        const loginUserObject = {
+            username: username,
+            password: password
+        };
+        console.log(loginUserObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/users/login',
+                dataType: 'json',
+                data: JSON.stringify(loginUserObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $('main').hide();
+                $('#nav-bar').show();
+                $('#nav-bar').addClass('nav-background');
+                $('#footer-container').show();
+                $('#dashboard-js').show();
+                $('#habit-notes-js').hide();
+                $('#habit-milestones-js').hide();
+
+                //            $('#loggedInName').text(result.name);
+                //            $('#loggedInUserName').val(result.username);
+                //            populateUserDashboardDate(result.username); //AJAX call in here??
+
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+                alert('Incorrect Username or Password');
+            });
+    };
+
 });
 //habit container - add notes
 $(document).on('click', '#add-notes-button-js', function (event) {
@@ -193,3 +232,12 @@ $('#delete-habit-js').on('click', function (event) {
     //    alert("habit delete icon clicked");
     $('#habit-container-js').hide();
 });
+
+
+
+
+
+//habit edit form done and cancel button
+
+//add + at milestones
+//Cancel button at notes
