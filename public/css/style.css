@@ -308,8 +308,11 @@ fieldset {
 }
 
 .habit-notes {
-    width: 200px;
-    height: 120px;
+    float: left;
+    width: 90%;
+    height: auto;
+    overflow: auto;
+    max-height: 300px;
     border: 1px solid black;
     border-radius: 5px;
     margin: 5px;
@@ -322,12 +325,14 @@ fieldset {
 }
 
 .habit-milestones {
-    width: 200px;
+    width: 90%;
     height: auto;
     border: 1px solid black;
     border-radius: 5px;
     margin: 5px;
+    float: right;
 }
+
 
 .habit-edit-bar {
     /*    width: auto;*/
@@ -375,9 +380,6 @@ fieldset {
     border-bottom: 1px solid #d9d9d9;
 }
 
-.habit-milestones {
-    float: left;
-}
 
 .habit-edit-bar a span {
     display: block;
@@ -386,9 +388,13 @@ fieldset {
 }
 
 .note-milestone-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
+    padding: 10px;
+    height: auto;
+    overflow: auto;
+}
+
+.milestone-container {
+    float: right;
 }
 
 /* style for Weekday inputs */
@@ -492,8 +498,10 @@ input[type=checkbox] {
 
 .notes-container,
 .milestone-container {
-/*    display: flex;*/
-    margin: 10px;
+    /*    display: flex;*/
+    margin: auto;
+    width: 50%;
+    display: inline-block;
 }
 
 .milestone-title {
@@ -537,10 +545,14 @@ footer img {
     .hero h4 {
         font-size: 20px;
     }
-    .note-milestone-container {
-        justify-content: center;
-        flex-direction: column;
-
+    .notes-container,
+    .milestone-container {
+        display: block;
+        width: 100%;
+    }
+    .habit-notes,
+    .habit-milestones {
+        float: left;
     }
 
 }

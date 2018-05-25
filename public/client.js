@@ -69,7 +69,7 @@ $(document).on('click', '#signup-button-js', function (event) {
         // create the payload object (what data we send to the api call)
         const newUserObject = {
             username: username,
-         password: password
+            password: password
         };
         // console.log(newUserObject);
 
@@ -120,21 +120,16 @@ $(document).on('click', '#add-habit-button-js', function (event) {
 // login button at signup form
 $(document).on('click', '#singup-screen-login-button-js', function (event) {
     event.preventDefault();
-    //    alert("login  clicked - signup form");
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
     $('#footer-container').show();
     $('#login-screen').show();
-
 });
 
 // Login button at Login form
 $(document).on('click', '#login-button-js', function (event) {
     event.preventDefault();
-    //    alert("login  clicked - login form");
-
-
 
     // Get the inputs from the user in Log In form
     const username = $("#login-username").val();
@@ -174,8 +169,8 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('#nav-bar').addClass('nav-background');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-                $('#habit-notes-js').hide();
-                $('#habit-milestones-js').hide();
+//                $('#habit-notes-js').hide();
+//                $('#habit-milestones-js').hide();
 
                 //            $('#loggedInName').text(result.name);
                 //            $('#loggedInUserName').val(result.username);
