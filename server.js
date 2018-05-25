@@ -1,5 +1,6 @@
 const User = require('./models/user');
-const Achievement = require('./models/achievement');
+const Entry = require('./models/achievement');
+const Habit = require('./models/habit');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const mongoose = require('mongoose');
@@ -175,17 +176,44 @@ app.post('/users/login', function (req, res) {
     });
 });
 
-// ---------------USER ENDPOINTS-------------------------------------
+// -------------entry ENDPOINTS------------------------------------------------
+// POST -----------------------------------------
+// creating a new Entry
+app.post('/habit/create', (req, res) => {
+    let habitName = req.body.habitName;
+    let weekday = req.body.weekday;
+    let time = req.body.time;
+    let loggedinUser = req.body.loggedinUser;
+
+    Habit.create({
+        habitName,
+        weekday,
+        time,
+        loggedinUser
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
 // PUT --------------------------------------
-app.put('/achievement/:id', function (req, res) {
+app.put('/entry/:id', function (req, res) {
     let toUpdate = {};
-    let updateableFields = ['achieveWhat', 'achieveHow', 'achieveWhen', 'achieveWhy'];
+    //    let updateableFields = ['achieveWhat', 'achieveHow', 'achieveWhen', 'achieveWhy']; //<--Marius? 'entryType
+    let updateableFields = ['entryType', 'inputDate', 'inputPlay', 'inputAuthor', 'inputRole', 'inputCo', 'inputLocation', 'inputNotes', 'loggedInUserName'];
     updateableFields.forEach(function (field) {
         if (field in req.body) {
             toUpdate[field] = req.body[field];
         }
     });
-    Achievement
+    //    console.log(toUpdate);
+    Entry
         .findByIdAndUpdate(req.params.id, {
             $set: toUpdate
         }).exec().then(function (achievement) {
@@ -197,22 +225,97 @@ app.put('/achievement/:id', function (req, res) {
         });
 });
 
-// ---------------USER ENDPOINTS-------------------------------------
 // GET ------------------------------------
-// accessing all of a user's achievements
-app.get('/achievements/:user', function (req, res) {
-    Achievement
+// accessing all of a user's entries
+app.get('/entry-date/:user', function (req, res) {
+
+    Entry
         .find()
-        .sort('achieveWhen')
-        .then(function (achievements) {
-            let achievementOutput = [];
-            achievements.map(function (achievement) {
-                if (achievement.user == req.params.user) {
-                    achievementOutput.push(achievement);
+        .sort('inputDate')
+        .then(function (entries) {
+            let entriesOutput = [];
+            entries.map(function (entry) {
+                if (entry.loggedInUserName == req.params.user) {
+                    entriesOutput.push(entry);
                 }
             });
             res.json({
-                achievementOutput
+                entriesOutput
+            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+});
+app.get('/entry-read/:user', function (req, res) {
+
+    Entry
+        .find({
+            "entryType": "read"
+        })
+        .sort('inputDate')
+        .then(function (entries) {
+            let entriesOutput = [];
+            entries.map(function (entry) {
+                if (entry.loggedInUserName == req.params.user) {
+                    entriesOutput.push(entry);
+                }
+            });
+            res.json({
+                entriesOutput
+            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+});
+app.get('/entry-seen/:user', function (req, res) {
+
+    Entry
+        .find({
+            "entryType": "seen"
+        })
+        .sort('inputDate')
+        .then(function (entries) {
+            let entriesOutput = [];
+            entries.map(function (entry) {
+                if (entry.loggedInUserName == req.params.user) {
+                    entriesOutput.push(entry);
+                }
+            });
+            res.json({
+                entriesOutput
+            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error'
+            });
+        });
+});
+app.get('/entry-performed/:user', function (req, res) {
+
+    Entry
+        .find({
+            "entryType": "performed"
+        })
+        .sort('inputDate')
+        .then(function (entries) {
+            let entriesOutput = [];
+            entries.map(function (entry) {
+                if (entry.loggedInUserName == req.params.user) {
+                    entriesOutput.push(entry);
+                }
+            });
+            res.json({
+                entriesOutput
             });
         })
         .catch(function (err) {
@@ -224,12 +327,12 @@ app.get('/achievements/:user', function (req, res) {
 });
 
 // accessing a single achievement by id
-app.get('/achievement/:id', function (req, res) {
-    Achievement
-        .findById(req.params.id).exec().then(function (achievement) {
-            return res.json(achievement);
+app.get('/entry/:id', function (req, res) {
+    Entry
+        .findById(req.params.id).exec().then(function (entry) {
+            return res.json(entry);
         })
-        .catch(function (achievements) {
+        .catch(function (entries) {
             console.error(err);
             res.status(500).json({
                 message: 'Internal Server Error'
@@ -239,8 +342,8 @@ app.get('/achievement/:id', function (req, res) {
 
 // DELETE ----------------------------------------
 // deleting an achievement by id
-app.delete('/achievement/:id', function (req, res) {
-    Achievement.findByIdAndRemove(req.params.id).exec().then(function (achievement) {
+app.delete('/entry/:id', function (req, res) {
+    Entry.findByIdAndRemove(req.params.id).exec().then(function (entry) {
         return res.status(204).end();
     }).catch(function (err) {
         return res.status(500).json({
@@ -248,7 +351,6 @@ app.delete('/achievement/:id', function (req, res) {
         });
     });
 });
-
 
 // MISC ------------------------------------------
 // catch-all endpoint if client makes request to non-existent endpoint

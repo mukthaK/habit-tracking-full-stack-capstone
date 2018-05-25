@@ -16,31 +16,26 @@ $(document).ready(function () {
 
 // Signup button on landing screen(hero)
 $(document).on('click', '#hero-signup-button-js', function (event) {
-    //    alert("signup button clicked");
     event.preventDefault();
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
     $('#signup-screen').show();
     $('#footer-container').show();
-
 });
 //login button on landing screen(hero)
 $(document).on('click', '#hero-login-button-js', function (event) {
     event.preventDefault();
-    //    alert("login button clicked");
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
     $('#footer-container').show();
     $('#login-screen').show();
-
 });
 
 //Login button at Nav bar
 $(document).on('click', '#navbar-login-js', function (event) {
     event.preventDefault();
-    //    alert("login  clicked - navbar");
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
@@ -51,8 +46,6 @@ $(document).on('click', '#navbar-login-js', function (event) {
 //Signup button at signup form
 $(document).on('click', '#signup-button-js', function (event) {
     event.preventDefault();
-    //    alert("signup  clicked - signup form");
-
 
     // get values from sign up form
     const username = $('#signup-username').val();
@@ -73,11 +66,10 @@ $(document).on('click', '#signup-button-js', function (event) {
     // if valid
     else {
         //        alert("success");
-
         // create the payload object (what data we send to the api call)
         const newUserObject = {
             username: username,
-            password: password
+         password: password
         };
         // console.log(newUserObject);
 
@@ -92,13 +84,15 @@ $(document).on('click', '#signup-button-js', function (event) {
             // if call is succefull
             .done(function (result) {
                 console.log(result);
+                $('#loggedin-user').val(result.username);
+                $('#nav-bar span').text("Hello " + result.username);
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-//                $('#habit-notes - js ').hide();
-//                $('#habit-milestones-js').hide();
+                //                $('#habit-notes - js ').hide();
+                //                $('#habit-milestones-js').hide();
                 //    $('#habit-container - js ').hide();
                 //            populateUserDashboardDate(result.username);
             })
@@ -172,6 +166,9 @@ $(document).on('click', '#login-button-js', function (event) {
             //if call is succefull
             .done(function (result) {
                 console.log(result);
+                $('#loggedin-user').val(result.username);
+                $('#nav-bar span').text("Hello " + result.username);
+
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
@@ -236,8 +233,57 @@ $('#delete-habit-js').on('click', function (event) {
 // habit edit form done button
 $(document).on('click', '#habit-form-done-js', function (event) {
     event.preventDefault();
-    $('#habit-add-screen').hide();
-    $('#dashboard-js').show();
+
+
+    // Get the inputs from the user in Log In form
+    const habitName = $("#habit-name").val();
+    const weekday = $("input[type='radio']:checked").val();
+    const time = $('#habit-time').val();
+
+    const loggedinUser = $('#loggedin-user').val();
+    //    console.log(habitName, weekday, time);
+
+    // validate the input
+    if (habitName == "") {
+        alert('Please input habit name');
+    } else if (weekday == "") {
+        alert('Please select the weekday');
+    } else if (time == '') {
+        alert('Please select the time');
+    }
+    // if the input is valid
+    else {
+        // create the payload object (what data we send to the api call)
+        const newHabitObject = {
+            habitName: habitName,
+            weekday: weekday,
+            time: time,
+            loggedinUser: loggedinUser
+        };
+        console.log(newHabitObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'POST',
+                url: '/habit/create',
+                dataType: 'json',
+                data: JSON.stringify(newHabitObject),
+                contentType: 'application/json'
+            })
+            //if call is succefull
+            .done(function (result) {
+                console.log(result);
+                $('#habit-add-screen').hide();
+                $('#dashboard-js').show();
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+                alert('Incorrect Username or Password');
+            });
+    };
 });
 
 // habit edit form cancel button

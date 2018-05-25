@@ -25,7 +25,7 @@
                 <li>Habit Tracker</li>
             </div>
             <div class="nav-right">
-                <li>Hello username</li>
+                <li><span></span><input type="hidden" value="" id="loggedin-user"></li>
                 <li><a href="#" id="navbar-login-js">Log In</a></li>
             </div>
         </ul>
@@ -178,30 +178,30 @@
                 <input type="text" id="habit-name" placeholder="Name for a Habit" value="">
                 <div class="select-day">
                     <span>I want to repeat this</span>
-                    <input type="radio" name="day" id="monday" checked>
+                    <input type="radio" name="day" id="monday" value="monday" checked>
                     <label for="monday">Mon</label>
 
-                    <input type="radio" name="day" id="tuesday">
+                    <input type="radio" name="day" id="tuesday" value="tuesday">
                     <label for="tuesday">Tue</label>
 
-                    <input type="radio" name="day" id="wednesday">
+                    <input type="radio" name="day" id="wednesday" value="wednesday">
                     <label for="wednesday">Wed</label>
 
-                    <input type="radio" name="day" id="thursday">
+                    <input type="radio" name="day" id="thursday" value="thursday">
                     <label for="thursday">Thu</label>
 
-                    <input type="radio" name="day" id="friday">
+                    <input type="radio" name="day" id="friday" value="friday">
                     <label for="friday">Fri</label>
 
-                    <input type="radio" name="day" id="saturday">
+                    <input type="radio" name="day" id="saturday" value="saturday">
                     <label for="saturday">Sat</label>
 
-                    <input type="radio" name="day" id="sunday">
+                    <input type="radio" name="day" id="sunday" value="sunday">
                     <label for="sunday">Sun</label>
                 </div>
                 <div class="select-daytime">
                     <span>I will do it</span>
-                    <select name="daytime">
+                    <select name="daytime" id="habit-time">
                         <option value="anytime">At any time of the day</option>
                         <option value="morning">In the morning</option>
                         <option value="afternoon">In the afternoon</option>
