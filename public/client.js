@@ -169,8 +169,8 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('#nav-bar').addClass('nav-background');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-//                $('#habit-notes-js').hide();
-//                $('#habit-milestones-js').hide();
+                //                $('#habit-notes-js').hide();
+                //                $('#habit-milestones-js').hide();
 
                 //            $('#loggedInName').text(result.name);
                 //            $('#loggedInUserName').val(result.username);
@@ -289,4 +289,15 @@ $(document).on('click', '#habit-form-cancel-js', function (event) {
     $('#dashboard-js').show();
 });
 //add + at milestones
-//Cancel button at notes
+
+//Save button for Notes
+$(document).on('click', '#notes-save-js', function (event) {
+    event.preventDefault();
+    alert("save clicked");
+});
+
+// Delete button on Notes
+$(document).on('click', '#notes-delete-js', function (event) {
+    event.preventDefault();
+    alert("delete clicked");
+});

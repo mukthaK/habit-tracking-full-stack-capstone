@@ -312,6 +312,7 @@ fieldset {
     width: 90%;
     height: auto;
     overflow: auto;
+    min-height: 150px;
     max-height: 300px;
     border: 1px solid black;
     border-radius: 5px;
@@ -331,6 +332,8 @@ fieldset {
     border-radius: 5px;
     margin: 5px;
     float: right;
+    min-height: 150px;
+    max-height: 300px;
 }
 
 
@@ -366,9 +369,11 @@ fieldset {
     font-size: 20px;
 }
 
+/*
 .habit-notes-wrapper {
     overflow: hidden;
 }
+*/
 
 /*
 .habit-notes {
@@ -376,8 +381,20 @@ fieldset {
 }
 */
 
-.handle {
+.notes-handle span {
+    color: #d05d76;
+}
+
+.notes-delete,
+.notes-save {
+    float: right;
+    padding: 5px;
+
+}
+
+.notes-handle {
     border-bottom: 1px solid #d9d9d9;
+    padding: 5px;
 }
 
 
