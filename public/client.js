@@ -276,7 +276,7 @@ $(document).on('click', '#habit-form-done-js', function (event) {
                 console.log(jqXHR);
                 console.log(error);
                 console.log(errorThrown);
-                alert('Incorrect Username or Password');
+                alert('Incorrect New habit object');
             });
     };
 });
@@ -293,11 +293,134 @@ $(document).on('click', '#habit-form-cancel-js', function (event) {
 //Save button for Notes
 $(document).on('click', '#notes-save-js', function (event) {
     event.preventDefault();
-    alert("save clicked");
+    //    alert("save clicked");
+
+    // Get the value from the notes container
+    const notesContent = $('.notes-content-js').html()
+    console.log(notesContent);
+
+    // No validation - Because notes can be personal and can be anything ??
+
+    // Get the user name
+    const loggedinUser = $('#loggedin-user').val();
+    console.log(loggedinUser);
+
+    // Get the habit name associated with the notes
+    const habitName = $('#habit-container-js h4').html();
+    console.log(habitName);
+
+    // create the payload object (what data we send to the api call)
+    const notesObject = {
+        notesContent: notesContent,
+        loggedinUser: loggedinUser,
+        habitName: habitName
+    };
+    console.log(notesObject);
+
+    //make the api call using the payload above
+    $.ajax({
+            type: 'POST',
+            url: '/notes/save',
+            dataType: 'json',
+            data: JSON.stringify(notesObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            //                $('#habit-add-screen').hide();
+            $('#dashboard-js').show();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect Notes');
+        });
 });
 
 // Delete button on Notes
 $(document).on('click', '#notes-delete-js', function (event) {
     event.preventDefault();
-    alert("delete clicked");
+    //    alert("delete clicked");
+    $('#habit-notes-js').hide();
+    $('.notes-container').html(renderNotesAddButton);
 });
+
+// Adding an item in Milestones list
+$(document).on('click', '#milestone-item-add-js', function (event) {
+    event.preventDefault();
+    //    alert("delete clicked");
+    const htmlMilestoneItem = `<label for="milestone">
+        <input type="checkbox" name="milestone-item" id="milestone" value="item1"/>
+        <span>item1</span></label>`;
+    $('.milestone-list').append(htmlMilestoneItem);
+});
+
+// Delete button on Milestones
+$(document).on('click', '#milestones-delete-js', function (event) {
+    event.preventDefault();
+    //    alert("delete clicked");
+    $('#habit-milestones-js').hide();
+});
+
+//Save button for Milestones
+$(document).on('click', '#milestones-save-js', function (event) {
+    event.preventDefault();
+    //    alert("save clicked");
+
+    // Get the value from the milestones container
+    const milestonesContent = $('#milestone').val();
+    console.log("milestonesContent" + milestonesContent);
+    console.log("milestonesContent length" + milestonesContent.length);
+
+
+
+    // Get the user name
+    const loggedinUser = $('#loggedin-user').val();
+    console.log(loggedinUser);
+
+    //validation
+
+
+    // Get the habit name associated with the milestones
+    const habitName = $('#habit-container-js h4').html();
+    console.log(habitName);
+
+    // create the payload object (what data we send to the api call)
+    const milestonesObject = {
+        milestonesContent: milestonesContent,
+        loggedinUser: loggedinUser,
+        habitName: habitName
+    };
+    console.log(milestonesObject);
+
+    //make the api call using the payload above
+    $.ajax({
+            type: 'POST',
+            url: '/milestones/save',
+            dataType: 'json',
+            data: JSON.stringify(milestonesObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+
+            $('#dashboard-js').show();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect milestone');
+        });
+});
+
+function renderNotesAddButton() {
+    const notesAddButtonHtml = `<span><i class="far fa-sticky-note"></i>Notes</span>
+    <button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>`;
+
+}

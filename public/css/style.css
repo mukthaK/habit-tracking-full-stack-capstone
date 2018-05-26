@@ -334,6 +334,7 @@ fieldset {
     float: right;
     min-height: 150px;
     max-height: 300px;
+    overflow: auto;
 }
 
 
@@ -386,13 +387,15 @@ fieldset {
 }
 
 .notes-delete,
-.notes-save {
+.notes-save,
+.milestones-delete,
+.milestones-save {
     float: right;
     padding: 5px;
-
 }
 
-.notes-handle {
+.notes-handle,
+.milestones-handle {
     border-bottom: 1px solid #d9d9d9;
     padding: 5px;
 }
@@ -483,13 +486,14 @@ fieldset {
 
 /* Milestone style */
 
-.habit-milestones p {
-    border-bottom: 1px solid #e6e6e6;
+.milestone-title {
+    /*    border-bottom: 1px solid #e6e6e6;*/
     color: #d05d76;
-    padding: 5px;
+    /*    padding:5px;*/
 }
 
 .milestone-add-button {
+    border-bottom: 1px solid #e6e6e6;
     width: 100%;
     text-align: left;
     padding-left: 15px;

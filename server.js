@@ -1,6 +1,8 @@
 const User = require('./models/user');
 const Entry = require('./models/achievement');
 const Habit = require('./models/habit');
+const Notes = require('./models/notes');
+const Milestones = require('./models/milestones');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const mongoose = require('mongoose');
@@ -189,6 +191,52 @@ app.post('/habit/create', (req, res) => {
         habitName,
         weekday,
         time,
+        loggedinUser
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
+// POST-----------------------------------------------
+// Saving entry for Notes
+app.post('/notes/save', (req, res) => {
+    let notesContent = req.body.notesContent;
+    let habitName = req.body.habitName;
+    let loggedinUser = req.body.loggedinUser;
+
+    Notes.create({
+        notesContent,
+        habitName,
+        loggedinUser
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
+// POST-----------------------------------------------
+// Saving entry for Milestones
+app.post('/milestones/save', (req, res) => {
+    let milestonesContent = req.body.milestonesContent;
+    let habitName = req.body.habitName;
+    let loggedinUser = req.body.loggedinUser;
+
+    Milestones.create({
+        milestonesContent,
+        habitName,
         loggedinUser
     }, (err, item) => {
         if (err) {
