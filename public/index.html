@@ -138,7 +138,7 @@
                         <!-- <div class="sticky-note-pre ui-widget-content">-->
                         <div class="notes-handle">
                             <span>Notes & Journal</span>
-                            <button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>
+                            <!--                            <button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>-->
                             <button type="submit" class="notes-save" id="notes-save-js"><i class="far fa-save"></i></button>
                         </div>
                         <div contenteditable class="notes-content-js">Type here...</div>
@@ -151,27 +151,15 @@
                     <div class="habit-milestones" id="habit-milestones-js">
 
                         <div class="milestone-list">
-                            <div class="milestones-handle">
-                                <span class="milestone-title">Milestones</span>
-                                <button type="submit" class="milestones-delete" id="milestones-delete-js"><i class="far fa-trash-alt"></i></button>
-                                <button type="submit" class="milestones-save" id="milestones-save-js"><i class="far fa-save"></i></button>
+                            <div class="milestones-header">
+                                <label for="milestoneInput" class="milestone-title">Milestones</label>
+                                <input type="text" id="milestoneInput" placeholder="Enter title..." required>
+                                <button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>
                             </div>
-                            <!--
-<label for="milestone">
-                        <input type="checkbox" name="milestone-item" id="milestone" />
-                        <span>item1</span></label>
-
-<label for="milestone">
-                        <input type="checkbox" name="milestone-item" id="milestone" />
-                        <span>item1</span></label>
-
-<label for="milestone">
-                        <input type="checkbox" name="milestone-item" id="milestone" />
-                        <span>item1</span></label>
--->
-
-                            <button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>
+                            <ul id="milestonesItems">
+                            </ul>
                         </div>
+
                     </div>
                 </div>
             </div>

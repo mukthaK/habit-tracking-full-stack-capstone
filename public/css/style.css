@@ -1,7 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
 html,
 body {
     font-family: 'Monda', sans-serif;
@@ -15,6 +11,8 @@ button {
 button:hover {
     cursor: pointer;
 }
+
+/* nav bar style */
 
 #nav-bar {
     height: 60px;
@@ -104,9 +102,7 @@ header {
     font-size: 15px;
 }
 
-
-
-/* Feature style */
+/* Feature section style */
 
 .feature-heading {
     text-align: center;
@@ -216,9 +212,12 @@ fieldset {
 }
 */
 
+/* Sign Up section style */
+
 .singup-screen-login-button {
     color: #d05d76;
 }
+
 
 /* User dashboard */
 
@@ -266,37 +265,12 @@ fieldset {
     border: 1px solid rgb(140, 75, 118);
 }
 
-/*
-.habit-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-*/
-
 .habit-name {
     background-color: rgb(140, 75, 118);
     font-size: 20px;
     padding: 10px 0 5px 10px;
     display: flex;
 }
-
-.habit-title,
-.habit-edit-bar {
-    width: 100%;
-}
-
-.habit-name i {
-    color: gold;
-    font-size: 20px;
-    padding: 5px;
-}
-
-.habit-edit-bar i {
-    color: white;
-}
-
-.habit-edit-bar i: hover {}
 
 .habit-name h4 {
     margin: 0;
@@ -307,41 +281,30 @@ fieldset {
     font-size: 15px;
 }
 
-.habit-notes {
-    float: left;
-    width: 90%;
-    height: auto;
-    overflow: auto;
-    min-height: 150px;
-    max-height: 300px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 5px;
+.habit-name i {
+    color: gold;
+    font-size: 20px;
+    padding: 5px;
 }
 
-.add-notes-button span,
-.add-milestones-button span {
-    display: block;
-    padding: 10px;
+.habit-title,
+.habit-edit-bar {
+    width: 100%;
 }
 
-.habit-milestones {
-    width: 90%;
-    height: auto;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 5px;
-    float: right;
-    min-height: 150px;
-    max-height: 300px;
-    overflow: auto;
+.habit-edit-bar i {
+    color: white;
 }
-
 
 .habit-edit-bar {
     /*    width: auto;*/
     background-color: rgb(140, 75, 118);
     overflow: auto;
+}
+
+.habit-edit-bar a span {
+    display: block;
+    font-size: 10px;
 
 }
 
@@ -360,6 +323,32 @@ fieldset {
     color: #14A098;
 }
 
+/* notes style */
+
+.habit-notes {
+    float: left;
+    width: 90%;
+    height: auto;
+    overflow: auto;
+    min-height: 150px;
+    max-height: 300px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.notes-handle span {
+    color: #d05d76;
+}
+
+/* Notes and milestones style */
+
+.add-notes-button span,
+.add-milestones-button span {
+    display: block;
+    padding: 10px;
+}
+
 .add-notes-button:hover,
 .add-milestones-button:hover {
     color: #14A098;
@@ -368,22 +357,6 @@ fieldset {
 .add-notes-button i,
 .add-milestones-button i {
     font-size: 20px;
-}
-
-/*
-.habit-notes-wrapper {
-    overflow: hidden;
-}
-*/
-
-/*
-.habit-notes {
-    float: left;
-}
-*/
-
-.notes-handle span {
-    color: #d05d76;
 }
 
 .notes-delete,
@@ -400,16 +373,32 @@ fieldset {
     padding: 5px;
 }
 
-
-.habit-edit-bar a span {
-    display: block;
-    font-size: 10px;
-
-}
-
 .note-milestone-container {
     padding: 10px;
     height: auto;
+    overflow: auto;
+}
+
+.notes-container,
+.milestone-container {
+
+    /*    display: flex;*/
+    margin: auto;
+    width: 50%;
+    display: inline-block;
+}
+
+/* Milestones style */
+
+.habit-milestones {
+    width: 90%;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    float: right;
+    min-height: 150px;
+    max-height: 300px;
     overflow: auto;
 }
 
@@ -417,7 +406,74 @@ fieldset {
     float: right;
 }
 
-/* style for Weekday inputs */
+#milestonesItems li {
+    cursor: pointer;
+    position: relative;
+    padding: 0 10px;
+    list-style-type: none;
+    transition: 0.2s;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#milestoneInput {
+    width: 80%;
+    margin-left: 5px;
+}
+
+#milestonesItems li:hover {
+    background: #eee;
+}
+
+#milestone-item.checked {
+    color: #888;
+    text-decoration: line-through;
+}
+
+#milestonesItems label {
+    padding-left: 5px;
+}
+
+.delete-milestone-item {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 16px 5px 16px;
+}
+
+/*
+
+#milestonesItems li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #888;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 5px;
+    left: 13px;
+    transform: rotate(45deg);
+    height: 12px;
+    width: 5px;
+}
+*/
+
+/*
+.habit-notes-wrapper {
+    overflow: hidden;
+}
+*/
+
+/*
+.habit-notes {
+    float: left;
+}
+*/
+
+/* style for Weekday inputs  Habit Add Form */
 
 .habit-form {
     /*
@@ -471,7 +527,6 @@ fieldset {
     background: grey;
 }
 
-
 .habit-form-done,
 .habit-form-cancel {
     color: white;
@@ -484,56 +539,10 @@ fieldset {
     margin: 0 10px;
 }
 
-/* Milestone style */
-
-.milestone-title {
-    /*    border-bottom: 1px solid #e6e6e6;*/
-    color: #d05d76;
-    /*    padding:5px;*/
-}
-
-.milestone-add-button {
-    border-bottom: 1px solid #e6e6e6;
-    width: 100%;
-    text-align: left;
-    padding-left: 15px;
-}
-
-input[type=checkbox] {
-    width: 15px;
-    height: 15px;
-    overflow: hidden;
-}
-
-input[type=checkbox] {
-    cursor: pointer;
-
-}
-
-.milestone-list label {
-    display: block;
-    padding-left: 5px;
-    border-bottom: 1px solid #f2f2f2;
-}
 
 
-.notes-container,
-.milestone-container {
-    /*    display: flex;*/
-    margin: auto;
-    width: 50%;
-    display: inline-block;
-}
 
-.milestone-title {
-    width: 100%;
-
-}
-
-input[type=checked]:checked {
-    text-decoration: line-through;
-    color: #b3b3b3;
-}
+/* Footer style */
 
 .footer-container {
     background-image: url("/website-images/hero.jpg");
@@ -551,6 +560,8 @@ footer img {
     height: 30px;
     width: 30px;
 }
+
+/* Responsive media queries */
 
 @media only screen and (max-width: 675px) {
     .feature-container {

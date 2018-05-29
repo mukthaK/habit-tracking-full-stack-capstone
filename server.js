@@ -178,7 +178,7 @@ app.post('/users/login', function (req, res) {
     });
 });
 
-// -------------entry ENDPOINTS------------------------------------------------
+
 // POST -----------------------------------------
 // creating a new Entry
 app.post('/habit/create', (req, res) => {
@@ -199,7 +199,24 @@ app.post('/habit/create', (req, res) => {
             });
         }
         if (item) {
+            Notes.create({
+                notesContent: 'Type here...',
+                habitName,
+                loggedinUser
+            }, (err, item) => {
+                if (err) {
+                    ////                    return res.status(500).json({
+                    //                        message: 'Internal Server Error'
+                    //                    });
+                    console.log('Creating Notes while creating Habit Error');
+                }
+                if (item) {
+                    //                    return res.json(item);
+                    console.log(res.json(item));
+                }
+            });
             return res.json(item);
+
         }
     });
 });
@@ -228,14 +245,15 @@ app.post('/notes/save', (req, res) => {
 });
 
 // POST-----------------------------------------------
-// Saving entry for Milestones
-app.post('/milestones/save', (req, res) => {
+// Adding entry for Milestones
+app.post('/milestones/add', (req, res) => {
     let milestonesContent = req.body.milestonesContent;
     let habitName = req.body.habitName;
     let loggedinUser = req.body.loggedinUser;
 
     Milestones.create({
         milestonesContent,
+        checked: false,
         habitName,
         loggedinUser
     }, (err, item) => {
@@ -251,6 +269,7 @@ app.post('/milestones/save', (req, res) => {
 });
 
 // PUT --------------------------------------
+// Update milestone item for checked value
 app.put('/entry/:id', function (req, res) {
     let toUpdate = {};
     //    let updateableFields = ['achieveWhat', 'achieveHow', 'achieveWhen', 'achieveWhy']; //<--Marius? 'entryType
@@ -273,22 +292,49 @@ app.put('/entry/:id', function (req, res) {
         });
 });
 
+
+// PUT --------------------------------------
+// Update Notes
+app.put('/entry/:id', function (req, res) {
+    let toUpdate = {};
+
+    let updateableFields = ['notesContent'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+    //    console.log(toUpdate);
+    Entry
+        .findByIdAndUpdate(req.params.id, {
+            $set: toUpdate
+        }).exec().then(function (achievement) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+});
+
 // GET ------------------------------------
 // accessing all of a user's entries
-app.get('/entry-date/:user', function (req, res) {
-
-    Entry
+app.get('/get-habit/:loggedinUser', function (req, res) {
+    // Get all the habits from the database
+    Habit
         .find()
-        .sort('inputDate')
-        .then(function (entries) {
-            let entriesOutput = [];
-            entries.map(function (entry) {
-                if (entry.loggedInUserName == req.params.user) {
-                    entriesOutput.push(entry);
+        .then(function (habits) {
+            // Creates habitOutput array
+            let habitsOutput = [];
+            habits.map(function (habit) {
+                // if there is a habit matching existing user...
+                if (habit.loggedinUser == req.params.loggedinUser) {
+                    // ... added to the habit output array
+                    habitsOutput.push(habit);
                 }
             });
             res.json({
-                entriesOutput
+                habitsOutput
             });
         })
         .catch(function (err) {
