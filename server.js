@@ -208,11 +208,11 @@ app.post('/habit/create', (req, res) => {
                     ////                    return res.status(500).json({
                     //                        message: 'Internal Server Error'
                     //                    });
-                    console.log('Creating Notes while creating Habit Error');
+                    console.log('Error Creating Notes while creating Habit');
                 }
                 if (item) {
                     //                    return res.json(item);
-                    console.log(res.json(item));
+                    console.log(item);
                 }
             });
             return res.json(item);
@@ -253,6 +253,7 @@ app.post('/milestones/add', (req, res) => {
 
     Milestones.create({
         milestonesContent,
+        // Set the default checked value as false
         checked: false,
         habitName,
         loggedinUser

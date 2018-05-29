@@ -91,6 +91,7 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('#nav-bar').addClass('nav-background');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
+            populateHabitsByUsername(result.username);
                 //                $('#habit-notes - js ').hide();
                 //                $('#habit-milestones-js').hide();
                 //    $('#habit-container - js ').hide();
@@ -163,6 +164,8 @@ $(document).on('click', '#login-button-js', function (event) {
                 console.log(result);
                 $('#loggedin-user').val(result.username);
                 $('#nav-bar span').text("Hello " + result.username);
+
+            populateHabitsByUsername(result.username);
 
                 $('main').hide();
                 $('#nav-bar').show();
@@ -277,10 +280,11 @@ $(document).on('click', '#habit-form-done-js', function (event) {
             //if call is successfull
             .done(function (result) {
                 console.log(result);
-                populateHabitsByUsername(result.loggedinUser);
-
                 $('#habit-add-screen').hide();
                 $('#dashboard-js').show();
+                populateHabitsByUsername(result.loggedinUser);
+                //console.log("After calling function populate habits by username");
+
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -298,7 +302,7 @@ function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, 
     if ((loggedinUser == "") || (loggedinUser == undefined) || (loggedinUser == null)) {
         loggedinUser = $('#loggedin-user').val();
     }
-    // console.log(loggedinUser);
+    //console.log(loggedinUser);
     //make the api call using the payload above
     $.ajax({
             type: 'GET',
@@ -309,15 +313,7 @@ function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, 
         //if call is successfull
         .done(function (result) {
             console.log(result);
-            //            if(result.entriesOutput.length === 0) {
-            //                $('#no-entry').show();
-            //            } else {
-            //                $('#no-entry').hide();
-            //            }
-            //empty the user-list container before populating it dynamically
-            //            $('#user-list').html("");
-            //            htmlUserDashboard(result);
-
+            displayHabits(result.habitsOutput);
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -327,6 +323,72 @@ function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, 
         });
 }
 
+// To display habits on user dashboard
+function displayHabits(result) {
+    //create an empty variable to store each habits of a user
+    let buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+
+        buildTheHtmlOutput += '<div class="habit-container" id="habit-container-js">';
+        buildTheHtmlOutput += '<div class="habit-name">';
+        buildTheHtmlOutput += '<div class="habit-title">';
+        buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
+        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>0 Check-ins</p>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="habit-edit-bar">';
+        buildTheHtmlOutput += '<a onclick=deleteHabit("' + resultValue._id + '")><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
+        buildTheHtmlOutput += '<a onclick=editHabit("' + resultValue._id + '")><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>';
+        buildTheHtmlOutput += '<a onclick=checkinHabit("' + resultValue._id + '")><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="note-milestone-container">';
+
+        //notes wrapper start
+        buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
+        //buildTheHtmlOutput += '<span><i class="far fa-sticky-note"></i>Notes</span>';
+        //buildTheHtmlOutput += '<button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>';
+
+        //notes container start
+        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
+        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
+        buildTheHtmlOutput += '<div class="notes-handle">';
+        buildTheHtmlOutput += '<span>Notes & Journal</span>';
+        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
+        buildTheHtmlOutput += '<button type="submit" class="notes-save" id="notes-save-js"><i class="far fa-save"></i></button>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...</div>';
+        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        //notes container stop
+
+        //milestone container start
+        buildTheHtmlOutput += '<div class="milestone-container">';
+        //        buildTheHtmlOutput += '<p><i class="fas fa-tasks"></i>Milestones</p>';
+        //        buildTheHtmlOutput += '<button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>';
+        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
+        buildTheHtmlOutput += '<div class="milestone-list">';
+        buildTheHtmlOutput += '<div class="milestones-header">';
+        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
+        buildTheHtmlOutput += '<input type="text" id="milestoneInput" placeholder="Enter title..." required>';
+        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<ul id="milestonesItems">';
+        buildTheHtmlOutput += '</ul>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        //milestone container stop
+
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+    });
+
+    //use the HTML output to show it in the index.html
+    $(".habit-container-wrapper").html(buildTheHtmlOutput);
+
+}
 // habit edit form cancel button
 $(document).on('click', '#habit-form-cancel-js', function (event) {
     event.preventDefault();
@@ -361,7 +423,7 @@ $(document).on('click', '#notes-save-js', function (event) {
         loggedinUser: loggedinUser,
         habitName: habitName
     };
-    console.log(notesObject);
+    console.log("notes object initialized" + notesObject);
 
     //make the api call using the payload above
     $.ajax({
@@ -373,7 +435,7 @@ $(document).on('click', '#notes-save-js', function (event) {
         })
         //if call is succefull
         .done(function (result) {
-            console.log(result);
+            console.log("notes object within done function" + result);
             //                $('#habit-add-screen').hide();
             $('#dashboard-js').show();
         })
@@ -411,15 +473,13 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
     const milestonesContent = $('#milestoneInput').val();
     console.log(milestonesContent);
 
+    // HTML element for Milestone list item with data populated with user input
     const htmlMilestoneItem = `<li>
         <input type="checkbox" id="milestone-item">
         <label for="milestone-item">${milestonesContent}</label>
         <button class="delete-milestone-item"><i class="fas fa-times"></i></button>
         </li>`;
     $('#milestonesItems').append(htmlMilestoneItem);
-
-    // Set the default checked value as false
-    //    const checked = "false";
 
     // Get the user name
     const loggedinUser = $('#loggedin-user').val();
