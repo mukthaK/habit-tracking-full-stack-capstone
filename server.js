@@ -16,6 +16,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
+// Enables debug - we can see what queries are being sent to mongodb
+//mongoose.set('debug', true);
 
 mongoose.Promise = global.Promise;
 
@@ -345,89 +347,41 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
             });
         });
 });
-app.get('/entry-read/:user', function (req, res) {
 
-    Entry
-        .find({
-            "entryType": "read"
+// accessing a note content by habit id
+app.get('/get-notes/:habitId', function (req, res) {
+    //    console.log("habit id server " + req.params.habitId);
+    Notes
+        .findById(req.params.habitId)
+        .then(function (note) {
+            console.log("note " + note);
+            return res.json(note);
         })
-        .sort('inputDate')
-        .then(function (entries) {
-            let entriesOutput = [];
-            entries.map(function (entry) {
-                if (entry.loggedInUserName == req.params.user) {
-                    entriesOutput.push(entry);
-                }
-            });
-            res.json({
-                entriesOutput
-            });
-        })
+        //            if (req.params.habitId == note._id) {
+        //                return res.json(note.notesContent);
+        //            }
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-app.get('/entry-seen/:user', function (req, res) {
-
-    Entry
-        .find({
-            "entryType": "seen"
-        })
-        .sort('inputDate')
-        .then(function (entries) {
-            let entriesOutput = [];
-            entries.map(function (entry) {
-                if (entry.loggedInUserName == req.params.user) {
-                    entriesOutput.push(entry);
-                }
-            });
-            res.json({
-                entriesOutput
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
-            });
-        });
-});
-app.get('/entry-performed/:user', function (req, res) {
-
-    Entry
-        .find({
-            "entryType": "performed"
-        })
-        .sort('inputDate')
-        .then(function (entries) {
-            let entriesOutput = [];
-            entries.map(function (entry) {
-                if (entry.loggedInUserName == req.params.user) {
-                    entriesOutput.push(entry);
-                }
-            });
-            res.json({
-                entriesOutput
-            });
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal server error'
+                message: 'Internal Server Error'
             });
         });
 });
 
-// accessing a single achievement by id
-app.get('/entry/:id', function (req, res) {
-    Entry
-        .findById(req.params.id).exec().then(function (entry) {
-            return res.json(entry);
+// accessing a milestone items by habit id
+app.get('/get-milestones/:habitId', function (req, res) {
+
+    Milestones
+//        .findById(req.params.habitId)
+    .find()
+        .then(function (milestone) {
+            console.log("milestone " + milestone);
+            return res.json(milestone);
         })
-        .catch(function (entries) {
+        //            if (req.params.habitId == note._id) {
+        //                return res.json(note.notesContent);
+        //            }
+        .catch(function (err) {
             console.error(err);
             res.status(500).json({
                 message: 'Internal Server Error'
