@@ -322,12 +322,13 @@ function displayHabits(result) {
         buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>0 Check-ins</p>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="habit-edit-bar">';
-        buildTheHtmlOutput += '<a onclick=deleteHabit(\'' + resultValue._id + '\')><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
+        buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
         buildTheHtmlOutput += '<a onclick="editHabit(\'' + resultValue._id + '\');"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>';
-        buildTheHtmlOutput += '<a onclick=checkinHabit(\'' + resultValue._id + '\')><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
+        buildTheHtmlOutput += '<a onclick="checkinHabit(\'' + resultValue._id + '\')"><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="note-milestone-container">';
+        buildTheHtmlOutput += '<input type="hidden" class="noteMilestoneContainerID" value="' + resultValue._id + '">';
 
         //notes wrapper start
         buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
@@ -335,44 +336,53 @@ function displayHabits(result) {
         //buildTheHtmlOutput += '<button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>';
 
         //notes container start
-        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
-        buildTheHtmlOutput += '<div class="notes-handle">';
-        buildTheHtmlOutput += '<span>Notes & Journal</span>';
-        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
-        buildTheHtmlOutput += '<button type="submit" class="notes-save" id="notes-save-js"><i class="far fa-save"></i></button>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...';
+        //        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
+        //        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
+        //        buildTheHtmlOutput += '<div class="notes-handle">';
+        //        buildTheHtmlOutput += '<span>Notes & Journal</span>';
+        //        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
+        //        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...';
+        //
+        //
+        //        buildTheHtmlOutput += '</div>';
+        //
+        //        buildTheHtmlOutput += '</div>';
+        //notes container stop
+
         // Get the notes content and display
         populateNotesByHabitId(resultValue._id);
 
-        buildTheHtmlOutput += '</div>';
-
-        buildTheHtmlOutput += '</div>';
-        //notes container stop
         //        buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</div>';
         //notes wrapper stop
 
-        //milestone container start
+        //milestone wrapper start
         buildTheHtmlOutput += '<div class="milestone-container ' + resultValue._id + '">';
         //        buildTheHtmlOutput += '<p><i class="fas fa-tasks"></i>Milestones</p>';
         //        buildTheHtmlOutput += '<button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>';
-        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
-        buildTheHtmlOutput += '<div class="milestone-list">';
-        buildTheHtmlOutput += '<div class="milestones-header">';
-        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
-        buildTheHtmlOutput += '<input type="text" id="milestoneInput" placeholder="Enter title..." required>';
-        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+
+        //        //milestone container start
+        //        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
+        //        buildTheHtmlOutput += '<div class="milestone-list">';
+        //        buildTheHtmlOutput += '<div class="milestones-header">';
+        //        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
+        //        buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
+        //        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '<ul id="milestonesItems">';
+        //
+        //        buildTheHtmlOutput += '</ul>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '</div>';
+        //        //milestone container stop
+
         buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<ul id="milestonesItems">';
+        //milestone wrapper stop
+
         // Get the milestone items and display here
         populateMilestoneItemsByHabitId(resultValue._id);
-        buildTheHtmlOutput += '</ul>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</div>';
-        //milestone container stop
 
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</div>';
@@ -395,8 +405,8 @@ function populateNotesByHabitId(habitId) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log("get notes result done function" + result);
-            //        displayNotes(result.habitsOutput);
+            //console.log("get notes result done function", result);
+            displayNotes(result, habitId);
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -404,6 +414,29 @@ function populateNotesByHabitId(habitId) {
             console.log(error);
             console.log(errorThrown);
         });
+}
+
+function displayNotes(result, habitId) {
+    let buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+        //notes container start
+        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
+        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
+        buildTheHtmlOutput += '<div class="notes-handle">';
+        buildTheHtmlOutput += '<span>Notes & Journal</span>';
+        buildTheHtmlOutput += '<input type="hidden" class="save-note-id" value="' + resultValue._id + '">';
+        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
+        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">' + resultValue.notesContent;
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        //notes container stop
+    });
+
+    //use the HTML output to show it in the index.html
+    $(".notes-container." + habitId).html(buildTheHtmlOutput);
 }
 
 // Edit habit option - is it possible to pass object so that
@@ -439,7 +472,7 @@ function populateMilestoneItemsByHabitId(habitId) {
         //if call is successfull
         .done(function (result) {
             console.log("get milestones result done function" + result);
-            //        displayNotes(result.habitsOutput);
+            displayMilestones(result, habitId);
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -447,6 +480,41 @@ function populateMilestoneItemsByHabitId(habitId) {
             console.log(error);
             console.log(errorThrown);
         });
+}
+
+function displayMilestones(result, habitId) {
+    let buildTheHtmlOutput = "";
+
+    //milestone container start
+    buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
+    buildTheHtmlOutput += '<div class="milestone-list">';
+    buildTheHtmlOutput += '<div class="milestones-header">';
+    buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
+    buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
+    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+    buildTheHtmlOutput += '</div>';
+    buildTheHtmlOutput += '<ul id="milestonesItems">';
+
+    $.each(result, function (resultKey, resultValue) {
+
+        buildTheHtmlOutput += '<li>';
+        buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
+        buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
+        buildTheHtmlOutput += '<label for="milestone-item">';
+        buildTheHtmlOutput += resultValue.milestonesContent;
+        buildTheHtmlOutput += '</label>';
+        buildTheHtmlOutput += '<button class="delete-milestone-item"><i class="fas fa-times"></i></button>';
+        buildTheHtmlOutput += '</li>';
+
+    });
+
+    buildTheHtmlOutput += '</ul>';
+    buildTheHtmlOutput += '</div>';
+    buildTheHtmlOutput += '</div>';
+    //milestone container stop
+
+    //use the HTML output to show it in the index.html
+    $(".milestone-container." + habitId).html(buildTheHtmlOutput);
 }
 
 // habit edit form cancel button
@@ -460,35 +528,29 @@ $(document).on('click', '#habit-form-cancel-js', function (event) {
 //add + at milestones
 
 //Save button for Notes  ?? Notes save or Add ??
-$(document).on('click', '#notes-save-js', function (event) {
+$(document).on('click', '.notesSaveJs', function (event) {
     event.preventDefault();
     //    alert("save clicked");
 
     // Get the value from the notes container
-    const notesContent = $('.notes-content-js').html()
-    console.log(notesContent);
-
-    // No validation - Because notes can be personal and can be anything ??
-
-    // Get the user name
-    const loggedinUser = $('#loggedin-user').val();
-    console.log(loggedinUser);
-
-    // Get the habit name associated with the notes
-    const habitName = $('#habit-container-js h4').html();
-    console.log(habitName);
+    const notesContent = $(this).parent().parent().find('.notes-content-js').html();
+    const habitID = $(this).parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
+    if (notesContent == "") {
+        notesContent = "Type here.........";
+    }
+    const notesID = $(this).parent().find('.save-note-id').val();
 
     // create the payload object (what data we send to the api call)
     const notesObject = {
-        notesContent: notesContent,
-        loggedinUser: loggedinUser,
-        habitName: habitName
+        notesContent,
+        notesID,
+        habitID
     };
-    console.log("notes object initialized" + notesObject);
+    console.log("notes object initialized", notesObject);
 
     //make the api call using the payload above
     $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: '/notes/save',
             dataType: 'json',
             data: JSON.stringify(notesObject),
@@ -496,8 +558,8 @@ $(document).on('click', '#notes-save-js', function (event) {
         })
         //if call is succefull
         .done(function (result) {
-            console.log("notes object within done function" + result);
             //                $('#habit-add-screen').hide();
+            populateNotesByHabitId(habitID);
             $('#dashboard-js').show();
         })
         //if the call is failing
@@ -531,13 +593,13 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
     event.preventDefault();
 
     // Get the value from the milestone item input
-    const milestonesContent = $('#milestoneInput').val();
+    const milestonesContent = $('.milestoneInput').val();
     console.log(milestonesContent);
 
     // validate
     if (milestonesContent == "") {
         alert("Must input milestone title");
-        $('#milestoneInput ').focus();
+        $('.milestoneInput ').focus();
     } else {
         // HTML element for Milestone list item with data populated with user input
         const htmlMilestoneItem = `<li>

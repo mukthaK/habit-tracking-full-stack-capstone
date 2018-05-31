@@ -420,7 +420,7 @@ fieldset {
     user-select: none;
 }
 
-#milestoneInput {
+.milestoneInput {
     width: 80%;
     margin-left: 5px;
 }
@@ -429,7 +429,7 @@ fieldset {
     background: #eee;
 }
 
-#milestone-item.checked {
+.milestone-item.checked {
     color: #888;
     text-decoration: line-through;
 }

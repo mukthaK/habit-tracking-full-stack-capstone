@@ -6,16 +6,20 @@ const mongoose = require('mongoose');
 const habitSchema = new mongoose.Schema({
     habitName: {
         type: String,
-        required: false},
+        required: false
+    },
     weekday: {
         type: String,
-        required: false},
+        required: false
+    },
     time: {
         type: String,
-        required: false},
+        required: false
+    },
     loggedinUser: {
         type: String,
-        required: false}
+        required: false
+    }
 });
 
 const Habit = mongoose.model('Habit', habitSchema);

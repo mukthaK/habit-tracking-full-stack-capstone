@@ -201,9 +201,11 @@ app.post('/habit/create', (req, res) => {
             });
         }
         if (item) {
+            console.log("itemID for the habit generation", item._id)
             Notes.create({
                 notesContent: 'Type here...',
                 habitName,
+                habitID: item._id,
                 loggedinUser
             }, (err, item) => {
                 if (err) {
@@ -225,25 +227,29 @@ app.post('/habit/create', (req, res) => {
 
 // POST-----------------------------------------------
 // Saving entry for Notes
-app.post('/notes/save', (req, res) => {
+app.put('/notes/save', (req, res) => {
     let notesContent = req.body.notesContent;
-    let habitName = req.body.habitName;
-    let loggedinUser = req.body.loggedinUser;
+    let notesID = req.body.notesID;
 
-    Notes.create({
-        notesContent,
-        habitName,
-        loggedinUser
-    }, (err, item) => {
-        if (err) {
+    let toUpdate = {};
+    let updateableFields = ['notesContent'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+
+
+    Notes
+        .findByIdAndUpdate(notesID, {
+            $set: toUpdate
+        }).exec().then(function (note) {
+            return res.status(204).end();
+        }).catch(function (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
-        }
-        if (item) {
-            return res.json(item);
-        }
-    });
+        });
 });
 
 // POST-----------------------------------------------
@@ -352,9 +358,11 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
 app.get('/get-notes/:habitId', function (req, res) {
     //    console.log("habit id server " + req.params.habitId);
     Notes
-        .findById(req.params.habitId)
+        .find({
+            "habitID": req.params.habitId
+        })
         .then(function (note) {
-            console.log("note " + note);
+            console.log("note ", note);
             return res.json(note);
         })
         //            if (req.params.habitId == note._id) {
@@ -372,8 +380,8 @@ app.get('/get-notes/:habitId', function (req, res) {
 app.get('/get-milestones/:habitId', function (req, res) {
 
     Milestones
-//        .findById(req.params.habitId)
-    .find()
+        //        .findById(req.params.habitId)
+        .find()
         .then(function (milestone) {
             console.log("milestone " + milestone);
             return res.json(milestone);

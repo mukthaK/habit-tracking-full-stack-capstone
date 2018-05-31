@@ -12,6 +12,10 @@ const notesSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    habitID: {
+        type: String,
+        required: false
+    },
     loggedinUser: {
         type: String,
         required: false
