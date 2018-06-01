@@ -471,7 +471,7 @@ function populateMilestoneItemsByHabitId(habitId) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log("get milestones result done function" + result);
+            console.log("get milestones result done function", result);
             displayMilestones(result, habitId);
         })
         //if the call is failing
@@ -533,12 +533,13 @@ $(document).on('click', '.notesSaveJs', function (event) {
     //    alert("save clicked");
 
     // Get the value from the notes container
-    const notesContent = $(this).parent().parent().find('.notes-content-js').html();
-    const habitID = $(this).parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
+    let notesContent = $(this).parent().parent().find('.notes-content-js').html();
+    let habitID = $(this).parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
+
     if (notesContent == "") {
-        notesContent = "Type here.........";
+        notesContent = "Type here...";
     }
-    const notesID = $(this).parent().find('.save-note-id').val();
+    let notesID = $(this).parent().find('.save-note-id').val();
 
     // create the payload object (what data we send to the api call)
     const notesObject = {
@@ -593,8 +594,18 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
     event.preventDefault();
 
     // Get the value from the milestone item input
-    const milestonesContent = $('.milestoneInput').val();
-    console.log(milestonesContent);
+    const milestonesContent = $(this).parent().find('.milestoneInput').val();
+
+    // Get the user name
+    const loggedinUser = $('#loggedin-user').val();
+
+    // Get the habit name associated with the milestones
+    const habitName = $('#habit-container-js h4').html();
+
+    // Get the Habit ID
+    const habitID = $(this).parent().parent().parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
+
+    console.log("milestonesContent-", milestonesContent, "habitName-", habitName, "loggedinUser-", loggedinUser, "habitID-", habitID);
 
     // validate
     if (milestonesContent == "") {
@@ -602,26 +613,20 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
         $('.milestoneInput ').focus();
     } else {
         // HTML element for Milestone list item with data populated with user input
-        const htmlMilestoneItem = `<li>
-        <input type="checkbox" id="milestone-item">
-        <label for="milestone-item">${milestonesContent}</label>
-        <button class="delete-milestone-item"><i class="fas fa-times"></i></button>
-        </li>`;
-        $('#milestonesItems').append(htmlMilestoneItem);
+        //        const htmlMilestoneItem = `<li>
+        //        <input type="checkbox" id="milestone-item">
+        //        <label for="milestone-item">${milestonesContent}</label>
+        //        <button class="delete-milestone-item"><i class="fas fa-times"></i></button>
+        //        </li>`;
+        //        $('#milestonesItems').append(htmlMilestoneItem);
 
-        // Get the user name
-        const loggedinUser = $('#loggedin-user').val();
-        console.log(loggedinUser);
-
-        // Get the habit name associated with the milestones
-        const habitName = $('#habit-container-js h4').html();
-        console.log(habitName);
 
         // create the payload object (what data we send to the api call)
         const milestonesObject = {
             milestonesContent: milestonesContent,
             loggedinUser: loggedinUser,
-            habitName: habitName
+            habitName: habitName,
+            habitID
         };
         console.log(milestonesObject);
 
@@ -636,7 +641,9 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
             //if call is succefull
             .done(function (result) {
                 console.log(result);
+            populateMilestoneItemsByHabitId(habitID);
                 $('#dashboard-js').show();
+
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {

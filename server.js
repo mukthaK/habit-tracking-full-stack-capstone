@@ -258,12 +258,14 @@ app.post('/milestones/add', (req, res) => {
     let milestonesContent = req.body.milestonesContent;
     let habitName = req.body.habitName;
     let loggedinUser = req.body.loggedinUser;
+    let habitID = req.body.habitID;
 
     Milestones.create({
         milestonesContent,
         // Set the default checked value as false
         checked: false,
         habitName,
+        habitID,
         loggedinUser
     }, (err, item) => {
         if (err) {
@@ -381,9 +383,11 @@ app.get('/get-milestones/:habitId', function (req, res) {
 
     Milestones
         //        .findById(req.params.habitId)
-        .find()
+        .find({
+            "habitID": req.params.habitId
+        })
         .then(function (milestone) {
-            console.log("milestone " + milestone);
+            console.log("milestone ", milestone);
             return res.json(milestone);
         })
         //            if (req.params.habitId == note._id) {
