@@ -312,7 +312,7 @@ function displayHabits(result) {
         buildTheHtmlOutput += '<div class="habit-name">';
         buildTheHtmlOutput += '<div class="habit-title">';
         buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
-        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>0 Check-ins</p>';
+        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>' + resultValue.checkin + ' Check-ins</p>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="habit-edit-bar">';
         buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\',\'' + resultValue.loggedinUser + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
@@ -468,9 +468,34 @@ function deleteHabit(habitID, username) {
 // Checkin habit by habit ID
 function checkinHabit(habitId) {
     console.log(habitId);
-    // Add checkin value to Schema
+
     // Increment the value in DB for every checkin
-    // Display checkin value on user dashboard
+
+    // Create a payload to update the checked value in DB
+    const habitObject = {
+        habitId
+    };
+    console.log("habit to update", habitObject);
+    //make the api call using the payload above
+    $.ajax({
+            type: 'PUT',
+            url: '/habit/checkin',
+            dataType: 'json',
+            data: JSON.stringify(habitObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            populateHabitsByUsername();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect habit checkin updation');
+        });
 }
 
 // Make a GET call to get the milestone items for the habit
@@ -512,7 +537,12 @@ function displayMilestones(result, habitId) {
     $.each(result, function (resultKey, resultValue) {
 
         buildTheHtmlOutput += '<li>';
-        buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
+        console.log(resultValue.checked);
+        if (resultValue.checked == 'true') {
+            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item" checked>';
+        } else {
+            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
+        }
         buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
         buildTheHtmlOutput += '<label for="milestone-item">';
         buildTheHtmlOutput += resultValue.milestonesContent;
@@ -729,7 +759,7 @@ $(document).on('change', '.milestone-item', function (event) {
         milestoneID,
         checked
     };
-    console.log("milestone to update", milestoneObject)
+    console.log("milestone to update", milestoneObject);
     //make the api call using the payload above
     $.ajax({
             type: 'PUT',

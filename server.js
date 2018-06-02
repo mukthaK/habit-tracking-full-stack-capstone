@@ -192,7 +192,8 @@ app.post('/habit/create', (req, res) => {
         habitName,
         weekday,
         time,
-        loggedinUser
+        loggedinUser,
+        checkin: 0
     }, (err, item) => {
         if (err) {
             return res.status(500).json({
@@ -357,8 +358,8 @@ app.put('/notes/save', (req, res) => {
 // PUT --------------------------------------
 // Update milestone item for checked value
 app.put('/milestone/check', function (req, res) {
-    let milestoneID = req.params.milestoneID;
-    let checkedValue = req.params.checked;
+    let milestoneID = req.body.milestoneID;
+    let checkedValue = req.body.checked;
 
     console.log(milestoneID, checkedValue);
 
@@ -383,7 +384,41 @@ app.put('/milestone/check', function (req, res) {
         });
 });
 
+// PUT --------------------------------------
+// Update habit checkin value
+app.put('/habit/checkin', function (req, res) {
+    let habitId = req.body.habitId;
 
+    console.log(habitId);
+
+    Habit
+        .update({
+            _id: habitId
+        }, {
+            $inc: {
+                "checkin": 1
+            }
+        }).exec().then(function (milestone) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+
+    //    Habit
+    //        .findByIdAndUpdate(milestoneID, {
+    //        $set: toUpdate
+    //    }).exec().then(function (milestone) {
+    //        return res.status(204).end();
+    //    }).catch(function (err) {
+    //        return res.status(500).json({
+    //            message: 'Internal Server Error'
+    //        });
+    //    });
+
+
+});
 // DELETE ----------------------------------------
 // deleting a milestone item by id
 app.delete('/milestone/:milestoneID', function (req, res) {

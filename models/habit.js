@@ -19,6 +19,10 @@ const habitSchema = new mongoose.Schema({
     loggedinUser: {
         type: String,
         required: false
+    },
+    checkin: {
+        type: Number,
+        required: false
     }
 });
 
