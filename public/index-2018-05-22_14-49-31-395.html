@@ -25,9 +25,8 @@
                 <li>Habit Tracker</li>
             </div>
             <div class="nav-right">
-                <li><span></span><input type="hidden" value="" id="loggedin-user"></li>
+                <li>Hello username</li>
                 <li><a href="#" id="navbar-login-js">Log In</a></li>
-                <li><a href="#" id="navbar-logout-js">Log Out</a></li>
             </div>
         </ul>
     </nav>
@@ -77,11 +76,11 @@
                 <fieldset>
                     <p class="signup-heading">Sign Up</p>
                     <label for="signup-username">Username</label>
-                    <input type="text" id="signup-username" placeholder="Username" value="Username">
+                    <input type="text" id="signup-username" placeholder="Username" value="">
                     <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" placeholder="Password" value="Password">
+                    <input type="password" id="signup-password" placeholder="Password" value="">
                     <label for="signup-confirm-password">Confirm password</label>
-                    <input type="password" id="signup-confirm-password" placeholder="Re-enter password" value="Password">
+                    <input type="password" id="signup-confirm-password" placeholder="Re-enter password" value="">
                     <button role="button" name="login" type="submit" class="signup-button" id="signup-button-js">Sign Up</button>
                     <p>Have an account?<button role="button" name="login" type="submit" class="singup-screen-login-button" id="singup-screen-login-button-js">Log In</button></p>
                 </fieldset>
@@ -97,9 +96,9 @@
                 <fieldset>
                     <p class="login-heading">Log In</p>
                     <label for="login-username">Username</label>
-                    <input type="text" id="login-username" placeholder="Username" value="Username">
+                    <input type="text" id="login-username" placeholder="Username" value="">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Password" value="Password">
+                    <input type="password" id="login-password" placeholder="Password" value="">
                     <button role="button" name="login" type="submit" class="login-button" id="login-button-js">Log In</button>
                 </fieldset>
             </form>
@@ -118,49 +117,55 @@
             <button class="add-habit-button" id="add-habit-button-js">+</button>
             <span>Add a new habit</span>
         </div>
-        <div class="habit-container-wrapper">
-            <!--
-<div class="habit-container" id="habit-container-js">
-    <div class="habit-name">
-        <div class="habit-title">
-            <h4>Habit name</h4>
-            <p><i class="fas fa-trophy"></i>0 Check-ins
-            </p>
-        </div>
-        <div class="habit-edit-bar">
-            <a href="#"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>
-            <a href="#"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>
-            <a href="#"><i class="far fa-calendar-check"></i><span>Check-in</span></a>
-        </div>
-    </div>
-    <div class="note-milestone-container">
-        <div class="notes-container">
-            <div class="habit-notes" id="habit-notes-js">
-                <div class="notes-handle">
-                    <span>Notes & Journal</span>
-                    <button type="submit" class="notes-save" id="notes-save-js"><i class="far fa-save"></i></button>
+        <div class="habit-container" id="habit-container-js">
+            <div class="habit-name">
+                <div class="habit-title">
+                    <h4>Habit name</h4>
+                    <p><i class="fas fa-trophy"></i>0 Check-ins
+                    </p>
                 </div>
-                <div contenteditable class="notes-content-js">Type here...</div>
+                <div class="habit-edit-bar">
+                    <!--                    <a href="#"><i class="fas fa-check" id="checkin-habit-js"></i><span>Check-in</span></a>-->
+                    <a href="#"><i class="far fa-trash-alt" id="delete-habit-js"></i></a>
+                    <a href="#"><i class="fas fa-pencil-alt" id="edit-habit-js"></i></a>
+                    <a href="#"><i class="far fa-calendar-check"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="milestone-container">
-            <div class="habit-milestones" id="habit-milestones-js">
-
-                <div class="milestone-list">
-                    <div class="milestones-header">
-                        <label for="milestoneInput" class="milestone-title">Milestones</label>
-                        <input type="text" id="milestoneInput" placeholder="Enter title..." required>
-                        <button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>
+            <div class="notes-container">
+                <span><i class="far fa-sticky-note"></i>Notes</span>
+                <button type="submit" class="add-notes-button"><i class="fas fa-plus-circle"></i></button>
+                <div class="habit-notes">
+                    <div class="sticky-note-pre ui-widget-content">
+                        <div class="handle">&nbsp;
+                            <div class="close">&times;</div>
+                        </div>
+                        <div contenteditable class="contents">Type here...</div>
                     </div>
-                    <ul id="milestonesItems">
-                    </ul>
                 </div>
-
             </div>
-        </div>
-    </div>
-</div>
--->
+            <div class="milestone-container">
+                <p><i class="fas fa-tasks"></i>Milestones</p>
+                <button type="submit" class="add-milestones-button"><i class="fas fa-plus-circle"></i></button>
+                <div class="habit-milestones">
+
+                    <div class="milestone-list">
+                        <p>Milestones</p>
+                        <label for="milestone">
+                        <input type="checkbox" name="milestone-item" id="milestone" />
+                        <span>item1</span></label>
+
+                        <label for="milestone">
+                        <input type="checkbox" name="milestone-item" id="milestone" />
+                        <span>item1</span></label>
+
+                        <label for="milestone">
+                        <input type="checkbox" name="milestone-item" id="milestone" />
+                        <span>item1</span></label>
+
+                        <button type="submit" class="milestone-add-button"><span>+</span></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -172,30 +177,30 @@
                 <input type="text" id="habit-name" placeholder="Name for a Habit" value="">
                 <div class="select-day">
                     <span>I want to repeat this</span>
-                    <input type="radio" name="day" id="monday" value="monday" checked>
+                    <input type="radio" name="day" id="monday" checked>
                     <label for="monday">Mon</label>
 
-                    <input type="radio" name="day" id="tuesday" value="tuesday">
+                    <input type="radio" name="day" id="tuesday">
                     <label for="tuesday">Tue</label>
 
-                    <input type="radio" name="day" id="wednesday" value="wednesday">
+                    <input type="radio" name="day" id="wednesday">
                     <label for="wednesday">Wed</label>
 
-                    <input type="radio" name="day" id="thursday" value="thursday">
+                    <input type="radio" name="day" id="thursday">
                     <label for="thursday">Thu</label>
 
-                    <input type="radio" name="day" id="friday" value="friday">
+                    <input type="radio" name="day" id="friday">
                     <label for="friday">Fri</label>
 
-                    <input type="radio" name="day" id="saturday" value="saturday">
+                    <input type="radio" name="day" id="saturday">
                     <label for="saturday">Sat</label>
 
-                    <input type="radio" name="day" id="sunday" value="sunday">
+                    <input type="radio" name="day" id="sunday">
                     <label for="sunday">Sun</label>
                 </div>
                 <div class="select-daytime">
                     <span>I will do it</span>
-                    <select name="daytime" id="habit-time">
+                    <select name="daytime">
                         <option value="anytime">At any time of the day</option>
                         <option value="morning">In the morning</option>
                         <option value="afternoon">In the afternoon</option>
@@ -203,11 +208,42 @@
                     </select>
                 </div>
             </fieldset>
-            <button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>
-            <button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>
+            <button type="submit" class="habit-edit-done"> Done</button>
+            <button type="submit" class="habit-edit-cancel">Cancel</button>
         </form>
     </main>
 
+    <!-- Edit a habit
+    <main role="main" id="habit-screen">
+        <div class="habit-container">
+            <div class="habit-details">
+                <h4>Habit name</h4>
+                <h6>0 Check-ins</h6>
+            </div>
+            <div id="notes">
+
+                <div class="sticky-note-pre ui-widget-content">
+                    <div class="handle">&nbsp;<div class="close">&times;</div></div>
+                    <div contenteditable class="contents">Type here...</div>
+                </div>
+
+            </div>
+            <div id="milestones">
+
+            </div>
+            <div id="habit-edit-bar">
+                <a href="#"></a>
+                <a href="#"><i class="far fa-sticky-note"></i></a>
+                <a href="#"><i class="fas fa-tasks"></i></a>
+                <a href="#"><i class="fas fa-check"></i></a>
+                <a href="#"><i class="fas fa-pencil-alt"></i></a>
+
+                <a href="#"><i class="far fa-trash-alt"></i></a>
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+    </main>
+-->
     <!-- Footer for the page -->
     <footer role="contentinfo" class="footer-container">
         <p>Source code</p>

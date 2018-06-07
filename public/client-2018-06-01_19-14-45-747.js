@@ -2,7 +2,6 @@
 $(document).ready(function () {
     $('main').hide();
     $('#nav-bar').show();
-    $('#navbar-logout-js').hide();
     $('#landing-screen').show();
     $('#footer-container').show();
     //habit container - checkin
@@ -18,7 +17,6 @@ $(document).on('click', '#hero-signup-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#signup-screen').show();
     $('#footer-container').show();
 });
@@ -29,7 +27,6 @@ $(document).on('click', '#hero-login-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -40,7 +37,6 @@ $(document).on('click', '#navbar-login-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -51,7 +47,6 @@ $(document).on('click', '#singup-screen-login-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -102,11 +97,8 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-                $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
                 populateHabitsByUsername(result.username);
                 //                $('#habit-notes - js ').hide();
                 //                $('#habit-milestones-js').hide();
@@ -164,12 +156,8 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
-                $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-
                 //                $('#habit-notes-js').hide();
                 //                $('#habit-milestones-js').hide();
 
@@ -324,7 +312,7 @@ function displayHabits(result) {
         buildTheHtmlOutput += '<div class="habit-name">';
         buildTheHtmlOutput += '<div class="habit-title">';
         buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
-        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>' + resultValue.checkin + ' Check-ins</p>';
+        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>0 Check-ins</p>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="habit-edit-bar">';
         buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\',\'' + resultValue.loggedinUser + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
@@ -448,31 +436,6 @@ function displayNotes(result, habitId) {
 // it has all the details to populate edit form ???? <----
 function editHabit(habitId) {
     console.log(habitId);
-    let loggedinUser = $('#loggedin-user').val();
-
-
-
-    // Make a call to get the habit details by habitId
-    $.ajax({
-            type: 'GET',
-            url: `/get-habit/${habitId}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            console.log("get habit result done function", result);
-            // Display habit edit form
-            //            $('#dashboard-js ').hide();
-            //            $('#habit-add-screen').show();
-            //            $('#habit-name').val(result.habitName);
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
 }
 
 // Delete habit by habit Id
@@ -505,34 +468,9 @@ function deleteHabit(habitID, username) {
 // Checkin habit by habit ID
 function checkinHabit(habitId) {
     console.log(habitId);
-
+    // Add checkin value to Schema
     // Increment the value in DB for every checkin
-
-    // Create a payload to update the checked value in DB
-    const habitObject = {
-        habitId
-    };
-    console.log("habit to update", habitObject);
-    //make the api call using the payload above
-    $.ajax({
-            type: 'PUT',
-            url: '/habit/checkin',
-            dataType: 'json',
-            data: JSON.stringify(habitObject),
-            contentType: 'application/json'
-        })
-        //if call is succefull
-        .done(function (result) {
-            console.log(result);
-            populateHabitsByUsername();
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-            alert('Incorrect habit checkin updation');
-        });
+    // Display checkin value on user dashboard
 }
 
 // Make a GET call to get the milestone items for the habit
@@ -574,12 +512,7 @@ function displayMilestones(result, habitId) {
     $.each(result, function (resultKey, resultValue) {
 
         buildTheHtmlOutput += '<li>';
-        console.log(resultValue.checked);
-        if (resultValue.checked == 'true') {
-            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item" checked>';
-        } else {
-            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
-        }
+        buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
         buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
         buildTheHtmlOutput += '<label for="milestone-item">';
         buildTheHtmlOutput += resultValue.milestonesContent;

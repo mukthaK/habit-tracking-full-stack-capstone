@@ -2,7 +2,6 @@
 $(document).ready(function () {
     $('main').hide();
     $('#nav-bar').show();
-    $('#navbar-logout-js').hide();
     $('#landing-screen').show();
     $('#footer-container').show();
     //habit container - checkin
@@ -18,7 +17,6 @@ $(document).on('click', '#hero-signup-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#signup-screen').show();
     $('#footer-container').show();
 });
@@ -29,7 +27,6 @@ $(document).on('click', '#hero-login-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -40,7 +37,6 @@ $(document).on('click', '#navbar-login-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -51,7 +47,6 @@ $(document).on('click', '#singup-screen-login-button-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
     $('#footer-container').show();
     $('#login-screen').show();
 });
@@ -102,11 +97,9 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
                 $('#footer-container').show();
                 $('#dashboard-js').show();
                 $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
                 populateHabitsByUsername(result.username);
                 //                $('#habit-notes - js ').hide();
                 //                $('#habit-milestones-js').hide();
@@ -164,12 +157,8 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('main').hide();
                 $('#nav-bar').show();
                 $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
-                $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
                 $('#footer-container').show();
                 $('#dashboard-js').show();
-
                 //                $('#habit-notes-js').hide();
                 //                $('#habit-milestones-js').hide();
 
@@ -448,31 +437,6 @@ function displayNotes(result, habitId) {
 // it has all the details to populate edit form ???? <----
 function editHabit(habitId) {
     console.log(habitId);
-    let loggedinUser = $('#loggedin-user').val();
-
-
-
-    // Make a call to get the habit details by habitId
-    $.ajax({
-            type: 'GET',
-            url: `/get-habit/${habitId}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            console.log("get habit result done function", result);
-            // Display habit edit form
-            //            $('#dashboard-js ').hide();
-            //            $('#habit-add-screen').show();
-            //            $('#habit-name').val(result.habitName);
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
 }
 
 // Delete habit by habit Id

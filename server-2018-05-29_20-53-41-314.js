@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
 // Enables debug - we can see what queries are being sent to mongodb
-//mongoose.set('debug', true);
+mongoose.set('debug', true);
 
 mongoose.Promise = global.Promise;
 
@@ -180,6 +180,7 @@ app.post('/users/login', function (req, res) {
     });
 });
 
+
 // POST -----------------------------------------
 // creating a new Entry
 app.post('/habit/create', (req, res) => {
@@ -192,8 +193,7 @@ app.post('/habit/create', (req, res) => {
         habitName,
         weekday,
         time,
-        loggedinUser,
-        checkin: 0
+        loggedinUser
     }, (err, item) => {
         if (err) {
             return res.status(500).json({
@@ -201,11 +201,9 @@ app.post('/habit/create', (req, res) => {
             });
         }
         if (item) {
-            console.log("itemID for the habit generation", item._id)
             Notes.create({
                 notesContent: 'Type here...',
                 habitName,
-                habitID: item._id,
                 loggedinUser
             }, (err, item) => {
                 if (err) {
@@ -226,19 +224,15 @@ app.post('/habit/create', (req, res) => {
 });
 
 // POST-----------------------------------------------
-// Adding entry for Milestones
-app.post('/milestones/add', (req, res) => {
-    let milestonesContent = req.body.milestonesContent;
+// Saving entry for Notes
+app.post('/notes/save', (req, res) => {
+    let notesContent = req.body.notesContent;
     let habitName = req.body.habitName;
     let loggedinUser = req.body.loggedinUser;
-    let habitID = req.body.habitID;
 
-    Milestones.create({
-        milestonesContent,
-        // Set the default checked value as false
-        checked: false,
+    Notes.create({
+        notesContent,
         habitName,
-        habitID,
         loggedinUser
     }, (err, item) => {
         if (err) {
@@ -252,6 +246,79 @@ app.post('/milestones/add', (req, res) => {
     });
 });
 
+// POST-----------------------------------------------
+// Adding entry for Milestones
+app.post('/milestones/add', (req, res) => {
+    let milestonesContent = req.body.milestonesContent;
+    let habitName = req.body.habitName;
+    let loggedinUser = req.body.loggedinUser;
+
+    Milestones.create({
+        milestonesContent,
+        // Set the default checked value as false
+        checked: false,
+        habitName,
+        loggedinUser
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
+// PUT --------------------------------------
+// Update milestone item for checked value
+app.put('/entry/:id', function (req, res) {
+    let toUpdate = {};
+    //    let updateableFields = ['achieveWhat', 'achieveHow', 'achieveWhen', 'achieveWhy']; //<--Marius? 'entryType
+    let updateableFields = ['entryType', 'inputDate', 'inputPlay', 'inputAuthor', 'inputRole', 'inputCo', 'inputLocation', 'inputNotes', 'loggedInUserName'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+    //    console.log(toUpdate);
+    Entry
+        .findByIdAndUpdate(req.params.id, {
+            $set: toUpdate
+        }).exec().then(function (achievement) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+});
+
+
+// PUT --------------------------------------
+// Update Notes
+app.put('/entry/:id', function (req, res) {
+    let toUpdate = {};
+
+    let updateableFields = ['notesContent'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
+    //    console.log(toUpdate);
+    Entry
+        .findByIdAndUpdate(req.params.id, {
+            $set: toUpdate
+        }).exec().then(function (achievement) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+});
 
 // GET ------------------------------------
 // accessing all of a user's entries
@@ -281,195 +348,40 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
         });
 });
 
-// GET ------------------------------------
-// accessing a habit content by habit id
-app.get('/get-habit/:habitId', function (req, res) {
-    console.log("inside get habit server call");
-    console.log("habit id server ", habitId);
-
-    Habit
-        .find({
-            _id: req.params.habitId
-        })
-        .exec()
-        .then(function (habit) {
-            console.log("Habit ", habit);
-            return res.json(habit);
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// GET ------------------------------------
 // accessing a note content by habit id
 app.get('/get-notes/:habitId', function (req, res) {
-    //    console.log("habit id server " + req.params.habitId);
+    console.log("habit id server " + req.params.habitId);
     Notes
-        .find({
-            "habitID": req.params.habitId
-        })
+        .find()
         .then(function (note) {
-            console.log("note ", note);
-            return res.json(note);
-        })
-        //            if (req.params.habitId == note._id) {
-        //                return res.json(note.notesContent);
-        //            }
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// GET ------------------------------------
-// accessing a milestone items by habit id
-app.get('/get-milestones/:habitId', function (req, res) {
-
-    Milestones
-        //        .findById(req.params.habitId)
-        .find({
-            "habitID": req.params.habitId
-        })
-        .then(function (milestone) {
-            console.log("milestone ", milestone);
-            return res.json(milestone);
-        })
-        //            if (req.params.habitId == note._id) {
-        //                return res.json(note.notesContent);
-        //            }
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// PUT-----------------------------------------------
-// Saving entry for Notes
-app.put('/notes/save', (req, res) => {
-    let notesContent = req.body.notesContent;
-    let notesID = req.body.notesID;
-
-    let toUpdate = {};
-    let updateableFields = ['notesContent'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-
-
-    Notes
-        .findByIdAndUpdate(notesID, {
-            $set: toUpdate
-        }).exec().then(function (note) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// PUT --------------------------------------
-// Update milestone item for checked value
-app.put('/milestone/check', function (req, res) {
-    let milestoneID = req.body.milestoneID;
-    let checkedValue = req.body.checked;
-
-    console.log(milestoneID, checkedValue);
-
-    let toUpdate = {};
-    let updateableFields = ['checked'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-    console.log(toUpdate);
-
-    Milestones
-        .findByIdAndUpdate(milestoneID, {
-            $set: toUpdate
-        }).exec().then(function (milestone) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// PUT --------------------------------------
-// Update habit checkin value
-app.put('/habit/checkin', function (req, res) {
-    let habitId = req.body.habitId;
-
-    console.log(habitId);
-
-    Habit
-        .update({
-            _id: habitId
-        }, {
-            $inc: {
-                "checkin": 1
+            //            console.log("Notes server side " + note);
+            if (req.params.habitId == note._id) {
+                return res.json(note.notesContent);
             }
-        }).exec().then(function (milestone) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-
-    //    Habit
-    //        .findByIdAndUpdate(milestoneID, {
-    //        $set: toUpdate
-    //    }).exec().then(function (milestone) {
-    //        return res.status(204).end();
-    //    }).catch(function (err) {
-    //        return res.status(500).json({
-    //            message: 'Internal Server Error'
-    //        });
-    //    });
-
-
-});
-// DELETE ----------------------------------------
-// deleting a milestone item by id
-app.delete('/milestone/:milestoneID', function (req, res) {
-    Milestones
-        .findByIdAndRemove(req.params.milestoneID)
-        .exec().then(function (item) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
+        })
+        //        .findById(req.params.habitId).then(function (note) {
+        //            return res.json(note);
+        //            console.log("response object  findbyid fun" + res);
+        //        })
+        .catch(function (entries) {
+            console.error(err);
+            res.status(500).json({
                 message: 'Internal Server Error'
             });
         });
 });
 
 // DELETE ----------------------------------------
-// deleting a Habit  by id
-app.delete('/habit/:habitID', function (req, res) {
-    Habit
-        .findByIdAndRemove(req.params.habitID)
-        .exec().then(function (item) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
+// deleting an achievement by id
+app.delete('/entry/:id', function (req, res) {
+    Entry.findByIdAndRemove(req.params.id).exec().then(function (entry) {
+        return res.status(204).end();
+    }).catch(function (err) {
+        return res.status(500).json({
+            message: 'Internal Server Error'
         });
+    });
 });
-
 
 // MISC ------------------------------------------
 // catch-all endpoint if client makes request to non-existent endpoint

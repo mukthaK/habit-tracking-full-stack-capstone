@@ -25,7 +25,6 @@ button:hover {
     background-size: cover;
 }
 
-
 .nav-left {
     float: left;
     font-family: 'Megrim', cursive;
@@ -188,7 +187,6 @@ header {
     background-color: #14A098;
     background-color: rgba(126, 80, 148, 1.9);
     background-color: #8C4B76;
-    background-color: #d05d76;
 }
 
 input[type=text],
@@ -264,15 +262,11 @@ fieldset {
     max-width: 90%;
     padding: 0px;
     margin: 10px auto;
-    /*    border: 1px solid rgb(140, 75, 118);*/
-    border: 1px solid rgb(235, 152, 150);
+    border: 1px solid rgb(140, 75, 118);
 }
 
 .habit-name {
-    /*    background-color: rgb(140, 75, 118);*/
-    background-color: rgb(227, 124, 133);
-    background-color: rgb(235, 152, 150)
-    /*    background-color: #d05d76;*/
+    background-color: rgb(140, 75, 118);
     font-size: 20px;
     padding: 10px 0 5px 10px;
     display: flex;
@@ -304,7 +298,7 @@ fieldset {
 
 .habit-edit-bar {
     /*    width: auto;*/
-    /*    background-color: rgb(140, 75, 118);*/
+    background-color: rgb(140, 75, 118);
     overflow: auto;
 }
 
@@ -326,15 +320,13 @@ fieldset {
 
 .habit-edit-bar a i:hover {
     transform: scale(1.2);
-    background-color: white;
-    color: #d05d76;
-    border-radius: 50%;
+    color: #14A098;
 }
 
 /* notes style */
 
 .habit-notes {
-    /*    float: left;*/
+    float: left;
     width: 90%;
     height: auto;
     overflow: auto;
@@ -342,15 +334,11 @@ fieldset {
     max-height: 300px;
     border: 1px solid black;
     border-radius: 5px;
-    margin: 5px auto;
+    margin: 5px;
 }
 
 .notes-handle span {
     color: #d05d76;
-}
-
-.notes-content-js {
-    padding: 5px;
 }
 
 /* Notes and milestones style */
@@ -386,7 +374,7 @@ fieldset {
 }
 
 .note-milestone-container {
-    padding: 20px 10px;
+    padding: 10px;
     height: auto;
     overflow: auto;
 }
@@ -407,8 +395,8 @@ fieldset {
     height: auto;
     border: 1px solid black;
     border-radius: 5px;
-    margin: 5px auto;
-    /*    float: right;*/
+    margin: 5px;
+    float: right;
     min-height: 150px;
     max-height: 300px;
     overflow: auto;
@@ -432,11 +420,9 @@ fieldset {
     user-select: none;
 }
 
-#habit-milestones-js .milestoneInput {
+.milestoneInput {
     width: 80%;
     margin-left: 5px;
-    width: 80%;
-    padding: 5px;
 }
 
 #milestonesItems li:hover {
@@ -457,15 +443,6 @@ fieldset {
     right: 0;
     top: 0;
     padding: 5px 16px 5px 16px;
-}
-
-.milestone-title {
-    color: #d05d76;
-    padding: 5px;
-}
-
-.milestones-header {
-    padding: 5px;
 }
 
 /*
@@ -608,8 +585,6 @@ footer img {
     .habit-notes,
     .habit-milestones {
         float: left;
-        width: 100%;
-        margin: 5px auto;
     }
 
 }
@@ -632,10 +607,8 @@ footer img {
 
     .signup-section,
     .login-section {
-        /*        width: 70%;*/
-        width: auto;
+        width: 70%;
         margin: 0 auto;
-        padding: 30px;
     }
     .nav-left {
         font-size: 18px;
@@ -648,9 +621,6 @@ footer img {
 
     #nav-bar li {
         padding: 15px 5px;
-    }
-    #nav-bar {
-        height: auto;
     }
     .habit-title {
         font-size: 15px;
