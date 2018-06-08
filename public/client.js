@@ -10,6 +10,7 @@ $(document).ready(function () {
         event.preventDefault();
         alert("habit checkin icon clicked");
     });
+    $(".newuser-msg").hide();
 });
 
 // Signup button on landing screen(hero)
@@ -107,6 +108,7 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('#dashboard-js').show();
                 $('#navbar-login-js').hide();
                 $('#navbar-logout-js').show();
+                $(".newuser-msg").show();
                 populateHabitsByUsername(result.username);
                 //                $('#habit-notes - js ').hide();
                 //                $('#habit-milestones-js').hide();
@@ -567,7 +569,7 @@ function displayMilestones(result, habitId) {
     buildTheHtmlOutput += '<div class="milestones-header">';
     buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
     buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
-    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js"><i class="fa fa-plus" aria-hidden="true"></i></button>';
     buildTheHtmlOutput += '</div>';
     buildTheHtmlOutput += '<ul id="milestonesItems">';
 

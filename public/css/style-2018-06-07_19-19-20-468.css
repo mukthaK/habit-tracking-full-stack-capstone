@@ -247,8 +247,7 @@ fieldset {
 }
 
 .habit-container-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 900px;
 }
 
 /* Add habit button style */
@@ -261,11 +260,6 @@ fieldset {
     color: white;
     font-size: 25px;
     background-color: #d05d76;
-}
-
-.add-habit-button:hover {
-    color: #d05d76;
-    background-color: white;
 }
 
 /* habit list */
@@ -469,12 +463,6 @@ fieldset {
     padding: 5px 16px 5px 16px;
 }
 
-.notes-save:hover,
-.delete-milestone-item:hover {
-    transform: scale(1.2);
-    color: #d05d76;
-}
-
 .milestone-title {
     color: #d05d76;
     padding: 5px;
@@ -483,11 +471,6 @@ fieldset {
 
 .milestones-header {
     padding: 5px;
-}
-
-.milestone-add-button:hover {
-    color: #d05d76;
-    transform: scale(1.2);
 }
 
 /*
