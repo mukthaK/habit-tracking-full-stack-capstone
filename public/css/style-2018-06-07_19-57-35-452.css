@@ -277,7 +277,6 @@ fieldset {
     margin: 10px auto;
     /*    border: 1px solid rgb(140, 75, 118);*/
     border: 1px solid rgb(235, 152, 150);
-    border-radius: 5px;
 }
 
 .habit-name {
@@ -606,16 +605,6 @@ footer p {
 footer img {
     height: 30px;
     width: 30px;
-}
-
-.footer-container i {
-    color: white;
-}
-
-.footer-container i:hover {
-
-    color: #ecb2ab;
-    border-radius: 50%;
 }
 
 /* Responsive media queries */
