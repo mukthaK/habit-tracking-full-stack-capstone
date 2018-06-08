@@ -452,8 +452,6 @@ function editHabit(habitId) {
     console.log(habitId);
     let loggedinUser = $('#loggedin-user').val();
 
-
-
     // Make a call to get the habit details by habitId
     $.ajax({
             type: 'GET',
@@ -465,8 +463,8 @@ function editHabit(habitId) {
         .done(function (result) {
             console.log("get habit result done function", result);
             // Display habit edit form
-            //            $('#dashboard-js ').hide();
-            //            $('#habit-add-screen').show();
+            $('#dashboard-js ').hide();
+            $('#habit-add-screen').show();
             //            $('#habit-name').val(result.habitName);
         })
         //if the call is failing
@@ -823,7 +821,10 @@ $(document).on('change', '.milestone-item', function (event) {
         });
 });
 
-
+$('#navbar-logout-js').click(function (event) {
+    event.preventDefault();
+    location.reload();
+});
 
 
 
