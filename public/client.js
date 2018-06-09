@@ -227,7 +227,7 @@ $('#delete-habit-js').on('click', function (event) {
 });
 
 // habit edit form done button
-$(document).on('click', '#habit-form-done-js', function (event) {
+$(document).on('click', '.habit-form-done-js', function (event) {
     event.preventDefault();
 
 
@@ -393,7 +393,7 @@ function displayHabits(result) {
 
         buildTheHtmlOutput += '</div>';
         // Start habit edit form
-        buildTheHtmlOutput += '<main role="main" class="habit-edit-screen">';
+        buildTheHtmlOutput += '<div class="habit-edit-screen">';
         buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
         buildTheHtmlOutput += '<fieldset>';
         buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
@@ -484,10 +484,10 @@ function displayHabits(result) {
         buildTheHtmlOutput += '</select>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</fieldset>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" class="habit-form-done-js">Done</button>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" class="habit-form-cancel-js">Cancel</button>';
         buildTheHtmlOutput += '</form>';
-        buildTheHtmlOutput += '</main>';
+        buildTheHtmlOutput += '</div>';
         // End Habit Edit form
         buildTheHtmlOutput += '</div>';
 
@@ -520,6 +520,69 @@ function populateNotesByHabitId(habitId) {
             console.log(errorThrown);
         });
 }
+
+// Habit edit form submit
+$('.habit-edit-form').submit(function (event) {
+    event.preventDefault();
+
+    // Get the inputs from the user in Log In form
+    const habitName = $("#habit-name").val();
+    const weekday = $("input[type='radio']:checked").val();
+    const time = $('#habit-time').val();
+    const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
+    const loggedinUser = $('#loggedin-user').val();
+    //    console.log(habitName, weekday, time);
+
+    // validate the input
+    if (habitName == "") {
+        alert('Please input habit name');
+    } else if (weekday == "") {
+        alert('Please select the weekday');
+    } else if (time == '') {
+        alert('Please select the time');
+    }
+    // if the input is valid
+    else {
+        // create the payload object (what data we send to the api call)
+        const editHabitObject = {
+            habitName: habitName,
+            weekday: weekday,
+            time: time,
+            loggedinUser: loggedinUser
+        };
+        //        console.log(newHabitObject);
+
+        //make the api call using the payload above
+        $.ajax({
+                type: 'PUT',
+                url: '/get-habit/${habitId}',
+                dataType: 'json',
+                data: JSON.stringify(editHabitObject),
+                contentType: 'application/json'
+            })
+            //if call is successfull
+            .done(function (result) {
+                console.log(result);
+                //            $('#habit-add-screen').hide();
+                //            $('#dashboard-js').show();
+                populateHabitsByUsername(result.loggedinUser);
+                $('.habit-edit-form').hide();
+                //console.log("After calling function populate habits by username");
+
+            })
+            //if the call is failing
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+                alert('Incorrect New habit object');
+            });
+    };
+
+});
+
+
+
 
 function displayNotes(result, habitId) {
     let buildTheHtmlOutput = "";
@@ -697,7 +760,7 @@ function displayMilestones(result, habitId) {
 }
 
 // habit edit form cancel button
-$(document).on('click', '#habit-form-cancel-js', function (event) {
+$(document).on('click', '.habit-form-cancel-js', function (event) {
     event.preventDefault();
     $('main').hide();
     $('#habit-add-screen').hide();

@@ -586,7 +586,11 @@ fieldset {
     margin: 0 10px;
 }
 
-
+.habit-edit-screen {
+    height: 350px;
+    padding: 20px;
+    background-color: #faf7f3;
+}
 
 
 /* Footer style */
@@ -695,6 +699,9 @@ footer img {
     .habit-edit-bar a {
         width: 27%;
         font-size: 15px;
+    }
+    .habit-edit-screen {
+        height: 400px;
     }
 }
 

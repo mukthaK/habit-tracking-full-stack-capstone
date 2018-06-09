@@ -281,26 +281,30 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
         });
 });
 
-// GET ------------------------------------
-// accessing a habit content by habit id
-app.get('/get-habit/:habitId', function (req, res) {
+// PUT ------------------------------------
+// accessing a habit content by habit id and updating
+app.put('/get-habit/:habitId', function (req, res) {
     console.log("inside get habit server call");
     console.log("habit id server ", habitId);
+    let toUpdate = {};
+    let updateableFields = ['habitName', 'weekday', 'time'];
+    updateableFields.forEach(function (field) {
+        if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+    });
 
     Habit
-        .findByIdandUpdate(req.params.habitId)
-        .exec()
-        .then(function (habit) {
-            console.log("Habit ", habit);
-            //            if (habit._id == req.params.habitId)
-            //                return res.json(habit);
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
+        .findByIdAndUpdate(req.params.habitId, {
+            $set: toUpdate
+        }).exec().then(function (achievement) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
                 message: 'Internal Server Error'
             });
         });
+
 });
 
 // GET ------------------------------------
