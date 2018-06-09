@@ -392,7 +392,105 @@ function displayHabits(result) {
         populateMilestoneItemsByHabitId(resultValue._id);
 
         buildTheHtmlOutput += '</div>';
+        // Start habit edit form
+        buildTheHtmlOutput += '<main role="main" class="habit-edit-screen">';
+        buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
+        buildTheHtmlOutput += '<fieldset>';
+        buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
+        buildTheHtmlOutput += '<input type="text" id="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
+        buildTheHtmlOutput += '<div class="select-day">';
+        buildTheHtmlOutput += '<span>I want to repeat this</span>';
+        if (resultValue.weekday == 'monday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="monday" value="monday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="monday" value="monday">';
+        }
+        buildTheHtmlOutput += '<label for="monday">Mon</label>';
+
+        if (resultValue.weekday == 'tuesday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="tuesday" value="tuesday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="tuesday" value="tuesday">';
+        }
+        buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
+
+        if (resultValue.weekday == 'wednesday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="wednesday" value="wednesday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="wednesday" value="wednesday">';
+        }
+        buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
+
+        if (resultValue.weekday == 'thursday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="thursday" value="thursday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="thursday" value="thursday">';
+        }
+        buildTheHtmlOutput += '<label for="thursday">Thu</label>';
+
+        if (resultValue.weekday == 'friday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="friday" value="friday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="friday" value="friday">';
+        }
+        buildTheHtmlOutput += '<label for="friday">Fri</label>';
+
+        if (resultValue.weekday == 'saturday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday">';
+        }
+        buildTheHtmlOutput += '<label for="saturday">Sat</label>';
+
+        if (resultValue.weekday == 'sunday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="sunday" value="sunday" checked>';
+
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday">';
+        }
+        buildTheHtmlOutput += '<label for="sunday">Sun</label>';
+
         buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="select-daytime">';
+        buildTheHtmlOutput += '<span>I will do it</span>';
+        buildTheHtmlOutput += '<select name="daytime" id="habit-time">';
+        if (resultValue.time == 'anytime') {
+            buildTheHtmlOutput += '<option value="anytime" selected>At any time of the day</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="anytime">At any time of the day</option>';
+        }
+        if (resultValue.time == 'morning') {
+            buildTheHtmlOutput += '<option value="morning" selected>In the morning</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="morning">In the morning</option>';
+        }
+        if (resultValue.time == 'afternoon') {
+            buildTheHtmlOutput += '<option value="afternoon" selected>In the afternoon</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="afternoon">In the afternoon</option>';
+        }
+        if (resultValue.time == 'evening') {
+            buildTheHtmlOutput += '<option value="evening" selected>In the evening</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="evening">In the evening</option>';
+        }
+
+        buildTheHtmlOutput += '</select>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</fieldset>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>';
+        buildTheHtmlOutput += '</form>';
+        buildTheHtmlOutput += '</main>';
+        // End Habit Edit form
+        buildTheHtmlOutput += '</div>';
+
     });
 
     //use the HTML output to show it in the index.html

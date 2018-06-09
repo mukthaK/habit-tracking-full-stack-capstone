@@ -288,12 +288,12 @@ app.get('/get-habit/:habitId', function (req, res) {
     console.log("habit id server ", habitId);
 
     Habit
-        .find()
+        .findByIdandUpdate(req.params.habitId)
         .exec()
         .then(function (habit) {
             console.log("Habit ", habit);
-            if (habit._id == req.params.habitId)
-                return res.json(habit);
+            //            if (habit._id == req.params.habitId)
+            //                return res.json(habit);
         })
         .catch(function (err) {
             console.error(err);
