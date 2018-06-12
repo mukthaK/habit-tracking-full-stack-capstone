@@ -397,7 +397,7 @@ function displayHabits(result) {
 
         buildTheHtmlOutput += '</div>';
         // Start habit edit form
-        buildTheHtmlOutput += '<div class="habit-edit-screen">';
+        buildTheHtmlOutput += '<div class="habit-edit-screen" id="' + resultValue._id + '">';
         buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
         buildTheHtmlOutput += '<fieldset>';
         buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
@@ -610,7 +610,8 @@ function displayNotes(result, habitId) {
 // Edit habit option - is it possible to pass object so that
 // it has all the details to populate edit form ???? <----
 function editHabit(habitId) {
-    $('.habit-edit-screen').show();
+    console.log($(this).parent());
+    $('#' + habitId).show();
 
 
 }
