@@ -570,6 +570,11 @@ fieldset {
     color: #fff;
 }
 
+.label-selected {
+    background: #999;
+    color: #fff;
+}
+
 .select-daytime option {
     background: grey;
 }

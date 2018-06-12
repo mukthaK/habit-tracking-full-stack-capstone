@@ -406,59 +406,54 @@ function displayHabits(result) {
         buildTheHtmlOutput += '<span>I want to repeat this</span>';
         if (resultValue.weekday == 'monday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday" checked>';
-
+            buildTheHtmlOutput += '<label for="monday" class="label-selected">Mon</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday">';
+            buildTheHtmlOutput += '<label for="monday">Mon</label>';
         }
-        buildTheHtmlOutput += '<label for="monday">Mon</label>';
-
         if (resultValue.weekday == 'tuesday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday" checked>';
-
+            buildTheHtmlOutput += '<label for="tuesday" class="label-selected">Tue</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday">';
+            buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
         }
-        buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
-
         if (resultValue.weekday == 'wednesday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday" checked>';
-
+            buildTheHtmlOutput += '<label for="wednesday" class="label-selected">Wed</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday">';
+            buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
         }
-        buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
-
         if (resultValue.weekday == 'thursday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday" checked>';
-
+            buildTheHtmlOutput += '<label for="thursday" class="label-selected">Thu</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday">';
+            buildTheHtmlOutput += '<label for="thursday">Thu</label>';
         }
-        buildTheHtmlOutput += '<label for="thursday">Thu</label>';
-
         if (resultValue.weekday == 'friday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday" checked>';
-
+            buildTheHtmlOutput += '<label for="friday" class="label-selected">Fri</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday">';
+            buildTheHtmlOutput += '<label for="friday">Fri</label>';
         }
-        buildTheHtmlOutput += '<label for="friday">Fri</label>';
-
         if (resultValue.weekday == 'saturday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday" checked>';
-
+            buildTheHtmlOutput += '<label for="saturday" class="label-selected">Sat</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
+            buildTheHtmlOutput += '<label for="saturday">Sat</label>';
         }
-        buildTheHtmlOutput += '<label for="saturday">Sat</label>';
-
         if (resultValue.weekday == 'sunday') {
             buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday" checked>';
-
+            buildTheHtmlOutput += '<label for="sunday" class="label-selected">Sun</label>';
         } else {
             buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
+            buildTheHtmlOutput += '<label for="sunday">Sun</label>';
         }
-        buildTheHtmlOutput += '<label for="sunday">Sun</label>';
+
 
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="select-daytime">';
