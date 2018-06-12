@@ -11,6 +11,7 @@ $(document).ready(function () {
         alert("habit checkin icon clicked");
     });
     $(".newuser-msg").hide();
+
 });
 
 // Signup button on landing screen(hero)
@@ -109,6 +110,7 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $('#navbar-login-js').hide();
                 $('#navbar-logout-js').show();
                 $(".newuser-msg").show();
+                $('.habit-edit-screen').hide();
                 populateHabitsByUsername(result.username);
                 //                $('#habit-notes - js ').hide();
                 //                $('#habit-milestones-js').hide();
@@ -171,6 +173,7 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('#navbar-logout-js').show();
                 $('#footer-container').show();
                 $('#dashboard-js').show();
+                $('.habit-edit-screen').hide();
 
                 //                $('#habit-notes-js').hide();
                 //                $('#habit-milestones-js').hide();
@@ -219,20 +222,20 @@ $('#delete-habit-js').on('click', function (event) {
     $('#habit-container-js').hide();
 
     // Get values of habit name and logged in user
-    const habitName = $("#habit-name").val();
+    const habitName = $(".habit-name").val();
     const loggedinUser = $('#loggedin-user').val();
 
     //const
 
 });
 
-// habit edit form done button
+// habit  form done button
 $(document).on('click', '.habit-form-done-js', function (event) {
     event.preventDefault();
 
 
     // Get the inputs from the user in Log In form
-    const habitName = $("#habit-name").val();
+    const habitName = $(".habit-name").val();
     const weekday = $("input[type='radio']:checked").val();
     const time = $('#habit-time').val();
 
@@ -303,6 +306,7 @@ function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, 
         .done(function (result) {
             console.log(result);
             displayHabits(result.habitsOutput);
+            $('.habit-edit-screen').hide();
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -397,62 +401,62 @@ function displayHabits(result) {
         buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
         buildTheHtmlOutput += '<fieldset>';
         buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
-        buildTheHtmlOutput += '<input type="text" id="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
+        buildTheHtmlOutput += '<input type="text" class="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
         buildTheHtmlOutput += '<div class="select-day">';
         buildTheHtmlOutput += '<span>I want to repeat this</span>';
         if (resultValue.weekday == 'monday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="monday" value="monday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="monday" value="monday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday">';
         }
         buildTheHtmlOutput += '<label for="monday">Mon</label>';
 
         if (resultValue.weekday == 'tuesday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="tuesday" value="tuesday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="tuesday" value="tuesday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday">';
         }
         buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
 
         if (resultValue.weekday == 'wednesday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="wednesday" value="wednesday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="wednesday" value="wednesday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday">';
         }
         buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
 
         if (resultValue.weekday == 'thursday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="thursday" value="thursday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="thursday" value="thursday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday">';
         }
         buildTheHtmlOutput += '<label for="thursday">Thu</label>';
 
         if (resultValue.weekday == 'friday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="friday" value="friday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="friday" value="friday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday">';
         }
         buildTheHtmlOutput += '<label for="friday">Fri</label>';
 
         if (resultValue.weekday == 'saturday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
         }
         buildTheHtmlOutput += '<label for="saturday">Sat</label>';
 
         if (resultValue.weekday == 'sunday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="sunday" value="sunday" checked>';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday" checked>';
 
         } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" id="saturday" value="saturday">';
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
         }
         buildTheHtmlOutput += '<label for="sunday">Sun</label>';
 
@@ -522,16 +526,16 @@ function populateNotesByHabitId(habitId) {
 }
 
 // Habit edit form submit
-$('.habit-edit-form').submit(function (event) {
+$(document).on('submit', '.habit-edit-form', function (event) {
     event.preventDefault();
 
     // Get the inputs from the user in Log In form
-    const habitName = $("#habit-name").val();
+    const habitName = $(".habit-name").val();
     const weekday = $("input[type='radio']:checked").val();
     const time = $('#habit-time').val();
     const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
     const loggedinUser = $('#loggedin-user').val();
-    //    console.log(habitName, weekday, time);
+    console.log(habitName, weekday, time, habitId);
 
     // validate the input
     if (habitName == "") {
@@ -565,8 +569,9 @@ $('.habit-edit-form').submit(function (event) {
                 console.log(result);
                 //            $('#habit-add-screen').hide();
                 //            $('#dashboard-js').show();
-                populateHabitsByUsername(result.loggedinUser);
+                populateHabitsByUsername(loggedinUser);
                 $('.habit-edit-form').hide();
+                alert('Habit is updated');
                 //console.log("After calling function populate habits by username");
 
             })
@@ -610,30 +615,9 @@ function displayNotes(result, habitId) {
 // Edit habit option - is it possible to pass object so that
 // it has all the details to populate edit form ???? <----
 function editHabit(habitId) {
-    console.log(habitId);
-    let loggedinUser = $('#loggedin-user').val();
+    $('.habit-edit-screen').show();
 
-    // Make a call to get the habit details by habitId
-    //    $.ajax({
-    //            type: 'GET',
-    //            url: `/get-habit/${habitId}`,
-    //            dataType: 'json',
-    //            contentType: 'application/json'
-    //        })
-    //        //if call is successfull
-    //        .done(function (result) {
-    //            console.log("get habit result done function", result);
-    //            // Display habit edit form
-    //            $('#dashboard-js ').hide();
-    //            $('#habit-add-screen').show();
-    //            //            $('#habit-name').val(result.habitName);
-    //        })
-    //        //if the call is failing
-    //        .fail(function (jqXHR, error, errorThrown) {
-    //            console.log(jqXHR);
-    //            console.log(error);
-    //            console.log(errorThrown);
-    //        });
+
 }
 
 // Delete habit by habit Id
