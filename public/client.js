@@ -237,7 +237,7 @@ $(document).on('click', '.habit-form-done-js', function (event) {
     // Get the inputs from the user in Log In form
     const habitName = $(".habit-name").val();
     const weekday = $("input[type='radio']:checked").val();
-    const time = $('#habit-time').val();
+    const time = $('.habit-time').val();
 
     const loggedinUser = $('#loggedin-user').val();
     //    console.log(habitName, weekday, time);
@@ -458,7 +458,7 @@ function displayHabits(result) {
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="select-daytime">';
         buildTheHtmlOutput += '<span>I will do it</span>';
-        buildTheHtmlOutput += '<select name="daytime" id="habit-time">';
+        buildTheHtmlOutput += '<select name="daytime" class="habit-time">';
         if (resultValue.time == 'anytime') {
             buildTheHtmlOutput += '<option value="anytime" selected>At any time of the day</option>';
         } else {
@@ -527,7 +527,7 @@ $(document).on('submit', '.habit-edit-form', function (event) {
     // Get the inputs from the user in Log In form
     const habitName = $(this).find(".habit-name").val();
     const weekday = $("input[type='radio']:checked").val();
-    const time = $('#habit-time').val();
+    const time = $('.habit-time').val();
     const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
     const loggedinUser = $('#loggedin-user').val();
     console.log(habitName, weekday, time, habitId, loggedinUser);
@@ -581,7 +581,10 @@ $(document).on('submit', '.habit-edit-form', function (event) {
 
 });
 
-
+$('.habit-edit-form').on('click', '.habit-form-cancel', function (event) {
+    event.preventDefault();
+    $('#' + habitId).hide();
+});
 
 
 function displayNotes(result, habitId) {
