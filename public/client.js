@@ -1,4 +1,391 @@
 //Triggers
+// Get the Habits for that user
+function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, render on page
+
+    if ((loggedinUser == "") || (loggedinUser == undefined) || (loggedinUser == null)) {
+        loggedinUser = $('#loggedin-user').val();
+    }
+    //console.log(loggedinUser);
+    //make the api call to get habits by username
+    $.ajax({
+            type: 'GET',
+            url: `/get-habit/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log(result);
+            displayHabits(result.habitsOutput);
+            $('.habit-edit-screen').hide();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+// To display habits on user dashboard
+function displayHabits(result) {
+    //create an empty variable to store each habits of a user
+    let buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+        //        console.log("result value [id] - " + resultValue._id);
+        //        console.log(result);
+        //        console.log(resultKey);
+
+        buildTheHtmlOutput += '<div class="habit-container" id="habit-container-js">';
+        buildTheHtmlOutput += '<div class="habit-name">';
+        buildTheHtmlOutput += '<div class="habit-title">';
+        buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
+        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>' + resultValue.checkin + ' Check-ins</p>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="habit-edit-bar">';
+        buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\',\'' + resultValue.loggedinUser + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
+        buildTheHtmlOutput += '<a onclick="editHabit(\'' + resultValue._id + '\')"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>';
+        buildTheHtmlOutput += '<a onclick="checkinHabit(\'' + resultValue._id + '\')"><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="note-milestone-container">';
+        buildTheHtmlOutput += '<input type="hidden" class="noteMilestoneContainerID" value="' + resultValue._id + '">';
+
+        //notes wrapper start
+        buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
+        //buildTheHtmlOutput += '<span><i class="far fa-sticky-note"></i>Notes</span>';
+        //buildTheHtmlOutput += '<button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>';
+
+        //notes container start
+        //        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
+        //        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
+        //        buildTheHtmlOutput += '<div class="notes-handle">';
+        //        buildTheHtmlOutput += '<span>Notes & Journal</span>';
+        //        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
+        //        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...';
+        //
+        //
+        //        buildTheHtmlOutput += '</div>';
+        //
+        //        buildTheHtmlOutput += '</div>';
+        //notes container stop
+
+        // Get the notes content and display
+        populateNotesByHabitId(resultValue._id);
+
+        //        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        //notes wrapper stop
+
+        //milestone wrapper start
+        buildTheHtmlOutput += '<div class="milestone-container ' + resultValue._id + '">';
+        //        buildTheHtmlOutput += '<p><i class="fas fa-tasks"></i>Milestones</p>';
+        //        buildTheHtmlOutput += '<button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>';
+
+        //        //milestone container start
+        //        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
+        //        buildTheHtmlOutput += '<div class="milestone-list">';
+        //        buildTheHtmlOutput += '<div class="milestones-header">';
+        //        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
+        //        buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
+        //        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '<ul id="milestonesItems">';
+        //
+        //        buildTheHtmlOutput += '</ul>';
+        //        buildTheHtmlOutput += '</div>';
+        //        buildTheHtmlOutput += '</div>';
+        //        //milestone container stop
+
+        buildTheHtmlOutput += '</div>';
+        //milestone wrapper stop
+
+        // Get the milestone items and display here
+        populateMilestoneItemsByHabitId(resultValue._id);
+
+        buildTheHtmlOutput += '</div>';
+        // Start habit edit form
+        buildTheHtmlOutput += '<div class="habit-edit-screen" id="' + resultValue._id + '">';
+        buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
+        buildTheHtmlOutput += '<fieldset>';
+        buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
+        buildTheHtmlOutput += '<input type="text" class="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
+        buildTheHtmlOutput += '<div class="select-day">';
+        buildTheHtmlOutput += '<span>I want to repeat this</span>';
+        if (resultValue.weekday == 'monday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday" checked>';
+            buildTheHtmlOutput += '<label for="monday" class="label-selected">Mon</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday">';
+            buildTheHtmlOutput += '<label for="monday">Mon</label>';
+        }
+        if (resultValue.weekday == 'tuesday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday" checked>';
+            buildTheHtmlOutput += '<label for="tuesday" class="label-selected">Tue</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday">';
+            buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
+        }
+        if (resultValue.weekday == 'wednesday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday" checked>';
+            buildTheHtmlOutput += '<label for="wednesday" class="label-selected">Wed</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday">';
+            buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
+        }
+        if (resultValue.weekday == 'thursday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday" checked>';
+            buildTheHtmlOutput += '<label for="thursday" class="label-selected">Thu</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday">';
+            buildTheHtmlOutput += '<label for="thursday">Thu</label>';
+        }
+        if (resultValue.weekday == 'friday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday" checked>';
+            buildTheHtmlOutput += '<label for="friday" class="label-selected">Fri</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday">';
+            buildTheHtmlOutput += '<label for="friday">Fri</label>';
+        }
+        if (resultValue.weekday == 'saturday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday" checked>';
+            buildTheHtmlOutput += '<label for="saturday" class="label-selected">Sat</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
+            buildTheHtmlOutput += '<label for="saturday">Sat</label>';
+        }
+        if (resultValue.weekday == 'sunday') {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday" checked>';
+            buildTheHtmlOutput += '<label for="sunday" class="label-selected">Sun</label>';
+        } else {
+            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
+            buildTheHtmlOutput += '<label for="sunday">Sun</label>';
+        }
+
+
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div class="select-daytime">';
+        buildTheHtmlOutput += '<span>I will do it</span>';
+        buildTheHtmlOutput += '<select name="daytime" class="habit-time">';
+        if (resultValue.time == 'anytime') {
+            buildTheHtmlOutput += '<option value="anytime" selected>At any time of the day</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="anytime">At any time of the day</option>';
+        }
+        if (resultValue.time == 'morning') {
+            buildTheHtmlOutput += '<option value="morning" selected>In the morning</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="morning">In the morning</option>';
+        }
+        if (resultValue.time == 'afternoon') {
+            buildTheHtmlOutput += '<option value="afternoon" selected>In the afternoon</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="afternoon">In the afternoon</option>';
+        }
+        if (resultValue.time == 'evening') {
+            buildTheHtmlOutput += '<option value="evening" selected>In the evening</option>';
+        } else {
+            buildTheHtmlOutput += '<option value="evening">In the evening</option>';
+        }
+
+        buildTheHtmlOutput += '</select>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</fieldset>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" class="habit-form-done-js">Done</button>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" class="habit-form-cancel-js">Cancel</button>';
+        buildTheHtmlOutput += '</form>';
+        buildTheHtmlOutput += '</div>';
+        // End Habit Edit form
+        buildTheHtmlOutput += '</div>';
+
+    });
+
+    //use the HTML output to show it in the index.html
+    $(".habit-container-wrapper").html(buildTheHtmlOutput);
+
+}
+
+// Get Notes content from DB by Habit Id
+function populateNotesByHabitId(habitId) {
+    //    console.log("habit id inside populate notes " + habitId);
+
+    $.ajax({
+            type: 'GET',
+            url: `/get-notes/${habitId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            //console.log("get notes result done function", result);
+            displayNotes(result, habitId);
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+function displayNotes(result, habitId) {
+    let buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+        //notes container start
+        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
+        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
+        buildTheHtmlOutput += '<div class="notes-handle">';
+        buildTheHtmlOutput += '<span>Notes & Journal</span>';
+        buildTheHtmlOutput += '<input type="hidden" class="save-note-id" value="' + resultValue._id + '">';
+        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
+        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">' + resultValue.notesContent;
+        buildTheHtmlOutput += '</div>';
+        buildTheHtmlOutput += '</div>';
+        //notes container stop
+    });
+
+    //use the HTML output to show it in the index.html
+    $(".notes-container." + habitId).html(buildTheHtmlOutput);
+}
+
+// Edit habit option - is it possible to pass object so that
+// it has all the details to populate edit form ???? <----
+function editHabit(habitId) {
+    console.log($(this).parent());
+    $('#' + habitId).show();
+
+
+}
+
+// Delete habit by habit Id
+function deleteHabit(habitID, username) {
+
+    console.log(habitID, username);
+
+    // Make a DELETE call to delete item by ID
+    $.ajax({
+            type: 'DELETE',
+            url: `/habit/${habitID}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            populateHabitsByUsername(username);
+            alert("Habit  deleted");
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+
+}
+
+// Checkin habit by habit ID
+function checkinHabit(habitId) {
+    console.log(habitId);
+
+    // Increment the value in DB for every checkin
+
+    // Create a payload to update the checked value in DB
+    const habitObject = {
+        habitId
+    };
+    console.log("habit to update", habitObject);
+    //make the api call using the payload above
+    $.ajax({
+            type: 'PUT',
+            url: '/habit/checkin',
+            dataType: 'json',
+            data: JSON.stringify(habitObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            populateHabitsByUsername();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect habit checkin updation');
+        });
+}
+
+// Make a GET call to get the milestone items for the habit
+function populateMilestoneItemsByHabitId(habitId) {
+    // console.log("habit id inside milestone item populate" + habitId);
+
+    $.ajax({
+            type: 'GET',
+            url: `/get-milestones/${habitId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log("get milestones result done function", result);
+            displayMilestones(result, habitId);
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+function displayMilestones(result, habitId) {
+    let buildTheHtmlOutput = "";
+
+    //milestone container start
+    buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
+    buildTheHtmlOutput += '<div class="milestone-list">';
+    buildTheHtmlOutput += '<div class="milestones-header">';
+    buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
+    buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
+    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js"><i class="fa fa-plus" aria-hidden="true"></i></button>';
+    buildTheHtmlOutput += '</div>';
+    buildTheHtmlOutput += '<ul id="milestonesItems">';
+
+    $.each(result, function (resultKey, resultValue) {
+
+        buildTheHtmlOutput += '<li>';
+        console.log(resultValue.checked);
+        if (resultValue.checked == 'true') {
+            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item" checked>';
+        } else {
+            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
+        }
+        buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
+        buildTheHtmlOutput += '<label for="milestone-item">';
+        buildTheHtmlOutput += resultValue.milestonesContent;
+        buildTheHtmlOutput += '</label>';
+        buildTheHtmlOutput += '<button class="delete-milestone-item"><i class="fas fa-times"></i></button>';
+        buildTheHtmlOutput += '</li>';
+
+    });
+
+    buildTheHtmlOutput += '</ul>';
+    buildTheHtmlOutput += '</div>';
+    buildTheHtmlOutput += '</div>';
+    //milestone container stop
+
+    //use the HTML output to show it in the index.html
+    $(".milestone-container." + habitId).html(buildTheHtmlOutput);
+}
+
 $(document).ready(function () {
     $('main').hide();
     $('#nav-bar').show();
@@ -288,238 +675,6 @@ $(document).on('click', '.habit-form-done-js', function (event) {
     };
 });
 
-// Get the Habits for that user
-function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, render on page
-
-    if ((loggedinUser == "") || (loggedinUser == undefined) || (loggedinUser == null)) {
-        loggedinUser = $('#loggedin-user').val();
-    }
-    //console.log(loggedinUser);
-    //make the api call to get habits by username
-    $.ajax({
-            type: 'GET',
-            url: `/get-habit/${loggedinUser}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            console.log(result);
-            displayHabits(result.habitsOutput);
-            $('.habit-edit-screen').hide();
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-}
-
-// To display habits on user dashboard
-function displayHabits(result) {
-    //create an empty variable to store each habits of a user
-    let buildTheHtmlOutput = "";
-
-    $.each(result, function (resultKey, resultValue) {
-        //        console.log("result value [id] - " + resultValue._id);
-        //        console.log(result);
-        //        console.log(resultKey);
-
-        buildTheHtmlOutput += '<div class="habit-container" id="habit-container-js">';
-        buildTheHtmlOutput += '<div class="habit-name">';
-        buildTheHtmlOutput += '<div class="habit-title">';
-        buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
-        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>' + resultValue.checkin + ' Check-ins</p>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<div class="habit-edit-bar">';
-        buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\',\'' + resultValue.loggedinUser + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
-        buildTheHtmlOutput += '<a onclick="editHabit(\'' + resultValue._id + '\')"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>';
-        buildTheHtmlOutput += '<a onclick="checkinHabit(\'' + resultValue._id + '\')"><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<div class="note-milestone-container">';
-        buildTheHtmlOutput += '<input type="hidden" class="noteMilestoneContainerID" value="' + resultValue._id + '">';
-
-        //notes wrapper start
-        buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
-        //buildTheHtmlOutput += '<span><i class="far fa-sticky-note"></i>Notes</span>';
-        //buildTheHtmlOutput += '<button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>';
-
-        //notes container start
-        //        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-        //        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
-        //        buildTheHtmlOutput += '<div class="notes-handle">';
-        //        buildTheHtmlOutput += '<span>Notes & Journal</span>';
-        //        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
-        //        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...';
-        //
-        //
-        //        buildTheHtmlOutput += '</div>';
-        //
-        //        buildTheHtmlOutput += '</div>';
-        //notes container stop
-
-        // Get the notes content and display
-        populateNotesByHabitId(resultValue._id);
-
-        //        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</div>';
-        //notes wrapper stop
-
-        //milestone wrapper start
-        buildTheHtmlOutput += '<div class="milestone-container ' + resultValue._id + '">';
-        //        buildTheHtmlOutput += '<p><i class="fas fa-tasks"></i>Milestones</p>';
-        //        buildTheHtmlOutput += '<button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>';
-
-        //        //milestone container start
-        //        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
-        //        buildTheHtmlOutput += '<div class="milestone-list">';
-        //        buildTheHtmlOutput += '<div class="milestones-header">';
-        //        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
-        //        buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
-        //        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '<ul id="milestonesItems">';
-        //
-        //        buildTheHtmlOutput += '</ul>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '</div>';
-        //        //milestone container stop
-
-        buildTheHtmlOutput += '</div>';
-        //milestone wrapper stop
-
-        // Get the milestone items and display here
-        populateMilestoneItemsByHabitId(resultValue._id);
-
-        buildTheHtmlOutput += '</div>';
-        // Start habit edit form
-        buildTheHtmlOutput += '<div class="habit-edit-screen" id="' + resultValue._id + '">';
-        buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
-        buildTheHtmlOutput += '<fieldset>';
-        buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
-        buildTheHtmlOutput += '<input type="text" class="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
-        buildTheHtmlOutput += '<div class="select-day">';
-        buildTheHtmlOutput += '<span>I want to repeat this</span>';
-        if (resultValue.weekday == 'monday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday" checked>';
-            buildTheHtmlOutput += '<label for="monday" class="label-selected">Mon</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday">';
-            buildTheHtmlOutput += '<label for="monday">Mon</label>';
-        }
-        if (resultValue.weekday == 'tuesday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday" checked>';
-            buildTheHtmlOutput += '<label for="tuesday" class="label-selected">Tue</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday">';
-            buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
-        }
-        if (resultValue.weekday == 'wednesday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday" checked>';
-            buildTheHtmlOutput += '<label for="wednesday" class="label-selected">Wed</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday">';
-            buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
-        }
-        if (resultValue.weekday == 'thursday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday" checked>';
-            buildTheHtmlOutput += '<label for="thursday" class="label-selected">Thu</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday">';
-            buildTheHtmlOutput += '<label for="thursday">Thu</label>';
-        }
-        if (resultValue.weekday == 'friday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday" checked>';
-            buildTheHtmlOutput += '<label for="friday" class="label-selected">Fri</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday">';
-            buildTheHtmlOutput += '<label for="friday">Fri</label>';
-        }
-        if (resultValue.weekday == 'saturday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday" checked>';
-            buildTheHtmlOutput += '<label for="saturday" class="label-selected">Sat</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
-            buildTheHtmlOutput += '<label for="saturday">Sat</label>';
-        }
-        if (resultValue.weekday == 'sunday') {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday" checked>';
-            buildTheHtmlOutput += '<label for="sunday" class="label-selected">Sun</label>';
-        } else {
-            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
-            buildTheHtmlOutput += '<label for="sunday">Sun</label>';
-        }
-
-
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<div class="select-daytime">';
-        buildTheHtmlOutput += '<span>I will do it</span>';
-        buildTheHtmlOutput += '<select name="daytime" class="habit-time">';
-        if (resultValue.time == 'anytime') {
-            buildTheHtmlOutput += '<option value="anytime" selected>At any time of the day</option>';
-        } else {
-            buildTheHtmlOutput += '<option value="anytime">At any time of the day</option>';
-        }
-        if (resultValue.time == 'morning') {
-            buildTheHtmlOutput += '<option value="morning" selected>In the morning</option>';
-        } else {
-            buildTheHtmlOutput += '<option value="morning">In the morning</option>';
-        }
-        if (resultValue.time == 'afternoon') {
-            buildTheHtmlOutput += '<option value="afternoon" selected>In the afternoon</option>';
-        } else {
-            buildTheHtmlOutput += '<option value="afternoon">In the afternoon</option>';
-        }
-        if (resultValue.time == 'evening') {
-            buildTheHtmlOutput += '<option value="evening" selected>In the evening</option>';
-        } else {
-            buildTheHtmlOutput += '<option value="evening">In the evening</option>';
-        }
-
-        buildTheHtmlOutput += '</select>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</fieldset>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" class="habit-form-done-js">Done</button>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" class="habit-form-cancel-js">Cancel</button>';
-        buildTheHtmlOutput += '</form>';
-        buildTheHtmlOutput += '</div>';
-        // End Habit Edit form
-        buildTheHtmlOutput += '</div>';
-
-    });
-
-    //use the HTML output to show it in the index.html
-    $(".habit-container-wrapper").html(buildTheHtmlOutput);
-
-}
-
-// Get Notes content from DB by Habit Id
-function populateNotesByHabitId(habitId) {
-    //    console.log("habit id inside populate notes " + habitId);
-
-    $.ajax({
-            type: 'GET',
-            url: `/get-notes/${habitId}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            //console.log("get notes result done function", result);
-            displayNotes(result, habitId);
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-}
-
 // Habit edit form submit
 $(document).on('submit', '.habit-edit-form', function (event) {
     event.preventDefault();
@@ -582,166 +737,11 @@ $(document).on('submit', '.habit-edit-form', function (event) {
 
 });
 
+// Habit edit form Cancel button -- not working ???????
 $('.habit-edit-form').on('click', '.habit-form-cancel', function (event) {
     event.preventDefault();
     $('#' + habitId).hide();
 });
-
-
-function displayNotes(result, habitId) {
-    let buildTheHtmlOutput = "";
-
-    $.each(result, function (resultKey, resultValue) {
-        //notes container start
-        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
-        buildTheHtmlOutput += '<div class="notes-handle">';
-        buildTheHtmlOutput += '<span>Notes & Journal</span>';
-        buildTheHtmlOutput += '<input type="hidden" class="save-note-id" value="' + resultValue._id + '">';
-        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
-        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">' + resultValue.notesContent;
-        buildTheHtmlOutput += '</div>';
-        buildTheHtmlOutput += '</div>';
-        //notes container stop
-    });
-
-    //use the HTML output to show it in the index.html
-    $(".notes-container." + habitId).html(buildTheHtmlOutput);
-}
-
-// Edit habit option - is it possible to pass object so that
-// it has all the details to populate edit form ???? <----
-function editHabit(habitId) {
-    console.log($(this).parent());
-    $('#' + habitId).show();
-
-
-}
-
-// Delete habit by habit Id
-function deleteHabit(habitID, username) {
-
-    console.log(habitID, username);
-
-    // Make a DELETE call to delete item by ID
-    $.ajax({
-            type: 'DELETE',
-            url: `/habit/${habitID}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is succefull
-        .done(function (result) {
-            console.log(result);
-            populateHabitsByUsername(username);
-            alert("Habit  deleted");
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-
-}
-
-// Checkin habit by habit ID
-function checkinHabit(habitId) {
-    console.log(habitId);
-
-    // Increment the value in DB for every checkin
-
-    // Create a payload to update the checked value in DB
-    const habitObject = {
-        habitId
-    };
-    console.log("habit to update", habitObject);
-    //make the api call using the payload above
-    $.ajax({
-            type: 'PUT',
-            url: '/habit/checkin',
-            dataType: 'json',
-            data: JSON.stringify(habitObject),
-            contentType: 'application/json'
-        })
-        //if call is succefull
-        .done(function (result) {
-            console.log(result);
-            populateHabitsByUsername();
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-            alert('Incorrect habit checkin updation');
-        });
-}
-
-// Make a GET call to get the milestone items for the habit
-function populateMilestoneItemsByHabitId(habitId) {
-    // console.log("habit id inside milestone item populate" + habitId);
-
-    $.ajax({
-            type: 'GET',
-            url: `/get-milestones/${habitId}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            console.log("get milestones result done function", result);
-            displayMilestones(result, habitId);
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-}
-
-function displayMilestones(result, habitId) {
-    let buildTheHtmlOutput = "";
-
-    //milestone container start
-    buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
-    buildTheHtmlOutput += '<div class="milestone-list">';
-    buildTheHtmlOutput += '<div class="milestones-header">';
-    buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
-    buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
-    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js"><i class="fa fa-plus" aria-hidden="true"></i></button>';
-    buildTheHtmlOutput += '</div>';
-    buildTheHtmlOutput += '<ul id="milestonesItems">';
-
-    $.each(result, function (resultKey, resultValue) {
-
-        buildTheHtmlOutput += '<li>';
-        console.log(resultValue.checked);
-        if (resultValue.checked == 'true') {
-            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item" checked>';
-        } else {
-            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
-        }
-        buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
-        buildTheHtmlOutput += '<label for="milestone-item">';
-        buildTheHtmlOutput += resultValue.milestonesContent;
-        buildTheHtmlOutput += '</label>';
-        buildTheHtmlOutput += '<button class="delete-milestone-item"><i class="fas fa-times"></i></button>';
-        buildTheHtmlOutput += '</li>';
-
-    });
-
-    buildTheHtmlOutput += '</ul>';
-    buildTheHtmlOutput += '</div>';
-    buildTheHtmlOutput += '</div>';
-    //milestone container stop
-
-    //use the HTML output to show it in the index.html
-    $(".milestone-container." + habitId).html(buildTheHtmlOutput);
-}
 
 // habit edit form cancel button
 $(document).on('click', '.habit-form-cancel-js', function (event) {
@@ -751,7 +751,7 @@ $(document).on('click', '.habit-form-cancel-js', function (event) {
     $('#dashboard-js').show();
 });
 
-//Save button for Notes  ?? Notes save or Add ??
+// Notes save
 $(document).on('click', '.notesSaveJs', function (event) {
     event.preventDefault();
     //    alert("save clicked");
@@ -795,8 +795,6 @@ $(document).on('click', '.notesSaveJs', function (event) {
             alert('Incorrect Notes');
         });
 });
-
-// Update on Notes ?? NEEDED ??  SAVE doed the same function
 
 // Delete button on Notes -- REMOVE
 $(document).on('click', '#notes-delete-js', function (event) {
@@ -919,7 +917,7 @@ $(document).on('click', '.delete-milestone-item', function (event) {
     //    console.log(itemId);
 });
 
-
+// Milestone item check and uncheck
 $(document).on('change', '.milestone-item', function (event) {
     const milestoneID = $(this).parent().find('.save-milestone-id').val();
     let habitID = $(this).parent().parent().parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
@@ -966,6 +964,7 @@ $(document).on('change', '.milestone-item', function (event) {
         });
 });
 
+// Nav bar logout
 $('#navbar-logout-js').click(function (event) {
     event.preventDefault();
     location.reload();
