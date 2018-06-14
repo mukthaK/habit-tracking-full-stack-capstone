@@ -1,5 +1,4 @@
 const User = require('./models/user');
-const Entry = require('./models/achievement');
 const Habit = require('./models/habit');
 const Notes = require('./models/notes');
 const Milestones = require('./models/milestones');
@@ -255,7 +254,7 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
 
 // PUT ------------------------------------
 // accessing a habit content by habit id and updating
-app.put('/habit/:habitId', function (req, res) {
+app.put('/update-habit/:habitId', function (req, res) {
     console.log("inside get habit server call");
     console.log("habit id server ", req.params.habitId);
     let toUpdate = {};
@@ -366,7 +365,6 @@ app.put('/notes/save', (req, res) => {
             toUpdate[field] = req.body[field];
         }
     });
-
 
     Notes
         .findByIdAndUpdate(notesID, {
