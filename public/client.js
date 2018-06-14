@@ -525,12 +525,12 @@ $(document).on('submit', '.habit-edit-form', function (event) {
     event.preventDefault();
 
     // Get the inputs from the user in Log In form
-    const habitName = $(".habit-name").val();
+    const habitName = $(this).find(".habit-name").val();
     const weekday = $("input[type='radio']:checked").val();
     const time = $('#habit-time').val();
     const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
     const loggedinUser = $('#loggedin-user').val();
-    console.log(habitName, weekday, time, habitId);
+    console.log(habitName, weekday, time, habitId, loggedinUser);
 
     // validate the input
     if (habitName == "") {

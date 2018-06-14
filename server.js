@@ -285,7 +285,7 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
 // accessing a habit content by habit id and updating
 app.put('/get-habit/:habitId', function (req, res) {
     console.log("inside get habit server call");
-    console.log("habit id server ", habitId);
+    console.log("habit id server ", req.params.habitId);
     let toUpdate = {};
     let updateableFields = ['habitName', 'weekday', 'time'];
     updateableFields.forEach(function (field) {
