@@ -528,7 +528,8 @@ $(document).on('submit', '.habit-edit-form', function (event) {
     const habitName = $(this).find(".habit-name").val();
     const weekday = $(this).find("input[type='radio']:checked").val();
     const time = $(this).find('.habit-time').val();
-    const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
+    //const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
+    const habitId = $(this).closest('.habit-container').find('.noteMilestoneContainerID').val();
     const loggedinUser = $('#loggedin-user').val();
     console.log(habitName, weekday, time, habitId, loggedinUser);
 
