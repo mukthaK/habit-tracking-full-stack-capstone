@@ -555,7 +555,7 @@ $(document).on('submit', '.habit-edit-form', function (event) {
         //make the api call using the payload above
         $.ajax({
                 type: 'PUT',
-                url: `/get-habit/${habitId}`,
+                url: `/habit/${habitId}`,
                 dataType: 'json',
                 data: JSON.stringify(editHabitObject),
                 contentType: 'application/json'

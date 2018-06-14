@@ -120,7 +120,6 @@ app.post('/users/create', (req, res) => {
     });
 });
 
-// ---------------USER ENDPOINTS-------------------------------------
 // Loging in a user
 app.post('/users/login', function (req, res) {
 
@@ -180,6 +179,7 @@ app.post('/users/login', function (req, res) {
     });
 });
 
+// -------------------HABIT ENDPOINTS----------------------------
 // POST -----------------------------------------
 // creating a new Entry
 app.post('/habit/create', (req, res) => {
@@ -225,34 +225,6 @@ app.post('/habit/create', (req, res) => {
     });
 });
 
-// POST-----------------------------------------------
-// Adding entry for Milestones
-app.post('/milestones/add', (req, res) => {
-    let milestonesContent = req.body.milestonesContent;
-    let habitName = req.body.habitName;
-    let loggedinUser = req.body.loggedinUser;
-    let habitID = req.body.habitID;
-
-    Milestones.create({
-        milestonesContent,
-        // Set the default checked value as false
-        checked: false,
-        habitName,
-        habitID,
-        loggedinUser
-    }, (err, item) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        if (item) {
-            return res.json(item);
-        }
-    });
-});
-
-
 // GET ------------------------------------
 // accessing all of a user's entries
 app.get('/get-habit/:loggedinUser', function (req, res) {
@@ -283,7 +255,7 @@ app.get('/get-habit/:loggedinUser', function (req, res) {
 
 // PUT ------------------------------------
 // accessing a habit content by habit id and updating
-app.put('/get-habit/:habitId', function (req, res) {
+app.put('/habit/:habitId', function (req, res) {
     console.log("inside get habit server call");
     console.log("habit id server ", req.params.habitId);
     let toUpdate = {};
@@ -307,6 +279,57 @@ app.put('/get-habit/:habitId', function (req, res) {
 
 });
 
+// PUT --------------------------------------
+// Update habit checkin value
+app.put('/habit/checkin', function (req, res) {
+    let habitId = req.body.habitId;
+
+    console.log(habitId);
+
+    Habit
+        .update({
+            _id: habitId
+        }, {
+            $inc: {
+                "checkin": 1
+            }
+        }).exec().then(function (milestone) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+
+    //    Habit
+    //        .findByIdAndUpdate(milestoneID, {
+    //        $set: toUpdate
+    //    }).exec().then(function (milestone) {
+    //        return res.status(204).end();
+    //    }).catch(function (err) {
+    //        return res.status(500).json({
+    //            message: 'Internal Server Error'
+    //        });
+    //    });
+
+
+});
+
+// DELETE ----------------------------------------
+// deleting a Habit  by id
+app.delete('/habit/:habitID', function (req, res) {
+    Habit
+        .findByIdAndRemove(req.params.habitID)
+        .exec().then(function (item) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+});
+
+// ---------------NOTES ENDPOINTS-------------------------------------
 // GET ------------------------------------
 // accessing a note content by habit id
 app.get('/get-notes/:habitId', function (req, res) {
@@ -318,30 +341,6 @@ app.get('/get-notes/:habitId', function (req, res) {
         .then(function (note) {
             console.log("note ", note);
             return res.json(note);
-        })
-        //            if (req.params.habitId == note._id) {
-        //                return res.json(note.notesContent);
-        //            }
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// GET ------------------------------------
-// accessing a milestone items by habit id
-app.get('/get-milestones/:habitId', function (req, res) {
-
-    Milestones
-        //        .findById(req.params.habitId)
-        .find({
-            "habitID": req.params.habitId
-        })
-        .then(function (milestone) {
-            console.log("milestone ", milestone);
-            return res.json(milestone);
         })
         //            if (req.params.habitId == note._id) {
         //                return res.json(note.notesContent);
@@ -381,6 +380,58 @@ app.put('/notes/save', (req, res) => {
         });
 });
 
+// ---------------MILESTONES ENDPOINTS-------------------------------------
+// POST-----------------------------------------------
+// Adding entry for Milestones
+app.post('/milestones/add', (req, res) => {
+    let milestonesContent = req.body.milestonesContent;
+    let habitName = req.body.habitName;
+    let loggedinUser = req.body.loggedinUser;
+    let habitID = req.body.habitID;
+
+    Milestones.create({
+        milestonesContent,
+        // Set the default checked value as false
+        checked: false,
+        habitName,
+        habitID,
+        loggedinUser
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
+// GET ------------------------------------
+// accessing a milestone items by habit id
+app.get('/get-milestones/:habitId', function (req, res) {
+
+    Milestones
+        //        .findById(req.params.habitId)
+        .find({
+            "habitID": req.params.habitId
+        })
+        .then(function (milestone) {
+            console.log("milestone ", milestone);
+            return res.json(milestone);
+        })
+        //            if (req.params.habitId == note._id) {
+        //                return res.json(note.notesContent);
+        //            }
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        });
+});
+
 // PUT --------------------------------------
 // Update milestone item for checked value
 app.put('/milestone/check', function (req, res) {
@@ -410,60 +461,11 @@ app.put('/milestone/check', function (req, res) {
         });
 });
 
-// PUT --------------------------------------
-// Update habit checkin value
-app.put('/habit/checkin', function (req, res) {
-    let habitId = req.body.habitId;
-
-    console.log(habitId);
-
-    Habit
-        .update({
-            _id: habitId
-        }, {
-            $inc: {
-                "checkin": 1
-            }
-        }).exec().then(function (milestone) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-
-    //    Habit
-    //        .findByIdAndUpdate(milestoneID, {
-    //        $set: toUpdate
-    //    }).exec().then(function (milestone) {
-    //        return res.status(204).end();
-    //    }).catch(function (err) {
-    //        return res.status(500).json({
-    //            message: 'Internal Server Error'
-    //        });
-    //    });
-
-
-});
 // DELETE ----------------------------------------
 // deleting a milestone item by id
 app.delete('/milestone/:milestoneID', function (req, res) {
     Milestones
         .findByIdAndRemove(req.params.milestoneID)
-        .exec().then(function (item) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        });
-});
-
-// DELETE ----------------------------------------
-// deleting a Habit  by id
-app.delete('/habit/:habitID', function (req, res) {
-    Habit
-        .findByIdAndRemove(req.params.habitID)
         .exec().then(function (item) {
             return res.status(204).end();
         }).catch(function (err) {
