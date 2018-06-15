@@ -272,7 +272,7 @@ app.put('/update-habit/:habitId', function (req, res) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Habit update failed'
             });
         });
 
@@ -296,7 +296,7 @@ app.put('/habit/checkin', function (req, res) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Habit checkin failed'
             });
         });
 
@@ -323,7 +323,7 @@ app.delete('/habit/:habitID', function (req, res) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Delete Habit failed'
             });
         });
 });
@@ -347,7 +347,7 @@ app.get('/get-notes/:habitId', function (req, res) {
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Get Notes failed'
             });
         });
 });
@@ -373,7 +373,7 @@ app.put('/notes/save', (req, res) => {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Notes Save failed'
             });
         });
 });
@@ -397,7 +397,7 @@ app.post('/milestones/add', (req, res) => {
     }, (err, item) => {
         if (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Failed to add milestones'
             });
         }
         if (item) {
@@ -425,7 +425,7 @@ app.get('/get-milestones/:habitId', function (req, res) {
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Get milestones failed'
             });
         });
 });
@@ -454,7 +454,7 @@ app.put('/milestone/check', function (req, res) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Check milestones failed'
             });
         });
 });
@@ -468,7 +468,7 @@ app.delete('/milestone/:milestoneID', function (req, res) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Milestone delete failed'
             });
         });
 });

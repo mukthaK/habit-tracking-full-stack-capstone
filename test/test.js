@@ -52,7 +52,7 @@ describe('habit API', function () {
 
     it('Should Update a habit', function () {
         chai.request(app)
-            .put('/update-habit/:habitId')
+            .put('/update-habit/5b11d3da6c25be0e6b554553')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
@@ -76,7 +76,7 @@ describe('habit API', function () {
 
     it('Should Delete a habit', function () {
         chai.request(app)
-            .delete('/habit/:habitID')
+            .delete('/habit/5b11d3da6c25be0e6b554553')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
@@ -93,7 +93,7 @@ describe('notes API', function () {
 
     it('Should Get All habits notes', function () {
         chai.request(app)
-            .get('/get-notes/:habitId')
+            .get('/get-notes/5b11d3da6c25be0e6b554553')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
@@ -125,7 +125,7 @@ describe('milestone API', function () {
                 milestonesContent: "run 2 miles",
                 checked: false,
                 habitName: "running",
-                habitID: "a47vbjh0178nkj9891mndycc6hklwhfuqb",
+                habitID: "5b11d3da6c25be0e6b554553",
                 loggedinUser: "test@gmail.com"
             })
             .then(function (err, res) {

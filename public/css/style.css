@@ -534,9 +534,10 @@ fieldset {
     max-width: 80%;
 }
 
+/*
 .select-day input {
     display: none;
-}
+}*/
 
 .select-day label {
     display: inline-block;
@@ -566,6 +567,17 @@ fieldset {
 #friday:checked ~ label[for="friday"],
 #saturday:checked ~ label[for="saturday"],
 #sunday:checked ~ label[for="sunday"] {
+    background: #999;
+    color: #fff;
+}
+
+.monday:checked ~ label[for="monday"],
+.tuesday:checked ~ label[for="tuesday"],
+.wednesday:checked ~ label[for="wednesday"],
+.thursday:checked ~ label[for="thursday"],
+.friday:checked ~ label[for="friday"],
+.saturday:checked ~ label[for="saturday"],
+.sunday:checked ~ label[for="sunday"] {
     background: #999;
     color: #fff;
 }
