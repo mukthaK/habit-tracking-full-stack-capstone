@@ -582,6 +582,16 @@ fieldset {
     color: #fff;
 }
 
+.monday,
+.tuesday,
+.wednesday,
+.thursday,
+.friday,
+.saturday,
+.sunday {
+    margin: 0 3px 0 15px;
+}
+
 .label-selected {
     background: #999;
     color: #fff;
