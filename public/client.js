@@ -832,7 +832,8 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
     // validate
     if (milestonesContent == "") {
         alert("Must input milestone title");
-        $('.milestoneInput ').focus();
+        console.log($(this));
+        $(this).parent().find('.milestoneInput').focus();
     } else {
         // HTML element for Milestone list item with data populated with user input
         //        const htmlMilestoneItem = `<li>
