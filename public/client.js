@@ -194,8 +194,8 @@ function displayHabits(result) {
         buildTheHtmlOutput += '</select>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</fieldset>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-done" class="habit-form-done-js">Done</button>';
-        buildTheHtmlOutput += '<button type="submit" class="habit-form-cancel" class="habit-form-cancel-js">Cancel</button>';
+        buildTheHtmlOutput += '<button type="submit" class="habit-form-done">Done</button>';
+        buildTheHtmlOutput += '<button type="button" class="habit-form-cancel" onclick="hideHabitFormContainer(\'' + resultValue._id + '\')">Cancel</button>';
         buildTheHtmlOutput += '</form>';
         buildTheHtmlOutput += '</div>';
         // End Habit Edit form
@@ -737,16 +737,22 @@ $(document).on('submit', '.habit-edit-form', function (event) {
 
 });
 
-
+/*
 // Habit edit form Cancel button -- not working ???????
 //$('.habit-edit-form').on('click', '.habit-form-cancel', function (event) {
-//$('document').on('click', '.habit-form-cancel', function (event) {
-$('.habit-form-cancel').click(function (event) {
+$('document').on('click', '.habit-form-cancel', function (event) {
+    //$('.habit-form-cancel').click(function (event) {
+    alert("Cancel button clicked");
     console.log($(this));
     event.preventDefault();
     $('#' + habitId).hide();
 });
+*/
 
+function hideHabitFormContainer(habitId) {
+    $('#' + habitId).hide();
+    alert("Cancel button clicked");
+}
 
 // habit  form cancel button
 $(document).on('click', '#habit-form-cancel-js', function (event) {
