@@ -134,7 +134,7 @@ header {
 }
 
 .feature-container i {
-    font-size: 100px;
+    font-size: 80px;
     padding: 25px;
     display: inline-block;
     color: #8C4B76
@@ -274,7 +274,7 @@ fieldset {
 .habit-container {
     max-width: 90%;
     padding: 0px;
-    margin: 10px auto;
+    margin: 40px auto;
     /*    border: 1px solid rgb(140, 75, 118);*/
     border: 1px solid rgb(235, 152, 150);
     border-radius: 5px;
@@ -627,6 +627,7 @@ fieldset {
     /*    background: url("http://tokyographicdesigners.com/wp-content/uploads/2015/09/lowpoly-bgk1.jpg") no-repeat top;*/
     height: auto;
     padding: 20px;
+    text-align: center;
 }
 
 footer p {
@@ -644,7 +645,6 @@ footer img {
 }
 
 .footer-container i:hover {
-
     color: #ecb2ab;
     border-radius: 50%;
 }
