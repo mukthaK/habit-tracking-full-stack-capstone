@@ -737,7 +737,7 @@ $(document).on('submit', '.habit-edit-form', function (event) {
 
 });
 
-/*
+
 // Habit edit form Cancel button -- not working ???????
 //$('.habit-edit-form').on('click', '.habit-form-cancel', function (event) {
 //$('document').on('click', '.habit-form-cancel', function (event) {
@@ -746,10 +746,10 @@ $('.habit-form-cancel').click(function (event) {
     event.preventDefault();
     $('#' + habitId).hide();
 });
-*/
 
-// habit edit form cancel button
-$(document).on('click', '.habit-form-cancel-js', function (event) {
+
+// habit  form cancel button
+$(document).on('click', '#habit-form-cancel-js', function (event) {
     event.preventDefault();
     $('main').hide();
     $('#habit-add-screen').hide();
