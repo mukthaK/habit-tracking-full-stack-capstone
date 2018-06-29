@@ -10,7 +10,7 @@ This app is designed for individual users who would like to cultivate new habit 
 ![UI Flow handwritten draft](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/uiflow.png)
 
 ### Wireframe _main
-![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/landingpage.png "Landing screen")
+![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/landingpage.png "Landing screen") \
 ![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/signupPage.png "Sign Up screen") |
 ![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/loginPage.png "Log In screen") |
 ![New user dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/newUserDashboard.png "New user dashboard") |
