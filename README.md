@@ -7,10 +7,16 @@ The habit Tracker app is designed for people who would like to cultivate a new h
 This app is designed for individual users who would like to cultivate new habit and track their habits.
 
 ### UI Flow
-![UI Flow handwritten draft](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/ui-flow-alt.jpg)
+![UI Flow handwritten draft](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/uiflow.png)
 
 ### Wireframe _main
-![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/landing-screen.jpg "Landing screen") | ![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/signup.jpg "Sign Up screen") | ![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/login.jpg "Log In screen") | ![New user dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/new-user-dashboard.jpg "New user dashboard") | ![User Dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/user-dashboard.jpg "User Dashboard") | ![Adding habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/images/wireframe/add-new-habit.jpg "Adding Habit") | ![Edit/View habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/editHabit.png "Edit/View habit")
+![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/landingpage.png "Landing screen") |
+![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/signupPage.png "Sign Up screen") |
+![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/loginPage.png "Log In screen") |
+![New user dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/newUserDashboard.png "New user dashboard") |
+![User Dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/userDashboard.png "User Dashboard") |
+![Adding habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/addNewHabit.png "Adding Habit") |
+![Edit/View habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/editHabit.png "Edit/View habit")
 
 ## Working Prototype
 You can access a working prototype of the app here: https://habit-tracker-fullstack.herokuapp.com/
