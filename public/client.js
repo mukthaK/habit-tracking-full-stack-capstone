@@ -583,6 +583,11 @@ $(document).on('click', '#habit-form-done-js', function (event) {
                 $('#habit-add-screen').hide();
                 $('#dashboard-js').show();
                 populateHabitsByUsername(result.loggedinUser);
+
+                $('html, body').animate({
+                    scrollTop: $('footer').offset().top
+                }, 1200);
+
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
