@@ -392,6 +392,17 @@ $(document).on('click', '#singup-screen-login-button-js', function (event) {
     $('#login-screen').show();
 });
 
+// signup button at login form
+$(document).on('click', '#login-screen-signup-button-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#nav-bar').addClass('nav-background');
+    $('.nav-left li, .nav-right li').css('color', 'white');
+    $('#footer-container').show();
+    $('#signup-screen').show();
+});
+
 //Signup button at signup form
 $(document).on('click', '#signup-button-js', function (event) {
     event.preventDefault();
@@ -399,6 +410,7 @@ $(document).on('click', '#signup-button-js', function (event) {
     const username = $('#signup-username').val();
     const password = $('#signup-password').val();
     const confirmPassword = $('#signup-confirm-password').val();
+
     // validate user inputs
     if (username == '')
         alert('Must input username');
@@ -439,9 +451,6 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $(".newuser-msg").show();
                 $('.habit-edit-screen').hide();
                 populateHabitsByUsername(result.username);
-                username = "";
-                password = "";
-                confirmPassword = "";
             })
             // if the call is failing
             .fail(function (jqXHR, error, errorThrown) {

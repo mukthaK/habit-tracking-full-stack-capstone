@@ -184,10 +184,10 @@ header {
     padding: 8px;
     font-family: 'Monda', sans-serif;
     font-size: 17px;
-    background-color: #02558B;
+    /*background-color: #02558B;
     background-color: #14A098;
     background-color: rgba(126, 80, 148, 1.9);
-    background-color: #8C4B76;
+    background-color: #8C4B76;*/
     background-color: #d05d76;
 }
 
@@ -216,10 +216,14 @@ fieldset {
 
 /* Sign Up section style */
 
-.singup-screen-login-button {
+.singup-screen-login-button,
+.login-screen-signup-button {
     color: #d05d76;
 }
 
+.demo-info {
+    margin-top: 10px;
+}
 
 /* User dashboard */
 
