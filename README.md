@@ -2,7 +2,6 @@
 The habit Tracker app is designed for people who would like to cultivate a new habit and make it a routine. It allows a user to create a habit list, plan on when they would like it to be done. User can also add notes and create  milestones to break down it into small steps. It shows how many times it has been done to motivate a user to continue in doing it.
 
 ## Screenshots
-
 ![Landing page](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/homePage.png "Landing page")
 ![Landing page additional](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/homePage1.png "Landing page")
 ![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/signup.png "Sign Up screen")
@@ -18,7 +17,7 @@ This app is designed for individual users who would like to cultivate new habit 
 ### UI Flow
 ![UI Flow handwritten draft](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/uiflow.png)
 
-### Wireframe _main
+### Wireframe
 ![Landing Screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/landingpage.png "Landing screen") \
 ![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/signupPage.png "Sign Up screen")
 ![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/github-images/loginPage.png "Log In screen")
