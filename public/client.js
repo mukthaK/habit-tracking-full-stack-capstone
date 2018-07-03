@@ -1,7 +1,7 @@
 //Triggers
 // Get the Habits for that user
-function populateHabitsByUsername(loggedinUser) { //Get AJAX User Entries call, render on page
-
+function populateHabitsByUsername(loggedinUser) {
+    //Get AJAX User Entries call, render on page
     if ((loggedinUser == "") || (loggedinUser == undefined) || (loggedinUser == null)) {
         loggedinUser = $('#loggedin-user').val();
     }
@@ -33,9 +33,6 @@ function displayHabits(result) {
     let buildTheHtmlOutput = "";
 
     $.each(result, function (resultKey, resultValue) {
-        //        console.log("result value [id] - " + resultValue._id);
-        //        console.log(result);
-        //        console.log(resultKey);
 
         buildTheHtmlOutput += '<div class="habit-container" id="habit-container-js">';
         buildTheHtmlOutput += '<div class="habit-name">';
@@ -54,52 +51,13 @@ function displayHabits(result) {
 
         //notes wrapper start
         buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
-        //buildTheHtmlOutput += '<span><i class="far fa-sticky-note"></i>Notes</span>';
-        //buildTheHtmlOutput += '<button type="submit" class="add-notes-button" id="add-notes-button-js"><i class="fas fa-plus-circle"></i><span>Notes</span></button>';
-
-        //notes container start
-        //        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-        //        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
-        //        buildTheHtmlOutput += '<div class="notes-handle">';
-        //        buildTheHtmlOutput += '<span>Notes & Journal</span>';
-        //        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
-        //        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">Type here...';
-        //
-        //
-        //        buildTheHtmlOutput += '</div>';
-        //
-        //        buildTheHtmlOutput += '</div>';
-        //notes container stop
-
         // Get the notes content and display
         populateNotesByHabitId(resultValue._id);
-
-        //        buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '</div>';
         //notes wrapper stop
 
         //milestone wrapper start
         buildTheHtmlOutput += '<div class="milestone-container ' + resultValue._id + '">';
-        //        buildTheHtmlOutput += '<p><i class="fas fa-tasks"></i>Milestones</p>';
-        //        buildTheHtmlOutput += '<button type="submit"class="add-milestones-button" id="add-milestones-button-js"><i class="fas fa-plus-circle"></i><span>Milestones</span></button>';
-
-        //        //milestone container start
-        //        buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
-        //        buildTheHtmlOutput += '<div class="milestone-list">';
-        //        buildTheHtmlOutput += '<div class="milestones-header">';
-        //        buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
-        //        buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
-        //        buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js">+</button>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '<ul id="milestonesItems">';
-        //
-        //        buildTheHtmlOutput += '</ul>';
-        //        buildTheHtmlOutput += '</div>';
-        //        buildTheHtmlOutput += '</div>';
-        //        //milestone container stop
-
         buildTheHtmlOutput += '</div>';
         //milestone wrapper stop
 
@@ -107,6 +65,7 @@ function displayHabits(result) {
         populateMilestoneItemsByHabitId(resultValue._id);
 
         buildTheHtmlOutput += '</div>';
+
         // Start habit edit form
         buildTheHtmlOutput += '<div class="habit-edit-screen" id="' + resultValue._id + '">';
         buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
@@ -165,7 +124,6 @@ function displayHabits(result) {
             buildTheHtmlOutput += '<label for="sunday">Sun</label>';
         }
 
-
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div class="select-daytime">';
         buildTheHtmlOutput += '<span>I will do it</span>';
@@ -210,8 +168,6 @@ function displayHabits(result) {
 
 // Get Notes content from DB by Habit Id
 function populateNotesByHabitId(habitId) {
-    //    console.log("habit id inside populate notes " + habitId);
-
     $.ajax({
             type: 'GET',
             url: `/get-notes/${habitId}`,
@@ -237,11 +193,9 @@ function displayNotes(result, habitId) {
     $.each(result, function (resultKey, resultValue) {
         //notes container start
         buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-        //buildTheHtmlOutput += '<div class="sticky-note-pre ui-widget-content">';
         buildTheHtmlOutput += '<div class="notes-handle">';
         buildTheHtmlOutput += '<span>Notes & Journal</span>';
         buildTheHtmlOutput += '<input type="hidden" class="save-note-id" value="' + resultValue._id + '">';
-        //buildTheHtmlOutput += '<button type="submit" class="notes-delete" id="notes-delete-js"><i class="far fa-trash-alt"></i></button>';
         buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
         buildTheHtmlOutput += '</div>';
         buildTheHtmlOutput += '<div contenteditable class="notes-content-js">' + resultValue.notesContent;
@@ -254,20 +208,14 @@ function displayNotes(result, habitId) {
     $(".notes-container." + habitId).html(buildTheHtmlOutput);
 }
 
-// Edit habit option - is it possible to pass object so that
-// it has all the details to populate edit form ???? <----
+// Edit habit option
 function editHabit(habitId) {
-    console.log($(this).parent());
+    //console.log($(this).parent());
     $('#' + habitId).show();
-
-
 }
 
 // Delete habit by habit Id
 function deleteHabit(habitID, username) {
-
-    console.log(habitID, username);
-
     // Make a DELETE call to delete item by ID
     $.ajax({
             type: 'DELETE',
@@ -277,7 +225,7 @@ function deleteHabit(habitID, username) {
         })
         //if call is succefull
         .done(function (result) {
-            console.log(result);
+            //console.log(result);
             populateHabitsByUsername(username);
             alert("Habit  deleted");
         })
@@ -292,9 +240,7 @@ function deleteHabit(habitID, username) {
 
 // Checkin habit by habit ID
 function checkinHabit(habitId) {
-    console.log(habitId);
-
-    // Increment the value in DB for every checkin
+    //console.log(habitId);
 
     // Create a payload to update the checked value in DB
     const habitObject = {
@@ -311,7 +257,7 @@ function checkinHabit(habitId) {
         })
         //if call is succefull
         .done(function (result) {
-            console.log(result);
+            //console.log(result);
             populateHabitsByUsername();
         })
         //if the call is failing
@@ -325,8 +271,6 @@ function checkinHabit(habitId) {
 
 // Make a GET call to get the milestone items for the habit
 function populateMilestoneItemsByHabitId(habitId) {
-    // console.log("habit id inside milestone item populate" + habitId);
-
     $.ajax({
             type: 'GET',
             url: `/get-milestones/${habitId}`,
@@ -335,7 +279,7 @@ function populateMilestoneItemsByHabitId(habitId) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log("get milestones result done function", result);
+            //console.log("get milestones result done function", result);
             displayMilestones(result, habitId);
         })
         //if the call is failing
@@ -360,7 +304,6 @@ function displayMilestones(result, habitId) {
     buildTheHtmlOutput += '<ul id="milestonesItems">';
 
     $.each(result, function (resultKey, resultValue) {
-
         buildTheHtmlOutput += '<li>';
         console.log(resultValue.checked);
         if (resultValue.checked == 'true') {
@@ -374,7 +317,6 @@ function displayMilestones(result, habitId) {
         buildTheHtmlOutput += '</label>';
         buildTheHtmlOutput += '<button class="delete-milestone-item"><i class="fas fa-times"></i></button>';
         buildTheHtmlOutput += '</li>';
-
     });
 
     buildTheHtmlOutput += '</ul>';
@@ -386,6 +328,12 @@ function displayMilestones(result, habitId) {
     $(".milestone-container." + habitId).html(buildTheHtmlOutput);
 }
 
+
+function hideHabitFormContainer(habitId) {
+    $('#' + habitId).hide();
+    //alert("Cancel button clicked");
+}
+
 $(document).ready(function () {
     $('main').hide();
     $('#nav-bar').show();
@@ -393,12 +341,11 @@ $(document).ready(function () {
     $('#landing-screen').show();
     $('#footer-container').show();
     //habit container - checkin
-    $('#checkin-habit-js').on('click', function (event) {
-        event.preventDefault();
-        alert("habit checkin icon clicked");
-    });
+    //$('#checkin-habit-js').on('click', function (event) {
+    //    event.preventDefault();
+    //      alert("habit checkin icon clicked");
+    //});
     $(".newuser-msg").hide();
-
 });
 
 // Signup button on landing screen(hero)
@@ -448,14 +395,10 @@ $(document).on('click', '#singup-screen-login-button-js', function (event) {
 //Signup button at signup form
 $(document).on('click', '#signup-button-js', function (event) {
     event.preventDefault();
-
     // get values from sign up form
     const username = $('#signup-username').val();
     const password = $('#signup-password').val();
     const confirmPassword = $('#signup-confirm-password').val();
-
-    console.log(username, password, confirmPassword);
-
     // validate user inputs
     if (username == '')
         alert('Must input username');
@@ -467,14 +410,11 @@ $(document).on('click', '#signup-button-js', function (event) {
         alert('Passwords do not match');
     // if valid
     else {
-        //        alert("success");
         // create the payload object (what data we send to the api call)
         const newUserObject = {
             username: username,
             password: password
         };
-        // console.log(newUserObject);
-
         // make the api call using the payload above
         $.ajax({
                 type: 'POST',
@@ -499,10 +439,6 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $(".newuser-msg").show();
                 $('.habit-edit-screen').hide();
                 populateHabitsByUsername(result.username);
-                //                $('#habit-notes - js ').hide();
-                //                $('#habit-milestones-js').hide();
-                //    $('#habit-container - js ').hide();
-                //            populateUserDashboardDate(result.username);
             })
             // if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -546,7 +482,7 @@ $(document).on('click', '#login-button-js', function (event) {
             })
             //if call is succefull
             .done(function (result) {
-                console.log(result);
+                //console.log(result);
                 $('#loggedin-user').val(result.username);
                 $('#nav-bar span').text("Hello " + result.username);
 
@@ -561,14 +497,6 @@ $(document).on('click', '#login-button-js', function (event) {
                 $('#footer-container').show();
                 $('#dashboard-js').show();
                 $('.habit-edit-screen').hide();
-
-                //                $('#habit-notes-js').hide();
-                //                $('#habit-milestones-js').hide();
-
-                //            $('#loggedInName').text(result.name);
-                //            $('#loggedInUserName').val(result.username);
-                //            populateUserDashboardDate(result.username); //AJAX call in here??
-
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -583,43 +511,26 @@ $(document).on('click', '#login-button-js', function (event) {
 // user dashboard - add habit button
 $(document).on('click', '#add-habit-button-js', function (event) {
     event.preventDefault();
-    //    alert("add habit button clicked");
     $('main').hide();
     $('#nav-bar').show();
     $('#nav-bar').addClass('nav-background');
     $('#footer-container').show();
-    //    $('#dashboard - js').show();
     $('#habit-add-screen').show();
 });
-
-//habit container - edit habit
-//$(document).on('click', '#edit-habit-js', function (event) {
-//    event.preventDefault();
-//    //    alert("habit edit icon clicked");
-//    $('main').hide();
-//    $('#habit-add-screen').show();
-//    console.log(event.currentTarget);
-//    //pre populate the habit form values with the details already there
-//});
 
 //habit container - delete habit
 $('#delete-habit-js').on('click', function (event) {
     event.preventDefault();
-    //    alert("habit delete icon clicked");
     $('#habit-container-js').hide();
 
     // Get values of habit name and logged in user
-    const habitName = $(".habit-name").val();
-    const loggedinUser = $('#loggedin-user').val();
-
-    //const
-
+    //const habitName = $(".habit-name").val();
+    //const loggedinUser = $('#loggedin-user').val();
 });
 
 // habit  form done button
 $(document).on('click', '#habit-form-done-js', function (event) {
     event.preventDefault();
-
 
     // Get the inputs from the user in Log In form
     const habitName = $("#habit-name").val();
@@ -627,7 +538,6 @@ $(document).on('click', '#habit-form-done-js', function (event) {
     const time = $('#habit-time').val();
 
     const loggedinUser = $('#loggedin-user').val();
-    //    console.log(habitName, weekday, time);
 
     // validate the input
     if (habitName == "") {
@@ -646,7 +556,6 @@ $(document).on('click', '#habit-form-done-js', function (event) {
             time: time,
             loggedinUser: loggedinUser
         };
-        //        console.log(newHabitObject);
 
         //make the api call using the payload above
         $.ajax({
@@ -662,8 +571,6 @@ $(document).on('click', '#habit-form-done-js', function (event) {
                 $('#habit-add-screen').hide();
                 $('#dashboard-js').show();
                 populateHabitsByUsername(result.loggedinUser);
-                //console.log("After calling function populate habits by username");
-
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -683,10 +590,9 @@ $(document).on('submit', '.habit-edit-form', function (event) {
     const habitName = $(this).find(".habit-name").val();
     const weekday = $(this).find("input[type='radio']:checked").val();
     const time = $(this).find('.habit-time').val();
-    //const habitId = $(this).parent().parent().parent().find('.noteMilestoneContainerID').val();
     const habitId = $(this).closest('.habit-container').find('.noteMilestoneContainerID').val();
     const loggedinUser = $('#loggedin-user').val();
-    console.log(habitName, weekday, time, habitId, loggedinUser);
+    //console.log(habitName, weekday, time, habitId, loggedinUser);
 
     // validate the input
     if (habitName == "") {
@@ -705,7 +611,6 @@ $(document).on('submit', '.habit-edit-form', function (event) {
             time: time,
             loggedinUser: loggedinUser
         };
-        //        console.log(newHabitObject);
 
         //make the api call using the payload above
         $.ajax({
@@ -718,13 +623,9 @@ $(document).on('submit', '.habit-edit-form', function (event) {
             //if call is successfull
             .done(function (result) {
                 console.log(result);
-                //            $('#habit-add-screen').hide();
-                //            $('#dashboard-js').show();
                 populateHabitsByUsername(loggedinUser);
                 $('.habit-edit-form').hide();
                 alert('Habit is updated');
-                //console.log("After calling function populate habits by username");
-
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -737,23 +638,6 @@ $(document).on('submit', '.habit-edit-form', function (event) {
 
 });
 
-/*
-// Habit edit form Cancel button -- not working ???????
-//$('.habit-edit-form').on('click', '.habit-form-cancel', function (event) {
-$('document').on('click', '.habit-form-cancel', function (event) {
-    //$('.habit-form-cancel').click(function (event) {
-    alert("Cancel button clicked");
-    console.log($(this));
-    event.preventDefault();
-    $('#' + habitId).hide();
-});
-*/
-
-function hideHabitFormContainer(habitId) {
-    $('#' + habitId).hide();
-    alert("Cancel button clicked");
-}
-
 // habit  form cancel button
 $(document).on('click', '#habit-form-cancel-js', function (event) {
     event.preventDefault();
@@ -765,7 +649,6 @@ $(document).on('click', '#habit-form-cancel-js', function (event) {
 // Notes save
 $(document).on('click', '.notesSaveJs', function (event) {
     event.preventDefault();
-    //    alert("save clicked");
 
     // Get the value from the notes container
     let notesContent = $(this).parent().parent().find('.notes-content-js').html();
@@ -811,16 +694,13 @@ $(document).on('click', '.notesSaveJs', function (event) {
 // Delete button on Notes -- REMOVE
 $(document).on('click', '#notes-delete-js', function (event) {
     event.preventDefault();
-    //    alert("delete clicked");
-    //    $('#habit-notes-js').hide();
-    //    $('.notes-container').html(renderNotesAddButton);
 
     // Empty the notes content
     $('.notes-content-js').text('Type here...');
 
     // Update/ DELETE the entry from the DB
     const itemId = $(this).attr(_id);
-    console.log(itemId);
+    //console.log(itemId);
 });
 
 // Adding an item in Milestones list habitId(unique) instead of Habit name(not unique)-- ??
@@ -847,15 +727,6 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
         console.log($(this));
         $(this).parent().find('.milestoneInput').focus();
     } else {
-        // HTML element for Milestone list item with data populated with user input
-        //        const htmlMilestoneItem = `<li>
-        //        <input type="checkbox" id="milestone-item">
-        //        <label for="milestone-item">${milestonesContent}</label>
-        //        <button class="delete-milestone-item"><i class="fas fa-times"></i></button>
-        //        </li>`;
-        //        $('#milestonesItems').append(htmlMilestoneItem);
-
-
         // create the payload object (what data we send to the api call)
         const milestonesObject = {
             milestonesContent: milestonesContent,
@@ -863,7 +734,7 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
             habitName: habitName,
             habitID
         };
-        console.log(milestonesObject);
+        //console.log(milestonesObject);
 
         //make the api call using the payload above
         $.ajax({
@@ -875,10 +746,9 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
             })
             //if call is succefull
             .done(function (result) {
-                console.log(result);
+                //console.log(result);
                 populateMilestoneItemsByHabitId(habitID);
                 $('#dashboard-js').show();
-
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -893,7 +763,6 @@ $(document).on('click', '#milestone-item-add-js', function (event) {
 // Delete button on Milestones
 $(document).on('click', '.delete-milestone-item', function (event) {
     event.preventDefault();
-    //alert("delete clicked");
 
     // Get the clicked elemt and habit ID
     let milestoneID = $(this).parent().find('.save-milestone-id').val();
@@ -918,16 +787,6 @@ $(document).on('click', '.delete-milestone-item', function (event) {
             console.log(errorThrown);
         });
 
-    //    const listItem = $(this).parent();
-    //    const itemToRemove = listItem.find('label').text();
-    //    console.log("itemToRemove label - " + itemToRemove);
-
-    // Remove item from display
-    //    listItem.remove();
-
-    //Remove item from DB
-    //    const itemId = listItem.attr(_id);
-    //    console.log(itemId);
 });
 
 // Milestone item check and uncheck
@@ -964,9 +823,6 @@ $(document).on('change', '.milestone-item', function (event) {
         //if call is succefull
         .done(function (result) {
             console.log(result);
-            //                $('#habit-add-screen').hide();
-            //populateMilestoneItemsByHabitId(habitID);
-            //$('#dashboard-js').show();
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -982,60 +838,3 @@ $('#navbar-logout-js').click(function (event) {
     event.preventDefault();
     location.reload();
 });
-
-
-
-////Save button for Milestones
-//$(document).on('click', '#milestones-save-js', function (event) {
-//    event.preventDefault();
-//    //    alert("save clicked");
-//
-//    // Get the value from the milestones container
-//    const milestonesContent = $('#milestone').val();
-//    console.log("milestonesContent" + milestonesContent);
-//    console.log("milestonesContent length" + milestonesContent.length);
-//
-//
-//
-//    // Get the user name
-//    const loggedinUser = $('#loggedin-user').val();
-//    console.log(loggedinUser);
-//
-//    //validation
-//
-//
-//    // Get the habit name associated with the milestones
-//    const habitName = $('#habit-container-js h4').html();
-//    console.log(habitName);
-//
-//    // create the payload object (what data we send to the api call)
-//    const milestonesObject = {
-//        milestonesContent: milestonesContent,
-//        loggedinUser: loggedinUser,
-//        habitName: habitName
-//    };
-//    console.log(milestonesObject);
-//
-//    //make the api call using the payload above
-//    $.ajax({
-//            type: 'POST',
-//            url: '/milestones/save',
-//            dataType: 'json',
-//            data: JSON.stringify(milestonesObject),
-//            contentType: 'application/json'
-//        })
-//        //if call is succefull
-//        .done(function (result) {
-//            console.log(result);
-//
-//            $('#dashboard-js').show();
-//        })
-//        //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//            console.log(jqXHR);
-//            console.log(error);
-//            console.log(errorThrown);
-//            alert('Incorrect milestone');
-//        });
-//
-//});
