@@ -439,6 +439,9 @@ $(document).on('click', '#signup-button-js', function (event) {
                 $(".newuser-msg").show();
                 $('.habit-edit-screen').hide();
                 populateHabitsByUsername(result.username);
+                username = "";
+                password = "";
+                confirmPassword = "";
             })
             // if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
