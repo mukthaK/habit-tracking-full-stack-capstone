@@ -57,11 +57,9 @@ function closeServer() {
 }
 
 
-
 // ---------------USER ENDPOINTS-------------------------------------
 // creating a new user
 app.post('/users/create', (req, res) => {
-
     //take the  username and the password from the ajax api call
     let username = req.body.username;
     let password = req.body.password;
@@ -72,10 +70,8 @@ app.post('/users/create', (req, res) => {
 
     //create an encryption key
     bcrypt.genSalt(10, (err, salt) => {
-
         //if creating the key returns an error...
         if (err) {
-
             //display it
             return res.status(500).json({
                 message: 'Encryption key creation error'
@@ -84,10 +80,8 @@ app.post('/users/create', (req, res) => {
 
         //using the encryption key above generate an encrypted pasword
         bcrypt.hash(password, salt, (err, hash) => {
-
             //if creating the encrypted pasword returns an error..
             if (err) {
-
                 //display it
                 return res.status(500).json({
                     message: 'Encryption password error'
@@ -99,7 +93,6 @@ app.post('/users/create', (req, res) => {
                 username,
                 password: hash,
             }, (err, item) => {
-
                 //if creating a new user in the DB returns an error..
                 if (err) {
                     //display it
@@ -109,7 +102,6 @@ app.post('/users/create', (req, res) => {
                 }
                 //if creating a new user in the DB is succefull
                 if (item) {
-
                     //display the new user
                     console.log(`User \`${username}\` created.`);
                     return res.json(item);
@@ -121,7 +113,6 @@ app.post('/users/create', (req, res) => {
 
 // Loging in a user
 app.post('/users/login', function (req, res) {
-
     //take the username and the password from the ajax api call
     const username = req.body.username;
     const password = req.body.password;
@@ -130,10 +121,8 @@ app.post('/users/login', function (req, res) {
     User.findOne({
         username: username
     }, function (err, items) {
-
         //if the there is an error connecting to the DB
         if (err) {
-
             //display it
             return res.status(500).json({
                 message: "Error connecting to the DB"
@@ -148,20 +137,15 @@ app.post('/users/login', function (req, res) {
         }
         //if the username is found
         else {
-
             //try to validate the password
             items.validatePassword(password, function (err, isValid) {
-
                 //if the connection to the DB to validate the password is not working
                 if (err) {
-
                     //display error
                     console.log('Could not connect to the DB to validate the password.');
                 }
-
                 //if the password is not valid
                 if (!isValid) {
-
                     //display error
                     return res.status(401).json({
                         message: "Password Invalid"
@@ -208,18 +192,13 @@ app.post('/habit/create', (req, res) => {
                 loggedinUser
             }, (err, item) => {
                 if (err) {
-                    ////                    return res.status(500).json({
-                    //                        message: 'Internal Server Error'
-                    //                    });
                     console.log('Error Creating Notes while creating Habit');
                 }
                 if (item) {
-                    //                    return res.json(item);
                     console.log(item);
                 }
             });
             return res.json(item);
-
         }
     });
 });
@@ -282,9 +261,7 @@ app.put('/update-habit/:habitId', function (req, res) {
 // Update habit checkin value
 app.put('/habit/checkin', function (req, res) {
     let habitId = req.body.habitId;
-
-    console.log(habitId);
-
+    //console.log(habitId);
     Habit
         .update({
             _id: habitId
@@ -299,19 +276,6 @@ app.put('/habit/checkin', function (req, res) {
                 message: 'Habit checkin failed'
             });
         });
-
-    //    Habit
-    //        .findByIdAndUpdate(milestoneID, {
-    //        $set: toUpdate
-    //    }).exec().then(function (milestone) {
-    //        return res.status(204).end();
-    //    }).catch(function (err) {
-    //        return res.status(500).json({
-    //            message: 'Internal Server Error'
-    //        });
-    //    });
-
-
 });
 
 // DELETE ----------------------------------------
@@ -341,9 +305,6 @@ app.get('/get-notes/:habitId', function (req, res) {
             console.log("note ", note);
             return res.json(note);
         })
-        //            if (req.params.habitId == note._id) {
-        //                return res.json(note.notesContent);
-        //            }
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
@@ -357,7 +318,6 @@ app.get('/get-notes/:habitId', function (req, res) {
 app.put('/notes/save', (req, res) => {
     let notesContent = req.body.notesContent;
     let notesID = req.body.notesID;
-
     let toUpdate = {};
     let updateableFields = ['notesContent'];
     updateableFields.forEach(function (field) {
@@ -411,7 +371,6 @@ app.post('/milestones/add', (req, res) => {
 app.get('/get-milestones/:habitId', function (req, res) {
 
     Milestones
-        //        .findById(req.params.habitId)
         .find({
             "habitID": req.params.habitId
         })
@@ -419,9 +378,6 @@ app.get('/get-milestones/:habitId', function (req, res) {
             console.log("milestone ", milestone);
             return res.json(milestone);
         })
-        //            if (req.params.habitId == note._id) {
-        //                return res.json(note.notesContent);
-        //            }
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
@@ -435,8 +391,7 @@ app.get('/get-milestones/:habitId', function (req, res) {
 app.put('/milestone/check', function (req, res) {
     let milestoneID = req.body.milestoneID;
     let checkedValue = req.body.checked;
-
-    console.log(milestoneID, checkedValue);
+    //console.log(milestoneID, checkedValue);
 
     let toUpdate = {};
     let updateableFields = ['checked'];
@@ -445,7 +400,7 @@ app.put('/milestone/check', function (req, res) {
             toUpdate[field] = req.body[field];
         }
     });
-    console.log(toUpdate);
+    //console.log(toUpdate);
 
     Milestones
         .findByIdAndUpdate(milestoneID, {
