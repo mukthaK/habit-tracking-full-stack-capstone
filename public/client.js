@@ -227,7 +227,7 @@ function deleteHabit(habitID, username) {
         .done(function (result) {
             //console.log(result);
             populateHabitsByUsername(username);
-            alert("Habit  deleted");
+            alert("Habit will be deleted");
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -708,17 +708,6 @@ $(document).on('click', '.notesSaveJs', function (event) {
         });
 });
 
-// Delete button on Notes -- REMOVE
-$(document).on('click', '#notes-delete-js', function (event) {
-    event.preventDefault();
-
-    // Empty the notes content
-    $('.notes-content-js').text('Type here...');
-
-    // Update/ DELETE the entry from the DB
-    const itemId = $(this).attr(_id);
-    //console.log(itemId);
-});
 
 // Adding an item in Milestones list habitId(unique) instead of Habit name(not unique)-- ??
 $(document).on('click', '#milestone-item-add-js', function (event) {
