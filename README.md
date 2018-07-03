@@ -3,6 +3,15 @@ The habit Tracker app is designed for people who would like to cultivate a new h
 
 ## Screenshots
 
+![Landing page](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/homePage.png "Landing page") \
+![Landing page additional](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/homePage1.png "Landing page")
+![Sign Up screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/signup.png "Sign Up screen") |
+![Log In screen](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/login.png "Log In screen") |
+![User dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/dashboard.png "User dashboard") |
+![User Dashboard](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/dashboard1.png "User Dashboard") |
+![Adding habit](https://github.com/mukthaK/habit-tracking-full-stack-capstone/blob/master/website-images/addHabit.png "Adding Habit") |
+
+
 ## User Cases
 This app is designed for individual users who would like to cultivate new habit and track their habits.
 
